@@ -13,6 +13,7 @@ import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ResultsLoadingRouteImport } from './routes/results-loading'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckRouteImport } from './routes/check'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -36,6 +37,11 @@ const ResultsRoute = ResultsRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckRoute = CheckRouteImport.update({
+  id: '/check',
+  path: '/check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuditRoute = AuditRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/audit': typeof AuditRoute
+  '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/check'
     | '/contact'
     | '/results'
     | '/results-loading'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/check'
     | '/contact'
     | '/results'
     | '/results-loading'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/audit'
+    | '/check'
     | '/contact'
     | '/results'
     | '/results-loading'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AuditRoute: typeof AuditRoute
+  CheckRoute: typeof CheckRoute
   ContactRoute: typeof ContactRoute
   ResultsRoute: typeof ResultsRoute
   ResultsLoadingRoute: typeof ResultsLoadingRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/check': {
+      id: '/check'
+      path: '/check'
+      fullPath: '/check'
+      preLoaderRoute: typeof CheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/audit': {
@@ -208,6 +228,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AuditRoute: AuditRoute,
+  CheckRoute: CheckRoute,
   ContactRoute: ContactRoute,
   ResultsRoute: ResultsRoute,
   ResultsLoadingRoute: ResultsLoadingRoute,

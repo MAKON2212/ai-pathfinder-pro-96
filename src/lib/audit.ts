@@ -38,7 +38,43 @@ export type AuditAnswers = {
   ecommercePlatform?: string;      // Shopify, WooCommerce, Magento ...
   serviceModel?: string;           // project-based, retainer, SaaS
   manufacturingType?: string;      // make-to-stock, make-to-order, custom
+
+  // ----- Quick-check 5 vragen (uit /check flow) -----
+  /** Q1 — welke systemen voor klantdata. */
+  dataSystems?: string[];
+  /** Q2 — process-documentatie volwassenheid 0-100. */
+  processMaturity?: number;
+  /** Q3 — open input grootste tijdvreter, max 200 chars. */
+  biggestTimeWaster?: string;
+  /** Q4 — terugkerende beslissing-pijn. */
+  decisionPain?: string;
+  /** Q5 — maximaal budget per maand voor AI tool. */
+  maxToolBudget?: string;
 };
+
+export const DATA_SYSTEMS = [
+  "CRM (HubSpot, Salesforce, Pipedrive…)",
+  "Excel / Google Sheets",
+  "Eigen database / tool",
+  "Email inbox is onze CRM",
+  "Geen idee / geen systeem",
+];
+
+export const DECISION_PAINS = [
+  "Welke leads bellen we eerst",
+  "Welke prijs vragen we deze klant",
+  "Welke voorraad bestellen we",
+  "Welke content maken we",
+  "Welke medewerker zetten we waarop",
+];
+
+export const MAX_TOOL_BUDGETS = [
+  "< € 100",
+  "€ 100 – € 500",
+  "€ 500 – € 2.000",
+  "€ 2.000+",
+  "Geen idee, hangt van ROI af",
+];
 
 export const INDUSTRIES = [
   "Retail & E-commerce",
@@ -449,6 +485,31 @@ export type SensitivityScenario = {
   rationale: string;
 };
 
+/** A single editable numeric input that drives the value calculation. */
+export type Assumption = {
+  id: AssumptionId;
+  label: string;          // human label, e.g. "FTE in bedrijf"
+  value: number;          // current numeric value
+  unit: "fte" | "eur" | "pct" | "count";
+  confidence: "high" | "low";  // 'high' = derived from public data / explicit input, 'low' = estimated band
+  source: string;         // e.g. "Geschat uit team-grootte band 11–50"
+  min: number;
+  max: number;
+  step?: number;
+};
+
+export type AssumptionId =
+  | "fte"
+  | "fteCost"
+  | "automatableShare"
+  | "revenue"
+  | "revenueUpliftPct"
+  | "customers"
+  | "customerValue"
+  | "churn"
+  | "churnRecoveryPct"
+  | "stackCount";
+
 export type AuditResult = {
   readinessScore: number;
   automationScore: number;
@@ -467,6 +528,8 @@ export type AuditResult = {
   };
   /** Transparent line-items behind the headline number. */
   valueLineItems: ValueLineItem[];
+  /** Editable numeric inputs that drive the value calculation client-side. */
+  assumptions: Assumption[];
   summary: string;
   roadmap: { phase: string; title: string; description: string }[];
   tools: ToolRec[];
@@ -478,6 +541,84 @@ export type AuditResult = {
   /** Worst / base / best case ROI scenario's. */
   sensitivity: SensitivityScenario[];
 };
+
+/**
+ * Pure recompute: given the 10 editable assumptions, return the headline value,
+ * breakdown, line-items and ±25% confidence band. Used by both the server
+ * (initial render) and the client (when the user edits a variable).
+ */
+export type ValueModel = {
+  estimatedAnnualValue: number;
+  valueBreakdown: {
+    laborSavings: number;
+    revenueUplift: number;
+    retentionGain: number;
+    efficiencyGain: number;
+  };
+  valueLineItems: ValueLineItem[];
+  /** ±25% confidence band around the headline number. */
+  band: { low: number; high: number };
+};
+
+const _fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
+
+export function recomputeValueModel(values: Record<AssumptionId, number>): ValueModel {
+  const fte = values.fte;
+  const fteCost = values.fteCost;
+  const automatableShare = values.automatableShare;
+  const revenue = values.revenue;
+  const revenueUpliftPct = values.revenueUpliftPct;
+  const customers = values.customers;
+  const customerValue = values.customerValue;
+  const churn = values.churn;
+  const churnRecoveryPct = values.churnRecoveryPct;
+  const stackCount = values.stackCount;
+
+  const laborSavings = Math.round(fte * fteCost * automatableShare);
+  const revenueUplift = Math.round(revenue * revenueUpliftPct);
+  const retentionPct = churn * churnRecoveryPct;
+  const retentionGain = Math.round(customers * customerValue * retentionPct);
+  const efficiencyGain = Math.round(stackCount * 2_500);
+
+  const total = Math.round((laborSavings + revenueUplift + retentionGain + efficiencyGain) / 1_000) * 1_000;
+
+  const valueLineItems: ValueLineItem[] = [
+    {
+      label: "Loonbesparing",
+      amount: laborSavings,
+      formula: `${Math.round(fte)} FTE × ${_fmt(fteCost)} × ${(automatableShare * 100).toFixed(0)}% automatiseerbaar`,
+      rationale: `Loaded jaarkost per FTE × deel dat AI/automatisering kan wegnemen.`,
+    },
+    {
+      label: "Omzet-uplift",
+      amount: revenueUplift,
+      formula: `${_fmt(revenue)} jaaromzet × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
+      rationale: `Extra omzet via betere conversie, AI-outbound en upsell.`,
+    },
+    {
+      label: "Retentie-winst",
+      amount: retentionGain,
+      formula: `${Math.round(customers).toLocaleString("nl-NL")} klanten × ${_fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% van ${(churn * 100).toFixed(1)}% churn)`,
+      rationale: `Deel van de jaarlijkse churn dat herstelbaar is via 24/7 AI support en proactieve outreach.`,
+    },
+    {
+      label: "Tooling-efficiëntie",
+      amount: efficiencyGain,
+      formula: `${Math.round(stackCount)} bestaande tools × € 2.500 koppel-winst`,
+      rationale: `Bestaande stack koppelen via n8n / Make levert kleine maar zekere winst per tool.`,
+    },
+  ];
+
+  return {
+    estimatedAnnualValue: total,
+    valueBreakdown: { laborSavings, revenueUplift, retentionGain, efficiencyGain },
+    valueLineItems,
+    band: {
+      low: Math.round((total * 0.75) / 1_000) * 1_000,
+      high: Math.round((total * 1.25) / 1_000) * 1_000,
+    },
+  };
+}
 
 const SIZE_FTE: Record<string, number> = {
   "1–10": 5,
@@ -596,75 +737,132 @@ export function analyze(a: AuditAnswers): AuditResult {
   };
   const churn = a.churnRate ? (CHURN_MID[a.churnRate] ?? 0.10) : 0.10;
 
-  // ----- LABOR SAVINGS (goal-weighted) -----
-  // Base: 6% per pain-point, capped at 30%.
+  // ----- LABOR SAVINGS share (goal-weighted) -----
   let automatableShare = Math.min(0.06 * painCount, 0.30);
-  // If "operationele kosten verlagen" or "productiviteit" is a goal, push harder.
   const wantsCostCut = goals.has("Operationele kosten verlagen");
   const wantsProductivity = goals.has("Productiviteit medewerkers");
   if (wantsCostCut) automatableShare += 0.08;
   if (wantsProductivity) automatableShare += 0.05;
-  // If user is NOT chasing cost cuts, dampen labor savings.
   if (!wantsCostCut && !wantsProductivity) automatableShare *= 0.55;
-  automatableShare = Math.min(automatableShare, 0.40);
-  const laborSavings = Math.round(fte * FTE_COST * automatableShare);
+  automatableShare = Math.min(Math.max(automatableShare, 0.03), 0.40);
 
-  // ----- REVENUE UPLIFT (goal-weighted) -----
-  // Base: 1% per goal, capped at 4%.
+  // ----- REVENUE UPLIFT pct (goal-weighted) -----
   let revenueUpliftPct = Math.min(0.01 * goalCount, 0.04);
   const wantsRevenue = goals.has("Omzet verhogen");
   const wantsLeads = pains.has("Lead generatie");
-  if (wantsRevenue) revenueUpliftPct += 0.05;       // big push when goal is omzet
+  if (wantsRevenue) revenueUpliftPct += 0.05;
   if (wantsLeads) revenueUpliftPct += 0.025;
   if (!wantsRevenue && !wantsLeads) revenueUpliftPct *= 0.4;
-  revenueUpliftPct = Math.min(revenueUpliftPct, 0.10);
-  const revenueUplift = Math.round(revenue * revenueUpliftPct);
+  revenueUpliftPct = Math.min(Math.max(revenueUpliftPct, 0.005), 0.10);
 
-  // ----- RETENTION GAIN (CX-weighted, gevoed door churn-input) -----
-  // We schatten dat AI 15-30% van churn weghaalt afhankelijk van CX-focus.
+  // ----- RETENTION recovery pct -----
   let churnRecoveryPct = 0.15;
   if (goals.has("Klantbeleving verbeteren")) churnRecoveryPct += 0.10;
   if (pains.has("Trage klantenservice")) churnRecoveryPct += 0.08;
   if (!goals.has("Klantbeleving verbeteren") && !pains.has("Trage klantenservice")) churnRecoveryPct = 0.10;
-  const retentionPct = churn * churnRecoveryPct; // werkelijke retentie-uplift
-  const retentionGain = Math.round(customers * customerValue * retentionPct);
 
-  // ----- TOOLING EFFICIENCY -----
-  const efficiencyGain = stackCount * 2_500;
-
-  const estimatedAnnualValue =
-    Math.round((laborSavings + revenueUplift + retentionGain + efficiencyGain) / 1_000) * 1_000;
+  // ----- Compute via shared pure function so client-side overrides use the same math -----
+  const valueModel = recomputeValueModel({
+    fte,
+    fteCost: FTE_COST,
+    automatableShare,
+    revenue,
+    revenueUpliftPct,
+    customers,
+    customerValue,
+    churn,
+    churnRecoveryPct,
+    stackCount,
+  });
+  const { laborSavings, revenueUplift, retentionGain, efficiencyGain } = valueModel.valueBreakdown;
+  const estimatedAnnualValue = valueModel.estimatedAnnualValue;
 
   // ----- SCORES with rationale -----
-  const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Nog onbekend" ? 8 : 0);
-  const readinessScore = Math.min(Math.max(readinessRaw, 20), 95);
-  const automationRaw = 35 + painCount * 7 + (pains.has("Repetitief handwerk") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
-  const automationScore = Math.min(automationRaw, 95);
+  // Quick-check overrides: if quiz answers present, base scores on those for higher fidelity.
+  const hasQuiz = !!(a.dataSystems?.length || typeof a.processMaturity === "number" || a.biggestTimeWaster || a.decisionPain || a.maxToolBudget);
+
+  // READINESS
+  let readinessScore: number;
+  let readinessDrivers: string[];
+  if (hasQuiz) {
+    const ds = a.dataSystems || [];
+    let r = 30;
+    if (ds.includes("CRM (HubSpot, Salesforce, Pipedrive…)")) r += 25;
+    if (ds.includes("Eigen database / tool")) r += 18;
+    if (ds.includes("Excel / Google Sheets")) r += 8;
+    if (ds.includes("Email inbox is onze CRM")) r -= 5;
+    if (ds.includes("Geen idee / geen systeem")) r -= 10;
+    if (typeof a.processMaturity === "number") r += Math.round((a.processMaturity / 100) * 30);
+    if (a.website) r += 5;
+    readinessScore = Math.min(Math.max(r, 15), 95);
+    readinessDrivers = [
+      ds.length ? `Klantdata-systemen: ${ds.slice(0, 2).join(", ")}${ds.length > 2 ? "…" : ""}` : "Geen klantdata-systemen opgegeven",
+      typeof a.processMaturity === "number"
+        ? `Proces-documentatie: ${a.processMaturity}/100 (${a.processMaturity < 30 ? "zwak" : a.processMaturity < 70 ? "gemiddeld" : "sterk"})`
+        : "Proces-volwassenheid niet opgegeven",
+      a.website ? `+5 pt voor publieke website` : `Geen website opgegeven`,
+    ];
+  } else {
+    const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Nog onbekend" ? 8 : 0);
+    readinessScore = Math.min(Math.max(readinessRaw, 20), 95);
+    readinessDrivers = [
+      `+${stackCount * 6} pt voor ${stackCount} bestaande tools in de stack`,
+      a.website ? `+6 pt voor publieke website (geanalyseerd)` : `+0 pt — geen website opgegeven`,
+      a.budget && a.budget !== "Nog onbekend" ? `+8 pt voor concreet budget (${a.budget})` : `+0 pt — budget nog onbekend`,
+    ];
+  }
+
+  // AUTOMATION
+  let automationScore: number;
+  let automationDrivers: string[];
+  if (hasQuiz) {
+    let auto = 40;
+    if (a.biggestTimeWaster && a.biggestTimeWaster.trim().length > 10) auto += 25;
+    if (a.decisionPain) auto += 18;
+    auto += painCount * 4;
+    automationScore = Math.min(auto, 95);
+    automationDrivers = [
+      a.biggestTimeWaster ? `Concrete tijdvreter benoemd → directe automatiseringskans` : `Geen specifieke tijdvreter opgegeven`,
+      a.decisionPain ? `Beslissing-pijn: "${a.decisionPain}"` : `Geen terugkerende beslissingspijn opgegeven`,
+      `+${painCount * 4} pt voor ${painCount} pijnpunten`,
+    ];
+  } else {
+    const automationRaw = 35 + painCount * 7 + (pains.has("Repetitief handwerk") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
+    automationScore = Math.min(automationRaw, 95);
+    automationDrivers = [
+      `+${painCount * 7} pt voor ${painCount} aangegeven pijnpunten`,
+      pains.has("Repetitief handwerk") ? `+10 pt — repetitief handwerk staat top-of-mind` : `Geen expliciete repetitieve last opgegeven`,
+      stackCount >= 3 ? `+5 pt — voldoende systemen om tussen te koppelen` : `Beperkte stack om aan te koppelen`,
+    ];
+  }
+
+  // IMPACT
   const impactRaw = 35 + goalCount * 7 + Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20);
-  const impactScore = Math.min(Math.round(impactRaw), 98);
+  let impactScore = Math.min(Math.round(impactRaw), 98);
+  let impactBudgetNote = "";
+  if (a.maxToolBudget) {
+    if (a.maxToolBudget === "€ 2.000+") { impactScore = Math.min(impactScore + 6, 98); impactBudgetNote = ` Budget-bereidheid > € 2.000/mnd verhoogt haalbare impact.`; }
+    else if (a.maxToolBudget === "< € 100") { impactScore = Math.max(impactScore - 8, 25); impactBudgetNote = ` Budget < € 100/mnd beperkt tool-keuze tot lichte stack.`; }
+  }
 
   const scoreDetails = {
     readiness: {
       value: readinessScore,
-      rationale: `Gebaseerd op huidige stack (${stackCount} tools), team-grootte (${a.size || "?"}), website-aanwezigheid en duidelijkheid van budget.`,
-      drivers: [
-        `+${stackCount * 6} pt voor ${stackCount} bestaande tools in de stack`,
-        a.website ? `+6 pt voor publieke website (geanalyseerd)` : `+0 pt — geen website opgegeven`,
-        a.budget && a.budget !== "Nog onbekend" ? `+8 pt voor concreet budget (${a.budget})` : `+0 pt — budget nog onbekend`,
-      ],
+      rationale: hasQuiz
+        ? `Op basis van jullie klantdata-systemen en hoe goed processen op papier staan.`
+        : `Gebaseerd op huidige stack (${stackCount} tools), team-grootte (${a.size || "?"}), website-aanwezigheid en duidelijkheid van budget.`,
+      drivers: readinessDrivers,
     },
     automation: {
       value: automationScore,
-      rationale: `Berekend uit het aantal pijnpunten (${painCount}) en of repetitief handwerk expliciet genoemd is.`,
-      drivers: [
-        `+${painCount * 7} pt voor ${painCount} aangegeven pijnpunten`,
-        pains.has("Repetitief handwerk") ? `+10 pt — repetitief handwerk staat top-of-mind` : `Geen expliciete repetitieve last opgegeven`,
-        stackCount >= 3 ? `+5 pt — voldoende systemen om tussen te koppelen` : `Beperkte stack om aan te koppelen`,
-      ],
+      rationale: hasQuiz
+        ? `Berekend uit jullie eigen benoemde tijdvreter en beslissingspijn — sterkste signaal voor automatiseerbaarheid.`
+        : `Berekend uit het aantal pijnpunten (${painCount}) en of repetitief handwerk expliciet genoemd is.`,
+      drivers: automationDrivers,
     },
     impact: {
       value: impactScore,
-      rationale: `Gewogen uit aantal doelen (${goalCount}) en bedrijfsomvang in omzet (${a.revenue || "?"}).`,
+      rationale: `Gewogen uit aantal doelen (${goalCount}) en bedrijfsomvang in omzet (${a.revenue || "?"}).${impactBudgetNote}`,
       drivers: [
         `+${goalCount * 7} pt voor ${goalCount} concrete doelen`,
         `+${Math.round(Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20))} pt op basis van omzetschaal`,
@@ -673,40 +871,68 @@ export function analyze(a: AuditAnswers): AuditResult {
     },
   };
 
-  // ----- TRANSPARENT VALUE LINE ITEMS -----
-  const valueLineItems: ValueLineItem[] = [
-    {
-      label: "Loonbesparing",
-      amount: laborSavings,
-      formula: `${fte} FTE × ${fmt(FTE_COST)} × ${(automatableShare * 100).toFixed(0)}% automatiseerbaar`,
-      rationale: wantsCostCut || wantsProductivity
+  // ----- VALUE LINE ITEMS — start from pure model, then enrich rationale with audit context -----
+  const valueLineItems: ValueLineItem[] = valueModel.valueLineItems.map((it) => {
+    if (it.label === "Loonbesparing") {
+      return { ...it, rationale: wantsCostCut || wantsProductivity
         ? `Doel "${wantsCostCut ? "kosten verlagen" : "productiviteit"}" verhoogt het automatiseerbare aandeel.`
-        : `Doelen liggen niet primair op cost-cutting — aandeel bewust gedempt.`,
-    },
-    {
-      label: "Omzet-uplift",
-      amount: revenueUplift,
-      formula: `${fmt(revenue)} jaaromzet × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
-      rationale: wantsRevenue
+        : `Doelen liggen niet primair op cost-cutting — aandeel bewust gedempt.` };
+    }
+    if (it.label === "Omzet-uplift") {
+      return { ...it, rationale: wantsRevenue
         ? `Doel "Omzet verhogen" geeft +5 pp uplift via betere lead-conversie en outbound (Instantly.ai / Clay).`
         : wantsLeads
           ? `Pijnpunt "Lead generatie" geeft +2.5 pp uplift via AI-outbound.`
-          : `Geen revenue-doel opgegeven — voorzichtige schatting.`,
-    },
-    {
-      label: "Retentie-winst",
-      amount: retentionGain,
-      formula: `${customers.toLocaleString("nl-NL")} klanten × ${fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% van ${(churn * 100).toFixed(1)}% churn)`,
-      rationale: a.churnRate
+          : `Geen revenue-doel opgegeven — voorzichtige schatting.` };
+    }
+    if (it.label === "Retentie-winst") {
+      return { ...it, rationale: a.churnRate
         ? `Churn-input "${a.churnRate}" + ${(churnRecoveryPct * 100).toFixed(0)}% recoverable via AI voice/chat (Vapi, Intercom Fin).`
-        : `Geen churn-input opgegeven — branche-default van 10% jaarlijkse churn gebruikt.`,
-    },
-    {
-      label: "Tooling-efficiëntie",
-      amount: efficiencyGain,
-      formula: `${stackCount} bestaande tools × € 2.500 koppel-winst`,
-      rationale: `Bestaande stack koppelen via n8n / Make levert kleine maar zekere winst per tool.`,
-    },
+        : `Geen churn-input opgegeven — branche-default van 10% jaarlijkse churn gebruikt.` };
+    }
+    return it;
+  });
+
+  // ----- EDITABLE ASSUMPTIONS — let the user correct any of the 10 inputs that drive value -----
+  const sizeKnown = !!a.size;
+  const revenueKnown = !!a.revenue;
+  const customersKnown = !!a.customersPerYear;
+  const cvKnown = !!a.customerValue;
+  const hourlyKnown = !!a.avgHourlyCost;
+  const churnKnown = !!a.churnRate;
+  const stackKnown = a.techStack.length > 0;
+
+  const assumptions: Assumption[] = [
+    { id: "fte", label: "FTE in bedrijf", value: fte, unit: "fte", confidence: sizeKnown ? "high" : "low",
+      source: sizeKnown ? `Afgeleid uit team-grootte band ${a.size}` : "Geschat — vul je eigen aantal in voor een preciezere uitkomst",
+      min: 1, max: 5000, step: 1 },
+    { id: "fteCost", label: "Loaded jaarkost / FTE", value: FTE_COST, unit: "eur", confidence: hourlyKnown ? "high" : "low",
+      source: hourlyKnown ? `Uurloon "${a.avgHourlyCost}" × 1.600 productieve uren` : "NL-benchmark € 55K — pas aan voor je eigen uurtarief",
+      min: 20_000, max: 200_000, step: 1_000 },
+    { id: "automatableShare", label: "Automatiseerbaar deel van werk", value: automatableShare, unit: "pct", confidence: "low",
+      source: `Afgeleid uit ${painCount} pijnpunten + doelen — typische bandbreedte 5–35%`,
+      min: 0.02, max: 0.50, step: 0.01 },
+    { id: "revenue", label: "Jaaromzet", value: revenue, unit: "eur", confidence: revenueKnown ? "high" : "low",
+      source: revenueKnown ? `Mediaan van band ${a.revenue}` : "Branche-default — vul je eigen omzet in",
+      min: 50_000, max: 100_000_000, step: 10_000 },
+    { id: "revenueUpliftPct", label: "Verwachte omzet-uplift", value: revenueUpliftPct, unit: "pct", confidence: "low",
+      source: `Op basis van ${goalCount} doelen + lead-pijnpunten — typisch 1–8%`,
+      min: 0.005, max: 0.15, step: 0.005 },
+    { id: "customers", label: "Klanten per jaar", value: customers, unit: "count", confidence: customersKnown ? "high" : "low",
+      source: customersKnown ? `Mediaan van band ${a.customersPerYear}` : "Geschat — pas aan voor preciezere retentie-rekensom",
+      min: 1, max: 1_000_000, step: 1 },
+    { id: "customerValue", label: "Gemiddelde klantwaarde / jaar", value: customerValue, unit: "eur", confidence: cvKnown ? "high" : "low",
+      source: cvKnown ? `Mediaan van band ${a.customerValue}` : "Geschat — vaak makkelijk te bepalen uit boekhouding",
+      min: 10, max: 1_000_000, step: 10 },
+    { id: "churn", label: "Jaarlijkse churn", value: churn, unit: "pct", confidence: churnKnown ? "high" : "low",
+      source: churnKnown ? `Mediaan van band ${a.churnRate}` : "Branche-default 10% — past in 30 sec aan",
+      min: 0.005, max: 0.80, step: 0.005 },
+    { id: "churnRecoveryPct", label: "Deel churn herstelbaar door AI", value: churnRecoveryPct, unit: "pct", confidence: "low",
+      source: "Schatting op basis van CX-focus in doelen — typisch 10–35%",
+      min: 0.05, max: 0.50, step: 0.01 },
+    { id: "stackCount", label: "Bestaande tools in stack", value: stackCount, unit: "count", confidence: stackKnown ? "high" : "low",
+      source: stackKnown ? `${stackCount} tools genoemd in audit` : "Geen tools opgegeven — elke koppel-winst telt mee",
+      min: 0, max: 50, step: 1 },
   ];
 
   const company = a.companyName || "jouw organisatie";
@@ -731,10 +957,20 @@ export function analyze(a: AuditAnswers): AuditResult {
   const topPain = a.painPoints[0] || "operationele frictie";
   const topGoal = a.goals[0] || "groei";
 
+  const timeWasterQuote = a.biggestTimeWaster?.trim();
   const quickWins: QuickWin[] = [
-    { title: `ChatGPT Team uitrollen voor ${company}`, effort: "1 dag", impact: `± ${fmt(fte * 200)} / jaar tijdwinst`, howTo: "Activeer ChatGPT Team, nodig kernteam uit en maak 3 prompt-templates voor de meest voorkomende taken." },
+    timeWasterQuote
+      ? {
+          title: `Pak jullie #1 tijdvreter aan`,
+          effort: "1-2 dagen",
+          impact: `± ${fmt(fte * 400)} / jaar tijdwinst`,
+          howTo: `Jullie noemden zelf: "${timeWasterQuote}". Bouw hier in week 1 een Make.com- of n8n-flow voor — vaak in 2 dagen werkend, en vanaf dag 3 levert het al tijd op.`,
+        }
+      : { title: `ChatGPT Team uitrollen voor ${company}`, effort: "1 dag", impact: `± ${fmt(fte * 200)} / jaar tijdwinst`, howTo: "Activeer ChatGPT Team, nodig kernteam uit en maak 3 prompt-templates voor de meest voorkomende taken." },
     { title: `1 repetitieve workflow automatiseren in Make.com`, effort: "halve dag", impact: `${fmt(8000)} / jaar`, howTo: `Pak "${topPain}" en bouw 1 scenario dat de hand-off tussen 2 tools wegneemt.` },
-    { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
+    a.decisionPain
+      ? { title: `Beslissings-copilot voor "${a.decisionPain}"`, effort: "1 week", impact: "Snellere & consistentere beslissingen", howTo: `Bouw een GPT met jullie historische data zodat het team in seconden een gemotiveerd voorstel krijgt voor "${a.decisionPain.toLowerCase()}".` }
+      : { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
   ];
 
   const weeklyPlan: WeeklyPlanItem[] = [
@@ -759,6 +995,7 @@ export function analyze(a: AuditAnswers): AuditResult {
     estimatedAnnualValue,
     valueBreakdown: { laborSavings, revenueUplift, retentionGain, efficiencyGain },
     valueLineItems,
+    assumptions,
     summary,
     roadmap,
     tools: matchTools(a),
