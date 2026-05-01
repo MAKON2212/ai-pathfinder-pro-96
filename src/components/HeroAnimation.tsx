@@ -20,8 +20,7 @@ const SWAP_DELAY = FORM_VISIBLE + 0.15;
 const REPORT_HOLD = 4.0;
 const TOTAL = SWAP_DELAY + REPORT_HOLD;
 
-const easeOutExpo = [0.16, 1, 0.3, 1] as const;
-const easeInOutQuart = [0.76, 0, 0.24, 1] as const;
+const calmEase = [0.25, 0.1, 0.25, 1] as const;
 
 /**
  * Refined two-stage hero animation.
@@ -40,25 +39,17 @@ export function HeroAnimation() {
         }}
       />
 
-      {/* Subtle floating wrapper */}
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="relative h-full w-full"
-      >
+      <div className="relative h-full w-full">
         {/* QUESTIONNAIRE */}
         <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.97 }}
+          initial={{ opacity: 0 }}
           animate={{
             opacity: [0, 1, 1, 0],
-            x: [0, 0, 0, -56],
-            y: [24, 0, 0, -8],
-            scale: [0.97, 1, 1, 0.96],
           }}
           transition={{
             duration: TOTAL,
             times: [0, 0.06, FORM_VISIBLE / TOTAL, (FORM_VISIBLE + 0.5) / TOTAL],
-            ease: easeInOutQuart,
+            ease: calmEase,
           }}
           className="absolute inset-x-0 top-0 overflow-hidden rounded-[32px] border border-border/60 p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.18)] backdrop-blur-2xl"
           style={{
@@ -110,7 +101,7 @@ export function HeroAnimation() {
                   transition={{
                     delay: 0.5 + i * PER_QUESTION,
                     duration: FILL_DURATION,
-                    ease: easeOutExpo,
+                     ease: calmEase,
                   }}
                   className="mt-2 flex items-center justify-between rounded-2xl border border-border/70 bg-background/40 px-4 py-3"
                 >
@@ -121,7 +112,7 @@ export function HeroAnimation() {
                     transition={{
                       delay: 0.65 + i * PER_QUESTION,
                       duration: 0.35,
-                      ease: easeOutExpo,
+                       ease: calmEase,
                     }}
                     className="flex h-5 w-5 items-center justify-center rounded-full bg-brand"
                   >
@@ -140,7 +131,7 @@ export function HeroAnimation() {
                 transition={{
                   delay: 0.4,
                   duration: PER_QUESTION * QUESTIONS.length,
-                  ease: easeOutExpo,
+                   ease: calmEase,
                 }}
                 className="h-full rounded-full bg-brand"
               />
@@ -151,9 +142,9 @@ export function HeroAnimation() {
 
         {/* REPORT */}
         <motion.div
-          initial={{ opacity: 0, x: 56, scale: 0.96 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: SWAP_DELAY, duration: 0.85, ease: easeOutExpo }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: SWAP_DELAY, duration: 0.65, ease: calmEase }}
           className="absolute inset-x-0 top-0 overflow-hidden rounded-[32px] border border-border/60 p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.22)] backdrop-blur-2xl"
           style={{
             background:
@@ -185,7 +176,7 @@ export function HeroAnimation() {
             <motion.span
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: SWAP_DELAY + 0.3, duration: 0.4, ease: easeOutExpo }}
+              transition={{ delay: SWAP_DELAY + 0.3, duration: 0.4, ease: calmEase }}
               className="rounded-full bg-brand/12 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand"
             >
               Klaar
@@ -196,7 +187,7 @@ export function HeroAnimation() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: SWAP_DELAY + 0.45, duration: 0.55, ease: easeOutExpo }}
+            transition={{ delay: SWAP_DELAY + 0.45, duration: 0.55, ease: calmEase }}
             className="mt-6 rounded-2xl border border-border/70 bg-background/40 p-5"
           >
             <div className="flex items-center justify-between">
@@ -223,7 +214,7 @@ export function HeroAnimation() {
                 transition={{
                   delay: SWAP_DELAY + 0.7 + i * 0.15,
                   duration: 0.45,
-                  ease: easeOutExpo,
+                  ease: calmEase,
                 }}
                 className="flex items-center justify-between rounded-xl border border-border/50 bg-secondary/30 px-3.5 py-2.5"
               >
@@ -248,7 +239,7 @@ export function HeroAnimation() {
             </span>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
     </div>
   );
 }
