@@ -176,7 +176,7 @@ export function HeroAnimation() {
             <motion.span
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: SWAP_DELAY + 0.3, duration: 0.4, ease: easeOutExpo }}
+              transition={{ delay: SWAP_DELAY + 0.3, duration: 0.4, ease: calmEase }}
               className="rounded-full bg-brand/12 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand"
             >
               Klaar
@@ -187,7 +187,7 @@ export function HeroAnimation() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: SWAP_DELAY + 0.45, duration: 0.55, ease: easeOutExpo }}
+            transition={{ delay: SWAP_DELAY + 0.45, duration: 0.55, ease: calmEase }}
             className="mt-6 rounded-2xl border border-border/70 bg-background/40 p-5"
           >
             <div className="flex items-center justify-between">
@@ -214,7 +214,7 @@ export function HeroAnimation() {
                 transition={{
                   delay: SWAP_DELAY + 0.7 + i * 0.15,
                   duration: 0.45,
-                  ease: easeOutExpo,
+                  ease: calmEase,
                 }}
                 className="flex items-center justify-between rounded-xl border border-border/50 bg-secondary/30 px-3.5 py-2.5"
               >
