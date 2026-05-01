@@ -871,40 +871,68 @@ export function analyze(a: AuditAnswers): AuditResult {
     },
   };
 
-  // ----- TRANSPARENT VALUE LINE ITEMS -----
-  const valueLineItems: ValueLineItem[] = [
-    {
-      label: "Loonbesparing",
-      amount: laborSavings,
-      formula: `${fte} FTE × ${fmt(FTE_COST)} × ${(automatableShare * 100).toFixed(0)}% automatiseerbaar`,
-      rationale: wantsCostCut || wantsProductivity
+  // ----- VALUE LINE ITEMS — start from pure model, then enrich rationale with audit context -----
+  const valueLineItems: ValueLineItem[] = valueModel.valueLineItems.map((it) => {
+    if (it.label === "Loonbesparing") {
+      return { ...it, rationale: wantsCostCut || wantsProductivity
         ? `Doel "${wantsCostCut ? "kosten verlagen" : "productiviteit"}" verhoogt het automatiseerbare aandeel.`
-        : `Doelen liggen niet primair op cost-cutting — aandeel bewust gedempt.`,
-    },
-    {
-      label: "Omzet-uplift",
-      amount: revenueUplift,
-      formula: `${fmt(revenue)} jaaromzet × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
-      rationale: wantsRevenue
+        : `Doelen liggen niet primair op cost-cutting — aandeel bewust gedempt.` };
+    }
+    if (it.label === "Omzet-uplift") {
+      return { ...it, rationale: wantsRevenue
         ? `Doel "Omzet verhogen" geeft +5 pp uplift via betere lead-conversie en outbound (Instantly.ai / Clay).`
         : wantsLeads
           ? `Pijnpunt "Lead generatie" geeft +2.5 pp uplift via AI-outbound.`
-          : `Geen revenue-doel opgegeven — voorzichtige schatting.`,
-    },
-    {
-      label: "Retentie-winst",
-      amount: retentionGain,
-      formula: `${customers.toLocaleString("nl-NL")} klanten × ${fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% van ${(churn * 100).toFixed(1)}% churn)`,
-      rationale: a.churnRate
+          : `Geen revenue-doel opgegeven — voorzichtige schatting.` };
+    }
+    if (it.label === "Retentie-winst") {
+      return { ...it, rationale: a.churnRate
         ? `Churn-input "${a.churnRate}" + ${(churnRecoveryPct * 100).toFixed(0)}% recoverable via AI voice/chat (Vapi, Intercom Fin).`
-        : `Geen churn-input opgegeven — branche-default van 10% jaarlijkse churn gebruikt.`,
-    },
-    {
-      label: "Tooling-efficiëntie",
-      amount: efficiencyGain,
-      formula: `${stackCount} bestaande tools × € 2.500 koppel-winst`,
-      rationale: `Bestaande stack koppelen via n8n / Make levert kleine maar zekere winst per tool.`,
-    },
+        : `Geen churn-input opgegeven — branche-default van 10% jaarlijkse churn gebruikt.` };
+    }
+    return it;
+  });
+
+  // ----- EDITABLE ASSUMPTIONS — let the user correct any of the 10 inputs that drive value -----
+  const sizeKnown = !!a.size;
+  const revenueKnown = !!a.revenue;
+  const customersKnown = !!a.customersPerYear;
+  const cvKnown = !!a.customerValue;
+  const hourlyKnown = !!a.avgHourlyCost;
+  const churnKnown = !!a.churnRate;
+  const stackKnown = a.techStack.length > 0;
+
+  const assumptions: Assumption[] = [
+    { id: "fte", label: "FTE in bedrijf", value: fte, unit: "fte", confidence: sizeKnown ? "high" : "low",
+      source: sizeKnown ? `Afgeleid uit team-grootte band ${a.size}` : "Geschat — vul je eigen aantal in voor een preciezere uitkomst",
+      min: 1, max: 5000, step: 1 },
+    { id: "fteCost", label: "Loaded jaarkost / FTE", value: FTE_COST, unit: "eur", confidence: hourlyKnown ? "high" : "low",
+      source: hourlyKnown ? `Uurloon "${a.avgHourlyCost}" × 1.600 productieve uren` : "NL-benchmark € 55K — pas aan voor je eigen uurtarief",
+      min: 20_000, max: 200_000, step: 1_000 },
+    { id: "automatableShare", label: "Automatiseerbaar deel van werk", value: automatableShare, unit: "pct", confidence: "low",
+      source: `Afgeleid uit ${painCount} pijnpunten + doelen — typische bandbreedte 5–35%`,
+      min: 0.02, max: 0.50, step: 0.01 },
+    { id: "revenue", label: "Jaaromzet", value: revenue, unit: "eur", confidence: revenueKnown ? "high" : "low",
+      source: revenueKnown ? `Mediaan van band ${a.revenue}` : "Branche-default — vul je eigen omzet in",
+      min: 50_000, max: 100_000_000, step: 10_000 },
+    { id: "revenueUpliftPct", label: "Verwachte omzet-uplift", value: revenueUpliftPct, unit: "pct", confidence: "low",
+      source: `Op basis van ${goalCount} doelen + lead-pijnpunten — typisch 1–8%`,
+      min: 0.005, max: 0.15, step: 0.005 },
+    { id: "customers", label: "Klanten per jaar", value: customers, unit: "count", confidence: customersKnown ? "high" : "low",
+      source: customersKnown ? `Mediaan van band ${a.customersPerYear}` : "Geschat — pas aan voor preciezere retentie-rekensom",
+      min: 1, max: 1_000_000, step: 1 },
+    { id: "customerValue", label: "Gemiddelde klantwaarde / jaar", value: customerValue, unit: "eur", confidence: cvKnown ? "high" : "low",
+      source: cvKnown ? `Mediaan van band ${a.customerValue}` : "Geschat — vaak makkelijk te bepalen uit boekhouding",
+      min: 10, max: 1_000_000, step: 10 },
+    { id: "churn", label: "Jaarlijkse churn", value: churn, unit: "pct", confidence: churnKnown ? "high" : "low",
+      source: churnKnown ? `Mediaan van band ${a.churnRate}` : "Branche-default 10% — past in 30 sec aan",
+      min: 0.005, max: 0.80, step: 0.005 },
+    { id: "churnRecoveryPct", label: "Deel churn herstelbaar door AI", value: churnRecoveryPct, unit: "pct", confidence: "low",
+      source: "Schatting op basis van CX-focus in doelen — typisch 10–35%",
+      min: 0.05, max: 0.50, step: 0.01 },
+    { id: "stackCount", label: "Bestaande tools in stack", value: stackCount, unit: "count", confidence: stackKnown ? "high" : "low",
+      source: stackKnown ? `${stackCount} tools genoemd in audit` : "Geen tools opgegeven — elke koppel-winst telt mee",
+      min: 0, max: 50, step: 1 },
   ];
 
   const company = a.companyName || "jouw organisatie";
