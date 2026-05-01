@@ -228,7 +228,7 @@ export function HeroAnimation() {
             <p className="mt-2 text-[11px] text-muted-foreground">Per jaar, na 90 dagen</p>
           </motion.div>
 
-          {/* Breakdown lines */}
+          {/* Breakdown lines with tool logos */}
           <div className="mt-4 space-y-2">
             {REPORT_LINES.map((line, i) => (
               <motion.div
@@ -242,25 +242,70 @@ export function HeroAnimation() {
                 }}
                 className="flex items-center justify-between rounded-xl border border-border/50 bg-secondary/30 px-3.5 py-2.5"
               >
-                <div className="flex items-center gap-2.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                  <p className="text-[12px] font-medium text-foreground/85">{line.label}</p>
+                <div className="flex min-w-0 items-center gap-2.5">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border/60 bg-background">
+                    <img
+                      src={line.tool.logo}
+                      alt={line.tool.name}
+                      loading="lazy"
+                      className="h-4 w-4 object-contain"
+                    />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-[12px] font-medium text-foreground/85">
+                      {line.label}
+                    </p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                      via {line.tool.name}
+                    </p>
+                  </div>
                 </div>
                 <p className="font-mono text-[12px] tabular-nums text-foreground">{line.value}</p>
               </motion.div>
             ))}
           </div>
 
+          {/* Recommended tool stack */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: SWAP_DELAY + 1.2, duration: 0.4 }}
-            className="mt-5 flex items-center justify-between border-t border-border/60 pt-4"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: SWAP_DELAY + 1.15, duration: 0.5, ease: calmEase }}
+            className="mt-5 border-t border-border/60 pt-4"
           >
-            <p className="text-[11px] text-muted-foreground">Volledig rapport · PDF</p>
-            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-foreground">
-              Bekijken <ArrowUpRight className="h-3 w-3" />
-            </span>
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Aanbevolen stack
+              </p>
+              <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
+                12 tools
+              </span>
+            </div>
+            <div className="mt-3 flex items-center gap-2">
+              {TOOL_STACK.map((tool, i) => (
+                <motion.span
+                  key={tool.name}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: SWAP_DELAY + 1.3 + i * 0.07,
+                    duration: 0.35,
+                    ease: calmEase,
+                  }}
+                  title={tool.name}
+                  className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-border/60 bg-background shadow-sm"
+                >
+                  <img
+                    src={tool.logo}
+                    alt={tool.name}
+                    loading="lazy"
+                    className="h-4 w-4 object-contain"
+                  />
+                </motion.span>
+              ))}
+              <span className="ml-1 flex h-8 items-center rounded-lg border border-border/60 bg-background px-2 font-mono text-[10px] font-medium text-muted-foreground">
+                +6
+              </span>
+            </div>
           </motion.div>
         </motion.div>
       </div>
