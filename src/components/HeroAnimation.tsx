@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, FileText, Sparkles, TrendingUp, ArrowUpRight } from "lucide-react";
+import { Check, FileText, Sparkles, TrendingUp } from "lucide-react";
 
 const QUESTIONS = [
   { q: "Naam van je bedrijf?", a: "Acme B.V." },
