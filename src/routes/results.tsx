@@ -258,6 +258,28 @@ function ResultsPage() {
             Volledig rapport ontgrendeld
           </div>
         )}
+        {paid && magicLink && (
+          <div className="mb-8 rounded-2xl border border-brand/30 bg-card p-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Bewaar deze link</p>
+            <p className="mt-2 text-sm text-foreground/85">
+              Met onderstaande link open je dit rapport later opnieuw — bewaar 'm of mail 'm naar jezelf.
+            </p>
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+              <input
+                readOnly
+                value={magicLink}
+                onClick={(e) => (e.target as HTMLInputElement).select()}
+                className="flex-1 truncate rounded-xl border border-border bg-background px-3 py-2 font-mono text-xs"
+              />
+              <button
+                onClick={() => { navigator.clipboard?.writeText(magicLink); }}
+                className="rounded-xl bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
+              >
+                Kopieer link
+              </button>
+            </div>
+          </div>
+        )}
         {/* Header — title + review slider top right */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
