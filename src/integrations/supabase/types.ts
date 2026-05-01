@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      reports: {
+        Row: {
+          annual_value_cents: number | null
+          answers: Json | null
+          company: string | null
+          contact_email: string | null
+          contact_name: string | null
+          created_at: string
+          currency: string | null
+          id: string
+          industry: string | null
+          paid: boolean
+          report: Json | null
+          score: number | null
+          source: string | null
+          stripe_session_id: string | null
+          team_size: string | null
+          updated_at: string
+        }
+        Insert: {
+          annual_value_cents?: number | null
+          answers?: Json | null
+          company?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          created_at?: string
+          currency?: string | null
+          id?: string
+          industry?: string | null
+          paid?: boolean
+          report?: Json | null
+          score?: number | null
+          source?: string | null
+          stripe_session_id?: string | null
+          team_size?: string | null
+          updated_at?: string
+        }
+        Update: {
+          annual_value_cents?: number | null
+          answers?: Json | null
+          company?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          created_at?: string
+          currency?: string | null
+          id?: string
+          industry?: string | null
+          paid?: boolean
+          report?: Json | null
+          score?: number | null
+          source?: string | null
+          stripe_session_id?: string | null
+          team_size?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sales: {
         Row: {
           amount_cents: number | null
