@@ -374,6 +374,10 @@ function ResultsPage() {
           </div>
         </section>
 
+        {/* PAYWALL: alles hieronder is alleen volledig zichtbaar na betaling */}
+        <div className="relative">
+          <div className={paid ? "" : "pointer-events-none select-none [filter:blur(8px)] opacity-60"} aria-hidden={!paid}>
+
         {/* AI Generated chapters */}
         <section className="mt-24">
           <div>
