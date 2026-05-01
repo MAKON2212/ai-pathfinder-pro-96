@@ -631,6 +631,49 @@ function ResultsPage() {
           </section>
         )}
 
+          </div>
+          {!paid && (
+            <div className="absolute inset-0 flex items-start justify-center pt-32 md:pt-48">
+              <div className="surface mx-6 max-w-xl rounded-3xl border border-brand/40 bg-card/95 p-8 text-center shadow-2xl backdrop-blur md:p-10">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
+                  <Sparkles className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 text-2xl font-medium tracking-tight md:text-3xl">
+                  Ontgrendel het volledige rapport
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  De complete roadmap, hoofdstukken, aanbevolen tools, quick wins, 90-dagen actieplan en sensitivity-analyse — plus PDF-export.
+                </p>
+                <ul className="mx-auto mt-5 max-w-sm space-y-2 text-left text-sm">
+                  {[
+                    `${report.chapters.length} persoonlijke hoofdstukken`,
+                    `${report.tools.length} aanbevolen AI-tools met instapstappen`,
+                    "90-dagen actieplan, week voor week",
+                    "Worst / base / best case scenario's",
+                    "Volledige PDF-download",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-foreground/85">
+                      <Check className="mt-0.5 h-4 w-4 flex-none text-brand" strokeWidth={3} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={openCheckout}
+                  className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Lock className="h-4 w-4" />
+                    Ontgrendel voor € 29
+                  </span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+                <p className="mt-3 text-[11px] text-muted-foreground">Eenmalige betaling · directe toegang</p>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Final CTA */}
         <section className="mt-24">
           <div className="surface relative overflow-hidden rounded-[2rem] p-10 md:p-14">
