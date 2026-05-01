@@ -672,35 +672,91 @@ export function analyze(a: AuditAnswers): AuditResult {
     Math.round((laborSavings + revenueUplift + retentionGain + efficiencyGain) / 1_000) * 1_000;
 
   // ----- SCORES with rationale -----
-  const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Nog onbekend" ? 8 : 0);
-  const readinessScore = Math.min(Math.max(readinessRaw, 20), 95);
-  const automationRaw = 35 + painCount * 7 + (pains.has("Repetitief handwerk") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
-  const automationScore = Math.min(automationRaw, 95);
+  // Quick-check overrides: if quiz answers present, base scores on those for higher fidelity.
+  const hasQuiz = !!(a.dataSystems?.length || typeof a.processMaturity === "number" || a.biggestTimeWaster || a.decisionPain || a.maxToolBudget);
+
+  // READINESS
+  let readinessScore: number;
+  let readinessDrivers: string[];
+  if (hasQuiz) {
+    const ds = a.dataSystems || [];
+    let r = 30;
+    if (ds.includes("CRM (HubSpot, Salesforce, Pipedrive…)")) r += 25;
+    if (ds.includes("Eigen database / tool")) r += 18;
+    if (ds.includes("Excel / Google Sheets")) r += 8;
+    if (ds.includes("Email inbox is onze CRM")) r -= 5;
+    if (ds.includes("Geen idee / geen systeem")) r -= 10;
+    if (typeof a.processMaturity === "number") r += Math.round((a.processMaturity / 100) * 30);
+    if (a.website) r += 5;
+    readinessScore = Math.min(Math.max(r, 15), 95);
+    readinessDrivers = [
+      ds.length ? `Klantdata-systemen: ${ds.slice(0, 2).join(", ")}${ds.length > 2 ? "…" : ""}` : "Geen klantdata-systemen opgegeven",
+      typeof a.processMaturity === "number"
+        ? `Proces-documentatie: ${a.processMaturity}/100 (${a.processMaturity < 30 ? "zwak" : a.processMaturity < 70 ? "gemiddeld" : "sterk"})`
+        : "Proces-volwassenheid niet opgegeven",
+      a.website ? `+5 pt voor publieke website` : `Geen website opgegeven`,
+    ];
+  } else {
+    const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Nog onbekend" ? 8 : 0);
+    readinessScore = Math.min(Math.max(readinessRaw, 20), 95);
+    readinessDrivers = [
+      `+${stackCount * 6} pt voor ${stackCount} bestaande tools in de stack`,
+      a.website ? `+6 pt voor publieke website (geanalyseerd)` : `+0 pt — geen website opgegeven`,
+      a.budget && a.budget !== "Nog onbekend" ? `+8 pt voor concreet budget (${a.budget})` : `+0 pt — budget nog onbekend`,
+    ];
+  }
+
+  // AUTOMATION
+  let automationScore: number;
+  let automationDrivers: string[];
+  if (hasQuiz) {
+    let auto = 40;
+    if (a.biggestTimeWaster && a.biggestTimeWaster.trim().length > 10) auto += 25;
+    if (a.decisionPain) auto += 18;
+    auto += painCount * 4;
+    automationScore = Math.min(auto, 95);
+    automationDrivers = [
+      a.biggestTimeWaster ? `Concrete tijdvreter benoemd → directe automatiseringskans` : `Geen specifieke tijdvreter opgegeven`,
+      a.decisionPain ? `Beslissing-pijn: "${a.decisionPain}"` : `Geen terugkerende beslissingspijn opgegeven`,
+      `+${painCount * 4} pt voor ${painCount} pijnpunten`,
+    ];
+  } else {
+    const automationRaw = 35 + painCount * 7 + (pains.has("Repetitief handwerk") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
+    automationScore = Math.min(automationRaw, 95);
+    automationDrivers = [
+      `+${painCount * 7} pt voor ${painCount} aangegeven pijnpunten`,
+      pains.has("Repetitief handwerk") ? `+10 pt — repetitief handwerk staat top-of-mind` : `Geen expliciete repetitieve last opgegeven`,
+      stackCount >= 3 ? `+5 pt — voldoende systemen om tussen te koppelen` : `Beperkte stack om aan te koppelen`,
+    ];
+  }
+
+  // IMPACT
   const impactRaw = 35 + goalCount * 7 + Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20);
-  const impactScore = Math.min(Math.round(impactRaw), 98);
+  let impactScore = Math.min(Math.round(impactRaw), 98);
+  let impactBudgetNote = "";
+  if (a.maxToolBudget) {
+    if (a.maxToolBudget === "€ 2.000+") { impactScore = Math.min(impactScore + 6, 98); impactBudgetNote = ` Budget-bereidheid > € 2.000/mnd verhoogt haalbare impact.`; }
+    else if (a.maxToolBudget === "< € 100") { impactScore = Math.max(impactScore - 8, 25); impactBudgetNote = ` Budget < € 100/mnd beperkt tool-keuze tot lichte stack.`; }
+  }
 
   const scoreDetails = {
     readiness: {
       value: readinessScore,
-      rationale: `Gebaseerd op huidige stack (${stackCount} tools), team-grootte (${a.size || "?"}), website-aanwezigheid en duidelijkheid van budget.`,
-      drivers: [
-        `+${stackCount * 6} pt voor ${stackCount} bestaande tools in de stack`,
-        a.website ? `+6 pt voor publieke website (geanalyseerd)` : `+0 pt — geen website opgegeven`,
-        a.budget && a.budget !== "Nog onbekend" ? `+8 pt voor concreet budget (${a.budget})` : `+0 pt — budget nog onbekend`,
-      ],
+      rationale: hasQuiz
+        ? `Op basis van jullie klantdata-systemen en hoe goed processen op papier staan.`
+        : `Gebaseerd op huidige stack (${stackCount} tools), team-grootte (${a.size || "?"}), website-aanwezigheid en duidelijkheid van budget.`,
+      drivers: readinessDrivers,
     },
     automation: {
       value: automationScore,
-      rationale: `Berekend uit het aantal pijnpunten (${painCount}) en of repetitief handwerk expliciet genoemd is.`,
-      drivers: [
-        `+${painCount * 7} pt voor ${painCount} aangegeven pijnpunten`,
-        pains.has("Repetitief handwerk") ? `+10 pt — repetitief handwerk staat top-of-mind` : `Geen expliciete repetitieve last opgegeven`,
-        stackCount >= 3 ? `+5 pt — voldoende systemen om tussen te koppelen` : `Beperkte stack om aan te koppelen`,
-      ],
+      rationale: hasQuiz
+        ? `Berekend uit jullie eigen benoemde tijdvreter en beslissingspijn — sterkste signaal voor automatiseerbaarheid.`
+        : `Berekend uit het aantal pijnpunten (${painCount}) en of repetitief handwerk expliciet genoemd is.`,
+      drivers: automationDrivers,
     },
     impact: {
       value: impactScore,
-      rationale: `Gewogen uit aantal doelen (${goalCount}) en bedrijfsomvang in omzet (${a.revenue || "?"}).`,
+      rationale: `Gewogen uit aantal doelen (${goalCount}) en bedrijfsomvang in omzet (${a.revenue || "?"}).${impactBudgetNote}`,
       drivers: [
         `+${goalCount * 7} pt voor ${goalCount} concrete doelen`,
         `+${Math.round(Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20))} pt op basis van omzetschaal`,
