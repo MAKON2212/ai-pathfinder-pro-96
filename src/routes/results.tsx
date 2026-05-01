@@ -725,6 +725,7 @@ function ResultsPage() {
             <StripeEmbeddedCheckout
               priceId="ai_check_report_one_time"
               returnUrl={returnUrl}
+              reportId={report.reportId}
             />
           )}
         </div>
