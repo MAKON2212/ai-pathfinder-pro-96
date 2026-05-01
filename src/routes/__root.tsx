@@ -2,6 +2,8 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { MeshBackground } from "@/components/MeshBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { FloatingConsult } from "@/components/FloatingConsult";
+
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -35,13 +37,19 @@ export const Route = createRootRoute({
         content:
           "ScanAI laat in 3 minuten zien hoeveel AI jouw bedrijf oplevert. Met persoonlijk rapport en concreet 90-dagen plan.",
       },
-      { property: "og:title", content: "ScanAI" },
+      { property: "og:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
       {
         property: "og:description",
         content: "Persoonlijke AI roadmap & geldwaarde-analyse voor jouw bedrijf.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { name: "description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
+      { property: "og:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
+      { name: "twitter:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/68c0f82d-d4f6-4705-8d42-bf447df71cba/id-preview-f1473f6a--19fa5cb1-a805-4773-ad66-ea0ea7129942.lovable.app-1777623786172.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/68c0f82d-d4f6-4705-8d42-bf447df71cba/id-preview-f1473f6a--19fa5cb1-a805-4773-ad66-ea0ea7129942.lovable.app-1777623786172.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -81,6 +89,7 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <FloatingConsult />
     </>
   );
 }
