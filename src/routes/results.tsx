@@ -209,8 +209,21 @@ function ResultsPage() {
   const fmtEUR = (n: number) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
   return (
+    <>
+    <PaymentTestModeBanner />
     <div className="px-6">
       <div className="mx-auto max-w-7xl py-24">
+        {verifying && (
+          <div className="mb-6 rounded-2xl border border-brand/30 bg-brand/5 px-5 py-3 text-sm text-brand">
+            Betaling controleren…
+          </div>
+        )}
+        {paid && (
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-medium text-brand">
+            <Check className="h-3.5 w-3.5" strokeWidth={3} />
+            Volledig rapport ontgrendeld
+          </div>
+        )}
         {/* Header — title + review slider top right */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
