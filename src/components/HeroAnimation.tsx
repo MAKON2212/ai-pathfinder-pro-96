@@ -129,7 +129,7 @@ export function HeroAnimation() {
                   }}
                   className="mt-2 flex items-center justify-between rounded-2xl border border-border/70 bg-background/40 px-4 py-3"
                 >
-                  <span className="text-[13px] font-medium text-foreground">{item.a}</span>
+                  <span className="text-[13px] font-medium text-brand">{item.a}</span>
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -222,7 +222,7 @@ export function HeroAnimation() {
                 <TrendingUp className="h-3 w-3" /> +28%
               </span>
             </div>
-            <p className="mt-2 text-[44px] font-medium leading-none tracking-tighter text-foreground">
+            <p className="mt-2 text-[44px] font-medium leading-none tracking-tighter text-brand">
               € 184.000
             </p>
             <p className="mt-2 text-[11px] text-muted-foreground">Per jaar, na 90 dagen</p>
@@ -255,12 +255,13 @@ export function HeroAnimation() {
                     <p className="truncate text-[12px] font-medium text-foreground/85">
                       {line.label}
                     </p>
+                    {/* keep subtext muted */}
                     <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
                       via {line.tool.name}
                     </p>
                   </div>
                 </div>
-                <p className="font-mono text-[12px] tabular-nums text-foreground">{line.value}</p>
+                <p className="font-mono text-[12px] font-semibold tabular-nums text-brand">{line.value}</p>
               </motion.div>
             ))}
           </div>
