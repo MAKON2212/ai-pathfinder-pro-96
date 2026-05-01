@@ -101,7 +101,7 @@ export function HeroAnimation() {
                   transition={{
                     delay: 0.5 + i * PER_QUESTION,
                     duration: FILL_DURATION,
-                    ease: easeOutExpo,
+                     ease: calmEase,
                   }}
                   className="mt-2 flex items-center justify-between rounded-2xl border border-border/70 bg-background/40 px-4 py-3"
                 >
@@ -112,7 +112,7 @@ export function HeroAnimation() {
                     transition={{
                       delay: 0.65 + i * PER_QUESTION,
                       duration: 0.35,
-                      ease: easeOutExpo,
+                       ease: calmEase,
                     }}
                     className="flex h-5 w-5 items-center justify-center rounded-full bg-brand"
                   >
@@ -131,7 +131,7 @@ export function HeroAnimation() {
                 transition={{
                   delay: 0.4,
                   duration: PER_QUESTION * QUESTIONS.length,
-                  ease: easeOutExpo,
+                   ease: calmEase,
                 }}
                 className="h-full rounded-full bg-brand"
               />
