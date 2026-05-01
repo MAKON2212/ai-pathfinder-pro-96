@@ -34,17 +34,6 @@ function Index() {
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12">
             {/* Left content */}
             <div className="lg:col-span-6">
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="pill">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                  Nieuw — gemiddeld € 120K extra per jaar
-                </span>
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
