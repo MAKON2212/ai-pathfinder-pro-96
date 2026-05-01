@@ -20,7 +20,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
+import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as AdminIdRouteImport } from './routes/admin.$id'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const ToolsRoute = ToolsRouteImport.update({
   id: '/tools',
@@ -77,11 +79,22 @@ const ToolsSlugRoute = ToolsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ToolsRoute,
 } as any)
+const RIdRoute = RIdRouteImport.update({
+  id: '/r/$id',
+  path: '/r/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminIdRoute = AdminIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,8 +107,10 @@ export interface FileRoutesByFullPath {
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
   '/admin/$id': typeof AdminIdRoute
+  '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,8 +122,10 @@ export interface FileRoutesByTo {
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
   '/admin/$id': typeof AdminIdRoute
+  '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,8 +139,10 @@ export interface FileRoutesById {
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
   '/admin/$id': typeof AdminIdRoute
+  '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -138,8 +157,10 @@ export interface FileRouteTypes {
     | '/results-loading'
     | '/tools'
     | '/admin/$id'
+    | '/r/$id'
     | '/tools/$slug'
     | '/admin/'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -151,8 +172,10 @@ export interface FileRouteTypes {
     | '/results-loading'
     | '/tools'
     | '/admin/$id'
+    | '/r/$id'
     | '/tools/$slug'
     | '/admin'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -165,8 +188,10 @@ export interface FileRouteTypes {
     | '/results-loading'
     | '/tools'
     | '/admin/$id'
+    | '/r/$id'
     | '/tools/$slug'
     | '/admin/'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -179,6 +204,8 @@ export interface RootRouteChildren {
   ResultsRoute: typeof ResultsRoute
   ResultsLoadingRoute: typeof ResultsLoadingRoute
   ToolsRoute: typeof ToolsRouteWithChildren
+  RIdRoute: typeof RIdRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -260,12 +287,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSlugRouteImport
       parentRoute: typeof ToolsRoute
     }
+    '/r/$id': {
+      id: '/r/$id'
+      path: '/r/$id'
+      fullPath: '/r/$id'
+      preLoaderRoute: typeof RIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/$id': {
       id: '/admin/$id'
       path: '/$id'
       fullPath: '/admin/$id'
       preLoaderRoute: typeof AdminIdRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -302,6 +343,8 @@ const rootRouteChildren: RootRouteChildren = {
   ResultsRoute: ResultsRoute,
   ResultsLoadingRoute: ResultsLoadingRoute,
   ToolsRoute: ToolsRouteWithChildren,
+  RIdRoute: RIdRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

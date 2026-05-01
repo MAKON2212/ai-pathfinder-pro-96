@@ -27,13 +27,15 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   // Mark report paid + attach email
   if (reportId && /^[0-9a-f-]{36}$/.test(reportId)) {
     try {
-      const updates: Record<string, unknown> = {
-        paid: true,
-        stripe_session_id: session.id,
-        updated_at: new Date().toISOString(),
-      };
-      if (customerEmail) updates.contact_email = customerEmail;
-      await supabaseAdmin.from("reports").update(updates).eq("id", reportId);
+      await supabaseAdmin
+        .from("reports")
+        .update({
+          paid: true,
+          stripe_session_id: session.id,
+          updated_at: new Date().toISOString(),
+          ...(customerEmail ? { contact_email: customerEmail } : {}),
+        })
+        .eq("id", reportId);
     } catch (err) {
       console.error("[webhook] reports update failed", err);
     }
