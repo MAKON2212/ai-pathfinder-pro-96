@@ -51,8 +51,8 @@ function Index() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter text-foreground md:text-7xl"
               >
-                AI ontwikkelt zich sneller dan je kunt bijhouden.<br />
-                <span className="text-brand">Onze AI Check</span> laat zien hoe jij bijblijft.
+                Weet je niet hoe AI jouw bedrijf geld oplevert?<br />
+                <span className="text-brand">Doe de AI-scan.</span>
               </motion.h1>
 
               <motion.p
