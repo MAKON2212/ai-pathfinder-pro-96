@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Clock, Info, Globe, Zap, CalendarDays, ShieldAlert } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Clock, Info, Globe, Zap, CalendarDays, ShieldAlert, Lock, Sparkles } from "lucide-react";
 import {
   Radar,
   RadarChart,
@@ -14,8 +14,19 @@ import {
 import type { GeneratedReport } from "@/lib/report.functions";
 import { generatePDF } from "@/lib/pdf.functions";
 import { ReviewSlider } from "@/components/ReviewSlider";
+import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { verifyCheckoutSession } from "@/lib/payments.functions";
+import { getStripeEnvironment } from "@/lib/stripe";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+const PAID_KEY = "audit_report_paid";
 
 export const Route = createFileRoute("/results")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+    checkout: typeof search.checkout === "string" ? search.checkout : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Jouw AI Roadmap · ScanAI" },
