@@ -823,10 +823,20 @@ export function analyze(a: AuditAnswers): AuditResult {
   const topPain = a.painPoints[0] || "operationele frictie";
   const topGoal = a.goals[0] || "groei";
 
+  const timeWasterQuote = a.biggestTimeWaster?.trim();
   const quickWins: QuickWin[] = [
-    { title: `ChatGPT Team uitrollen voor ${company}`, effort: "1 dag", impact: `± ${fmt(fte * 200)} / jaar tijdwinst`, howTo: "Activeer ChatGPT Team, nodig kernteam uit en maak 3 prompt-templates voor de meest voorkomende taken." },
+    timeWasterQuote
+      ? {
+          title: `Pak jullie #1 tijdvreter aan`,
+          effort: "1-2 dagen",
+          impact: `± ${fmt(fte * 400)} / jaar tijdwinst`,
+          howTo: `Jullie noemden zelf: "${timeWasterQuote}". Bouw hier in week 1 een Make.com- of n8n-flow voor — vaak in 2 dagen werkend, en vanaf dag 3 levert het al tijd op.`,
+        }
+      : { title: `ChatGPT Team uitrollen voor ${company}`, effort: "1 dag", impact: `± ${fmt(fte * 200)} / jaar tijdwinst`, howTo: "Activeer ChatGPT Team, nodig kernteam uit en maak 3 prompt-templates voor de meest voorkomende taken." },
     { title: `1 repetitieve workflow automatiseren in Make.com`, effort: "halve dag", impact: `${fmt(8000)} / jaar`, howTo: `Pak "${topPain}" en bouw 1 scenario dat de hand-off tussen 2 tools wegneemt.` },
-    { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
+    a.decisionPain
+      ? { title: `Beslissings-copilot voor "${a.decisionPain}"`, effort: "1 week", impact: "Snellere & consistentere beslissingen", howTo: `Bouw een GPT met jullie historische data zodat het team in seconden een gemotiveerd voorstel krijgt voor "${a.decisionPain.toLowerCase()}".` }
+      : { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
   ];
 
   const weeklyPlan: WeeklyPlanItem[] = [
