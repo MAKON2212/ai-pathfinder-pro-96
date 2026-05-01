@@ -2,7 +2,6 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { MeshBackground } from "@/components/MeshBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { FloatingConsult } from "@/components/FloatingConsult";
 
 import appCss from "../styles.css?url";
 
@@ -89,7 +88,6 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
-      <FloatingConsult />
     </>
   );
 }

@@ -17,6 +17,7 @@ import { ReviewSlider } from "@/components/ReviewSlider";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { verifyCheckoutSession } from "@/lib/payments.functions";
+import { setReportEmail } from "@/lib/report.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
@@ -128,6 +129,10 @@ function ResultsPage() {
   const [paid, setPaid] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [verifying, setVerifying] = useState(false);
+  const [emailStep, setEmailStep] = useState<"idle" | "asking" | "submitting">("idle");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [magicLink, setMagicLink] = useState<string | null>(null);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("audit_report");
@@ -177,7 +182,7 @@ function ResultsPage() {
 
   const handleUnlock = async () => {
     if (!report || downloading) return;
-    if (!paid) { setCheckoutOpen(true); return; }
+    if (!paid) { setEmailStep("asking"); setCheckoutOpen(true); return; }
     setDownloading(true);
     try {
       const res = await generatePDF({ data: { companyName: companyName || "ScanAI", report } });
@@ -201,7 +206,36 @@ function ResultsPage() {
     }
   };
 
-  const openCheckout = () => setCheckoutOpen(true);
+  const openCheckout = () => { setEmailStep("asking"); setCheckoutOpen(true); };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError(null);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Vul een geldig e-mailadres in.");
+      return;
+    }
+    if (!report?.reportId) {
+      setEmailError("Rapport niet gevonden — laad de pagina opnieuw.");
+      return;
+    }
+    setEmailStep("submitting");
+    try {
+      await setReportEmail({ data: { reportId: report.reportId, email } });
+      setEmailStep("idle"); // proceed to checkout step within same dialog
+    } catch (err) {
+      setEmailError(err instanceof Error ? err.message : "Iets ging mis");
+      setEmailStep("asking");
+    }
+  };
+
+  // Build magic link once we know token
+  useEffect(() => {
+    if (paid && report?.reportId && report?.accessToken && typeof window !== "undefined") {
+      setMagicLink(`${window.location.origin}/r/${report.reportId}?token=${report.accessToken}`);
+    }
+  }, [paid, report?.reportId, report?.accessToken]);
+
   const returnUrl = typeof window !== "undefined"
     ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
     : "/results";
@@ -222,6 +256,28 @@ function ResultsPage() {
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-medium text-brand">
             <Check className="h-3.5 w-3.5" strokeWidth={3} />
             Volledig rapport ontgrendeld
+          </div>
+        )}
+        {paid && magicLink && (
+          <div className="mb-8 rounded-2xl border border-brand/30 bg-card p-5">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Bewaar deze link</p>
+            <p className="mt-2 text-sm text-foreground/85">
+              Met onderstaande link open je dit rapport later opnieuw — bewaar 'm of mail 'm naar jezelf.
+            </p>
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+              <input
+                readOnly
+                value={magicLink}
+                onClick={(e) => (e.target as HTMLInputElement).select()}
+                className="flex-1 truncate rounded-xl border border-border bg-background px-3 py-2 font-mono text-xs"
+              />
+              <button
+                onClick={() => { navigator.clipboard?.writeText(magicLink); }}
+                className="rounded-xl bg-foreground px-4 py-2 text-xs font-medium text-background transition hover:opacity-90"
+              >
+                Kopieer link
+              </button>
+            </div>
           </div>
         )}
         {/* Header — title + review slider top right */}
@@ -712,7 +768,7 @@ function ResultsPage() {
       </div>
     </div>
 
-    <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
+    <Dialog open={checkoutOpen} onOpenChange={(o) => { setCheckoutOpen(o); if (!o) setEmailStep("idle"); }}>
       <DialogContent className="max-w-2xl p-0 sm:max-w-3xl">
         <DialogHeader className="border-b border-border px-6 py-4">
           <DialogTitle>Volledig AI-rapport ontgrendelen</DialogTitle>
@@ -721,9 +777,39 @@ function ResultsPage() {
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[80vh] overflow-y-auto px-2 py-2">
-          {checkoutOpen && (
+          {checkoutOpen && emailStep !== "idle" && (
+            <form onSubmit={handleEmailSubmit} className="space-y-5 px-6 py-8">
+              <div>
+                <label className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  E-mailadres
+                </label>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  We koppelen je rapport aan dit adres zodat je 'm later opnieuw kunt openen.
+                </p>
+                <input
+                  type="email"
+                  required
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-3 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
+                  placeholder="jij@bedrijf.nl"
+                />
+                {emailError && <p className="mt-2 text-xs text-destructive">{emailError}</p>}
+              </div>
+              <button
+                type="submit"
+                disabled={emailStep === "submitting"}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-accent-foreground transition hover:opacity-90 disabled:opacity-60"
+              >
+                Doorgaan naar betaling <ArrowRight className="h-4 w-4" />
+              </button>
+            </form>
+          )}
+          {checkoutOpen && emailStep === "idle" && (
             <StripeEmbeddedCheckout
               priceId="ai_check_report_one_time"
+              customerEmail={email || undefined}
               returnUrl={returnUrl}
               reportId={report.reportId}
             />

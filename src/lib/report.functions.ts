@@ -30,6 +30,7 @@ export type GeneratedReport = {
   weeklyPlan: AuditResult["weeklyPlan"];
   sensitivity: AuditResult["sensitivity"];
   reportId?: string;
+  accessToken?: string;
 };
 
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
@@ -428,6 +429,7 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       const avgScore = Math.round(
         (finalReport.scores.readiness + finalReport.scores.automation + finalReport.scores.impact) / 3,
       );
+      const accessToken = (await import("crypto")).randomBytes(24).toString("hex");
       const { data: inserted, error: insertErr } = await supabaseAdmin
         .from("reports")
         .insert([{
@@ -438,21 +440,75 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
           score: avgScore,
           annual_value_cents: Math.round(finalReport.estimatedAnnualValue * 100),
           currency: "EUR",
-          answers: answers as unknown as Record<string, unknown>,
-          report: finalReport as unknown as Record<string, unknown>,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          answers: answers as any,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          report: finalReport as any,
           source: "audit",
           paid: false,
+          access_token: accessToken,
         }])
-        .select("id")
+        .select("id, access_token")
         .single();
       if (insertErr) {
         console.error("[reports] insert failed", insertErr);
       } else if (inserted?.id) {
         finalReport.reportId = inserted.id;
+        finalReport.accessToken = inserted.access_token as string;
       }
     } catch (e) {
       console.error("[reports] save failed", e);
     }
 
     return finalReport;
+  });
+
+// ---------- Magic-link access ----------
+
+export const getReportByToken = createServerFn({ method: "POST" })
+  .inputValidator((input: { id: string; token: string }) => {
+    if (typeof input?.id !== "string" || !/^[0-9a-f-]{36}$/.test(input.id)) {
+      throw new Error("Ongeldige rapport-ID");
+    }
+    if (typeof input?.token !== "string" || !/^[a-f0-9]{16,128}$/.test(input.token)) {
+      throw new Error("Ongeldige toegangstoken");
+    }
+    return input;
+  })
+  .handler(async ({ data }) => {
+    const { data: row, error } = await supabaseAdmin
+      .from("reports")
+      .select("id, company, contact_email, paid, report, created_at, access_token")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (error) throw new Error(error.message);
+    if (!row) throw new Error("Rapport niet gevonden");
+    if (row.access_token !== data.token) throw new Error("Onjuiste toegangstoken");
+    return {
+      id: row.id,
+      company: row.company,
+      contactEmail: row.contact_email,
+      paid: row.paid,
+      report: row.report as unknown as GeneratedReport,
+      createdAt: row.created_at,
+    };
+  });
+
+export const setReportEmail = createServerFn({ method: "POST" })
+  .inputValidator((input: { reportId: string; email: string }) => {
+    if (typeof input?.reportId !== "string" || !/^[0-9a-f-]{36}$/.test(input.reportId)) {
+      throw new Error("Ongeldige rapport-ID");
+    }
+    if (typeof input?.email !== "string" || input.email.length > 255 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email)) {
+      throw new Error("Ongeldig e-mailadres");
+    }
+    return input;
+  })
+  .handler(async ({ data }) => {
+    const { error } = await supabaseAdmin
+      .from("reports")
+      .update({ contact_email: data.email, updated_at: new Date().toISOString() })
+      .eq("id", data.reportId);
+    if (error) throw new Error(error.message);
+    return { ok: true };
   });
