@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Clock, Info, Globe, Zap, CalendarDays, ShieldAlert } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Clock, Info, Globe, Zap, CalendarDays, ShieldAlert, Lock, Sparkles } from "lucide-react";
 import {
   Radar,
   RadarChart,
@@ -14,8 +14,19 @@ import {
 import type { GeneratedReport } from "@/lib/report.functions";
 import { generatePDF } from "@/lib/pdf.functions";
 import { ReviewSlider } from "@/components/ReviewSlider";
+import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
+import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
+import { verifyCheckoutSession } from "@/lib/payments.functions";
+import { getStripeEnvironment } from "@/lib/stripe";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+const PAID_KEY = "audit_report_paid";
 
 export const Route = createFileRoute("/results")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    session_id: typeof search.session_id === "string" ? search.session_id : undefined,
+    checkout: typeof search.checkout === "string" ? search.checkout : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Jouw AI Roadmap · ScanAI" },
@@ -109,10 +120,14 @@ function CountdownPill({ expiresAt }: { expiresAt: number }) {
 
 function ResultsPage() {
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const [report, setReport] = useState<GeneratedReport | null>(null);
   const [companyName, setCompanyName] = useState<string>("");
   const [downloading, setDownloading] = useState(false);
   const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  const [paid, setPaid] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("audit_report");
@@ -130,7 +145,27 @@ function ResultsPage() {
       sessionStorage.setItem("audit_report_expires_at", String(fresh));
       setExpiresAt(fresh);
     }
+    if (sessionStorage.getItem(PAID_KEY) === "true") setPaid(true);
   }, [navigate]);
+
+  // Verify Stripe return
+  useEffect(() => {
+    if (!search.session_id || paid) return;
+    let cancelled = false;
+    setVerifying(true);
+    verifyCheckoutSession({ data: { sessionId: search.session_id, environment: getStripeEnvironment() } })
+      .then((res) => {
+        if (cancelled) return;
+        if (res.paid) {
+          sessionStorage.setItem(PAID_KEY, "true");
+          setPaid(true);
+          setCheckoutOpen(false);
+        }
+      })
+      .catch((e) => console.error("Verify failed:", e))
+      .finally(() => { if (!cancelled) setVerifying(false); });
+    return () => { cancelled = true; };
+  }, [search.session_id, paid]);
 
   if (!report) {
     return (
@@ -142,6 +177,7 @@ function ResultsPage() {
 
   const handleUnlock = async () => {
     if (!report || downloading) return;
+    if (!paid) { setCheckoutOpen(true); return; }
     setDownloading(true);
     try {
       const res = await generatePDF({ data: { companyName: companyName || "ScanAI", report } });
@@ -165,11 +201,29 @@ function ResultsPage() {
     }
   };
 
+  const openCheckout = () => setCheckoutOpen(true);
+  const returnUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
+    : "/results";
+
   const fmtEUR = (n: number) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
   return (
+    <>
+    <PaymentTestModeBanner />
     <div className="px-6">
       <div className="mx-auto max-w-7xl py-24">
+        {verifying && (
+          <div className="mb-6 rounded-2xl border border-brand/30 bg-brand/5 px-5 py-3 text-sm text-brand">
+            Betaling controleren…
+          </div>
+        )}
+        {paid && (
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-4 py-2 text-xs font-medium text-brand">
+            <Check className="h-3.5 w-3.5" strokeWidth={3} />
+            Volledig rapport ontgrendeld
+          </div>
+        )}
         {/* Header — title + review slider top right */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -319,6 +373,10 @@ function ResultsPage() {
             <Score n="03" label="Business Impact" value={report.scores.impact} delay={0.3} rationale={report.scoreDetails.impact.rationale} drivers={report.scoreDetails.impact.drivers} />
           </div>
         </section>
+
+        {/* PAYWALL: alles hieronder is alleen volledig zichtbaar na betaling */}
+        <div className="relative">
+          <div className={paid ? "" : "pointer-events-none select-none [filter:blur(8px)] opacity-60"} aria-hidden={!paid}>
 
         {/* AI Generated chapters */}
         <section className="mt-24">
@@ -573,6 +631,49 @@ function ResultsPage() {
           </section>
         )}
 
+          </div>
+          {!paid && (
+            <div className="absolute inset-0 flex items-start justify-center pt-32 md:pt-48">
+              <div className="surface mx-6 max-w-xl rounded-3xl border border-brand/40 bg-card/95 p-8 text-center shadow-2xl backdrop-blur md:p-10">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
+                  <Sparkles className="h-6 w-6" />
+                </div>
+                <h3 className="mt-5 text-2xl font-medium tracking-tight md:text-3xl">
+                  Ontgrendel het volledige rapport
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  De complete roadmap, hoofdstukken, aanbevolen tools, quick wins, 90-dagen actieplan en sensitivity-analyse — plus PDF-export.
+                </p>
+                <ul className="mx-auto mt-5 max-w-sm space-y-2 text-left text-sm">
+                  {[
+                    `${report.chapters.length} persoonlijke hoofdstukken`,
+                    `${report.tools.length} aanbevolen AI-tools met instapstappen`,
+                    "90-dagen actieplan, week voor week",
+                    "Worst / base / best case scenario's",
+                    "Volledige PDF-download",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-foreground/85">
+                      <Check className="mt-0.5 h-4 w-4 flex-none text-brand" strokeWidth={3} />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={openCheckout}
+                  className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Lock className="h-4 w-4" />
+                    Ontgrendel voor € 29
+                  </span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+                <p className="mt-3 text-[11px] text-muted-foreground">Eenmalige betaling · directe toegang</p>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Final CTA */}
         <section className="mt-24">
           <div className="surface relative overflow-hidden rounded-[2rem] p-10 md:p-14">
@@ -585,7 +686,9 @@ function ResultsPage() {
                   per jaar te verzilveren?
                 </h2>
                 <p className="mt-4 max-w-xl text-sm text-muted-foreground">
-                  Print of bewaar de complete AI-roadmap voor {companyName || "jouw bedrijf"}.
+                  {paid
+                    ? `Print of bewaar de complete AI-roadmap voor ${companyName || "jouw bedrijf"}.`
+                    : `Ontgrendel het volledige rapport voor ${companyName || "jouw bedrijf"} — eenmalig € 29.`}
                 </p>
               </div>
               <div className="flex flex-col gap-3 md:col-span-4">
@@ -594,7 +697,12 @@ function ResultsPage() {
                   disabled={downloading}
                   className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90 disabled:opacity-60"
                 >
-                  <span className="inline-flex items-center gap-2"><Download className="h-4 w-4" />{downloading ? "PDF wordt gemaakt…" : "Download PDF rapport"}</span>
+                  <span className="inline-flex items-center gap-2">
+                    {paid ? <Download className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
+                    {paid
+                      ? (downloading ? "PDF wordt gemaakt…" : "Download PDF rapport")
+                      : "Ontgrendel volledig rapport — € 29"}
+                  </span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -603,5 +711,25 @@ function ResultsPage() {
         </section>
       </div>
     </div>
+
+    <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
+      <DialogContent className="max-w-2xl p-0 sm:max-w-3xl">
+        <DialogHeader className="border-b border-border px-6 py-4">
+          <DialogTitle>Volledig AI-rapport ontgrendelen</DialogTitle>
+          <DialogDescription>
+            Eenmalig € 29 — direct toegang tot de complete roadmap, tools, blueprints en PDF.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="max-h-[80vh] overflow-y-auto px-2 py-2">
+          {checkoutOpen && (
+            <StripeEmbeddedCheckout
+              priceId="ai_check_report_one_time"
+              returnUrl={returnUrl}
+            />
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
