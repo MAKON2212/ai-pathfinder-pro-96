@@ -29,6 +29,7 @@ export type GeneratedReport = {
   quickWins: AuditResult["quickWins"];
   weeklyPlan: AuditResult["weeklyPlan"];
   sensitivity: AuditResult["sensitivity"];
+  reportId?: string;
 };
 
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
