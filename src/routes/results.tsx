@@ -639,7 +639,9 @@ function ResultsPage() {
                   per jaar te verzilveren?
                 </h2>
                 <p className="mt-4 max-w-xl text-sm text-muted-foreground">
-                  Print of bewaar de complete AI-roadmap voor {companyName || "jouw bedrijf"}.
+                  {paid
+                    ? `Print of bewaar de complete AI-roadmap voor ${companyName || "jouw bedrijf"}.`
+                    : `Ontgrendel het volledige rapport voor ${companyName || "jouw bedrijf"} — eenmalig € 29.`}
                 </p>
               </div>
               <div className="flex flex-col gap-3 md:col-span-4">
@@ -648,7 +650,12 @@ function ResultsPage() {
                   disabled={downloading}
                   className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90 disabled:opacity-60"
                 >
-                  <span className="inline-flex items-center gap-2"><Download className="h-4 w-4" />{downloading ? "PDF wordt gemaakt…" : "Download PDF rapport"}</span>
+                  <span className="inline-flex items-center gap-2">
+                    {paid ? <Download className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
+                    {paid
+                      ? (downloading ? "PDF wordt gemaakt…" : "Download PDF rapport")
+                      : "Ontgrendel volledig rapport — € 29"}
+                  </span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -657,5 +664,25 @@ function ResultsPage() {
         </section>
       </div>
     </div>
+
+    <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
+      <DialogContent className="max-w-2xl p-0 sm:max-w-3xl">
+        <DialogHeader className="border-b border-border px-6 py-4">
+          <DialogTitle>Volledig AI-rapport ontgrendelen</DialogTitle>
+          <DialogDescription>
+            Eenmalig € 29 — direct toegang tot de complete roadmap, tools, blueprints en PDF.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="max-h-[80vh] overflow-y-auto px-2 py-2">
+          {checkoutOpen && (
+            <StripeEmbeddedCheckout
+              priceId="ai_check_report_one_time"
+              returnUrl={returnUrl}
+            />
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }
