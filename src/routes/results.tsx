@@ -120,10 +120,14 @@ function CountdownPill({ expiresAt }: { expiresAt: number }) {
 
 function ResultsPage() {
   const navigate = useNavigate();
+  const search = Route.useSearch();
   const [report, setReport] = useState<GeneratedReport | null>(null);
   const [companyName, setCompanyName] = useState<string>("");
   const [downloading, setDownloading] = useState(false);
   const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  const [paid, setPaid] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("audit_report");
@@ -141,7 +145,27 @@ function ResultsPage() {
       sessionStorage.setItem("audit_report_expires_at", String(fresh));
       setExpiresAt(fresh);
     }
+    if (sessionStorage.getItem(PAID_KEY) === "true") setPaid(true);
   }, [navigate]);
+
+  // Verify Stripe return
+  useEffect(() => {
+    if (!search.session_id || paid) return;
+    let cancelled = false;
+    setVerifying(true);
+    verifyCheckoutSession({ data: { sessionId: search.session_id, environment: getStripeEnvironment() } })
+      .then((res) => {
+        if (cancelled) return;
+        if (res.paid) {
+          sessionStorage.setItem(PAID_KEY, "true");
+          setPaid(true);
+          setCheckoutOpen(false);
+        }
+      })
+      .catch((e) => console.error("Verify failed:", e))
+      .finally(() => { if (!cancelled) setVerifying(false); });
+    return () => { cancelled = true; };
+  }, [search.session_id, paid]);
 
   if (!report) {
     return (
@@ -153,6 +177,7 @@ function ResultsPage() {
 
   const handleUnlock = async () => {
     if (!report || downloading) return;
+    if (!paid) { setCheckoutOpen(true); return; }
     setDownloading(true);
     try {
       const res = await generatePDF({ data: { companyName: companyName || "ScanAI", report } });
@@ -175,6 +200,11 @@ function ResultsPage() {
       setDownloading(false);
     }
   };
+
+  const openCheckout = () => setCheckoutOpen(true);
+  const returnUrl = typeof window !== "undefined"
+    ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
+    : "/results";
 
   const fmtEUR = (n: number) => new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(n);
 
