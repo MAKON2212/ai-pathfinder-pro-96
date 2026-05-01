@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
 import { type StripeEnv, createStripeClient } from './stripe.server';
+import { supabaseAdmin } from '@/integrations/supabase/client.server';
 
 export const createCheckoutSession = createServerFn({ method: 'POST' })
   .inputValidator((data: {
@@ -47,9 +48,29 @@ export const verifyCheckoutSession = createServerFn({ method: 'POST' })
   .handler(async ({ data }) => {
     const stripe = createStripeClient(data.environment);
     const session = await stripe.checkout.sessions.retrieve(data.sessionId);
-    return {
-      paid: session.payment_status === 'paid',
-      reportId: session.metadata?.reportId ?? null,
-      customerEmail: session.customer_details?.email ?? null,
-    };
+    const paid = session.payment_status === 'paid';
+    const reportId = session.metadata?.reportId ?? null;
+    const customerEmail = session.customer_details?.email ?? null;
+
+    if (paid) {
+      // Record sale (idempotent via unique stripe_session_id)
+      try {
+        await supabaseAdmin.from('sales').upsert(
+          {
+            stripe_session_id: session.id,
+            report_id: reportId,
+            customer_email: customerEmail,
+            amount_cents: session.amount_total ?? null,
+            currency: session.currency ?? null,
+            environment: data.environment,
+            status: 'paid',
+          },
+          { onConflict: 'stripe_session_id' },
+        );
+      } catch (err) {
+        console.error('[sales] failed to record sale', err);
+      }
+    }
+
+    return { paid, reportId, customerEmail };
   });
