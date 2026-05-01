@@ -768,7 +768,7 @@ function ResultsPage() {
       </div>
     </div>
 
-    <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
+    <Dialog open={checkoutOpen} onOpenChange={(o) => { setCheckoutOpen(o); if (!o) setEmailStep("idle"); }}>
       <DialogContent className="max-w-2xl p-0 sm:max-w-3xl">
         <DialogHeader className="border-b border-border px-6 py-4">
           <DialogTitle>Volledig AI-rapport ontgrendelen</DialogTitle>
@@ -777,9 +777,39 @@ function ResultsPage() {
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[80vh] overflow-y-auto px-2 py-2">
-          {checkoutOpen && (
+          {checkoutOpen && emailStep !== "idle" && (
+            <form onSubmit={handleEmailSubmit} className="space-y-5 px-6 py-8">
+              <div>
+                <label className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  E-mailadres
+                </label>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  We koppelen je rapport aan dit adres zodat je 'm later opnieuw kunt openen.
+                </p>
+                <input
+                  type="email"
+                  required
+                  autoFocus
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-3 block w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
+                  placeholder="jij@bedrijf.nl"
+                />
+                {emailError && <p className="mt-2 text-xs text-destructive">{emailError}</p>}
+              </div>
+              <button
+                type="submit"
+                disabled={emailStep === "submitting"}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-accent-foreground transition hover:opacity-90 disabled:opacity-60"
+              >
+                Doorgaan naar betaling <ArrowRight className="h-4 w-4" />
+              </button>
+            </form>
+          )}
+          {checkoutOpen && emailStep === "idle" && (
             <StripeEmbeddedCheckout
               priceId="ai_check_report_one_time"
+              customerEmail={email || undefined}
               returnUrl={returnUrl}
               reportId={report.reportId}
             />
