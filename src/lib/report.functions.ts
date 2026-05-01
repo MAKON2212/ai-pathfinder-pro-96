@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { analyze, type AuditAnswers, type AuditResult } from "@/lib/audit";
+import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 export type CompanyContext = {
   description: string;
@@ -28,6 +29,7 @@ export type GeneratedReport = {
   quickWins: AuditResult["quickWins"];
   weeklyPlan: AuditResult["weeklyPlan"];
   sensitivity: AuditResult["sensitivity"];
+  reportId?: string;
 };
 
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
@@ -393,7 +395,7 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       ...baseline.roadmap.slice(0, 3).map((r) => ({ title: r.title, body: r.description })),
     ];
 
-    return {
+    const finalReport: GeneratedReport = {
       executiveSummary: parsed.executiveSummary || baseline.summary,
       reportSnippets: (parsed.reportSnippets && parsed.reportSnippets.length === 3) ? parsed.reportSnippets : fallbackSnippets,
       estimatedAnnualValue: baseline.estimatedAnnualValue,
@@ -420,4 +422,37 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       weeklyPlan: baseline.weeklyPlan,
       sensitivity: baseline.sensitivity,
     };
+
+    // Persist report to database (best-effort — never block the user on this)
+    try {
+      const avgScore = Math.round(
+        (finalReport.scores.readiness + finalReport.scores.automation + finalReport.scores.impact) / 3,
+      );
+      const { data: inserted, error: insertErr } = await supabaseAdmin
+        .from("reports")
+        .insert([{
+          company: answers.companyName,
+          contact_email: answers.email ?? null,
+          industry: answers.industry ?? null,
+          team_size: answers.size ?? null,
+          score: avgScore,
+          annual_value_cents: Math.round(finalReport.estimatedAnnualValue * 100),
+          currency: "EUR",
+          answers: answers as unknown as Record<string, unknown>,
+          report: finalReport as unknown as Record<string, unknown>,
+          source: "audit",
+          paid: false,
+        }])
+        .select("id")
+        .single();
+      if (insertErr) {
+        console.error("[reports] insert failed", insertErr);
+      } else if (inserted?.id) {
+        finalReport.reportId = inserted.id;
+      }
+    } catch (e) {
+      console.error("[reports] save failed", e);
+    }
+
+    return finalReport;
   });
