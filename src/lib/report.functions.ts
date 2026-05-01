@@ -448,7 +448,7 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       if (insertErr) {
         console.error("[reports] insert failed", insertErr);
       } else if (inserted?.id) {
-        (finalReport as GeneratedReport & { reportId?: string }).reportId = inserted.id;
+        finalReport.reportId = inserted.id;
       }
     } catch (e) {
       console.error("[reports] save failed", e);
