@@ -429,7 +429,7 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       );
       const { data: inserted, error: insertErr } = await supabaseAdmin
         .from("reports")
-        .insert({
+        .insert([{
           company: answers.companyName,
           contact_email: answers.email ?? null,
           industry: answers.industry ?? null,
@@ -441,7 +441,7 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
           report: finalReport as unknown as Record<string, unknown>,
           source: "audit",
           paid: false,
-        })
+        }])
         .select("id")
         .single();
       if (insertErr) {
