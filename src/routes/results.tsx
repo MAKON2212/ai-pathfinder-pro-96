@@ -182,7 +182,7 @@ function ResultsPage() {
 
   const handleUnlock = async () => {
     if (!report || downloading) return;
-    if (!paid) { setCheckoutOpen(true); return; }
+    if (!paid) { setEmailStep("asking"); setCheckoutOpen(true); return; }
     setDownloading(true);
     try {
       const res = await generatePDF({ data: { companyName: companyName || "ScanAI", report } });
@@ -206,7 +206,36 @@ function ResultsPage() {
     }
   };
 
-  const openCheckout = () => setCheckoutOpen(true);
+  const openCheckout = () => { setEmailStep("asking"); setCheckoutOpen(true); };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setEmailError(null);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailError("Vul een geldig e-mailadres in.");
+      return;
+    }
+    if (!report?.reportId) {
+      setEmailError("Rapport niet gevonden — laad de pagina opnieuw.");
+      return;
+    }
+    setEmailStep("submitting");
+    try {
+      await setReportEmail({ data: { reportId: report.reportId, email } });
+      setEmailStep("idle"); // proceed to checkout step within same dialog
+    } catch (err) {
+      setEmailError(err instanceof Error ? err.message : "Iets ging mis");
+      setEmailStep("asking");
+    }
+  };
+
+  // Build magic link once we know token
+  useEffect(() => {
+    if (paid && report?.reportId && report?.accessToken && typeof window !== "undefined") {
+      setMagicLink(`${window.location.origin}/r/${report.reportId}?token=${report.accessToken}`);
+    }
+  }, [paid, report?.reportId, report?.accessToken]);
+
   const returnUrl = typeof window !== "undefined"
     ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
     : "/results";
