@@ -30,6 +30,7 @@ export type GeneratedReport = {
   weeklyPlan: AuditResult["weeklyPlan"];
   sensitivity: AuditResult["sensitivity"];
   reportId?: string;
+  accessToken?: string;
 };
 
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
