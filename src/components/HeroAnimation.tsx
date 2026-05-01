@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, FileText, Sparkles, TrendingUp } from "lucide-react";
+import { Check, FileText, Sparkles, TrendingUp, ArrowUpRight } from "lucide-react";
 
 const QUESTIONS = [
   { q: "Naam van je bedrijf?", a: "Acme B.V." },
@@ -8,129 +8,122 @@ const QUESTIONS = [
 ];
 
 const REPORT_LINES = [
-  "Acme B.V. laat ~€ 184K per jaar liggen.",
-  "Top kans: AI-agent voor klantenservice.",
-  "ROI binnen 60 dagen, 25 FTE schaalbaar.",
+  { label: "Klantenservice automatisering", value: "€ 84K" },
+  { label: "Outbound AI agents", value: "€ 62K" },
+  { label: "Content productie", value: "€ 38K" },
 ];
 
-const FILL_DURATION = 0.45;
-const PER_QUESTION = 0.9;
-const FORM_VISIBLE = 0.3 + QUESTIONS.length * PER_QUESTION + 0.5;
-const SWAP_DELAY = FORM_VISIBLE + 0.1;
-const REPORT_HOLD = 3.2;
+const FILL_DURATION = 0.5;
+const PER_QUESTION = 0.95;
+const FORM_VISIBLE = 0.3 + QUESTIONS.length * PER_QUESTION + 0.6;
+const SWAP_DELAY = FORM_VISIBLE + 0.15;
+const REPORT_HOLD = 4.0;
 const TOTAL = SWAP_DELAY + REPORT_HOLD;
 
 const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 const easeInOutQuart = [0.76, 0, 0.24, 1] as const;
 
 /**
- * Premium two-stage hero animation:
- *  Stage 1: questionnaire fills in with smooth micro-interactions.
- *  Stage 2: form drifts out, report glides in with snippets + value highlight.
- *  Subtle continuous float + glow on container for a polished feel.
+ * Refined two-stage hero animation.
+ * Calmer motion, premium glass surfaces, no shimmer over the value card.
  */
 export function HeroAnimation() {
   return (
-    <div className="relative mx-auto h-[500px] w-full max-w-[480px]">
-      {/* Ambient glow */}
-      <motion.div
+    <div className="relative mx-auto h-[540px] w-full max-w-[500px]">
+      {/* Soft ambient glow behind cards */}
+      <div
         aria-hidden
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: [0, 0.7, 0.55, 0.7], scale: [0.9, 1, 1.02, 1] }}
-        transition={{ duration: 4, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
-        className="pointer-events-none absolute inset-0 -z-10 blur-3xl"
+        className="pointer-events-none absolute inset-0 -z-10 blur-3xl opacity-60"
         style={{
           background:
-            "radial-gradient(60% 60% at 50% 40%, color-mix(in oklab, var(--brand) 35%, transparent) 0%, transparent 70%)",
+            "radial-gradient(55% 55% at 50% 45%, color-mix(in oklab, var(--brand) 28%, transparent) 0%, transparent 70%)",
         }}
       />
 
       {/* Subtle floating wrapper */}
       <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
         className="relative h-full w-full"
       >
         {/* QUESTIONNAIRE */}
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.96 }}
+          initial={{ opacity: 0, y: 24, scale: 0.97 }}
           animate={{
             opacity: [0, 1, 1, 0],
-            x: [0, 0, 0, -80],
-            y: [20, 0, 0, -10],
-            scale: [0.96, 1, 1, 0.94],
-            rotate: [0, 0, 0, -2],
+            x: [0, 0, 0, -56],
+            y: [24, 0, 0, -8],
+            scale: [0.97, 1, 1, 0.96],
           }}
           transition={{
             duration: TOTAL,
-            times: [0, 0.06, FORM_VISIBLE / TOTAL, (FORM_VISIBLE + 0.4) / TOTAL],
+            times: [0, 0.06, FORM_VISIBLE / TOTAL, (FORM_VISIBLE + 0.5) / TOTAL],
             ease: easeInOutQuart,
           }}
-          className="surface absolute inset-x-0 top-0 overflow-hidden rounded-[28px] p-6 shadow-2xl shadow-foreground/10 backdrop-blur-xl"
+          className="absolute inset-x-0 top-0 overflow-hidden rounded-[32px] border border-border/60 p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.18)] backdrop-blur-2xl"
           style={{
             background:
-              "linear-gradient(180deg, color-mix(in oklab, var(--card) 92%, transparent) 0%, color-mix(in oklab, var(--card) 78%, transparent) 100%)",
+              "linear-gradient(180deg, color-mix(in oklab, var(--card) 96%, transparent) 0%, color-mix(in oklab, var(--card) 84%, transparent) 100%)",
           }}
         >
-          {/* top sheen */}
+          {/* hairline top sheen */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px"
+            className="pointer-events-none absolute inset-x-6 top-0 h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--brand) 60%, transparent), transparent)",
+                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 25%, transparent), transparent)",
             }}
           />
 
-          <div className="flex items-center justify-between border-b border-border/60 pb-3">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <motion.span
-                animate={{ scale: [1, 1.15, 1], opacity: [0.9, 1, 0.9] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/15"
-              >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/12">
                 <Sparkles className="h-3.5 w-3.5 text-brand" />
-              </motion.span>
-              <span className="text-sm font-semibold tracking-tight">AI Check</span>
+              </span>
+              <div className="leading-tight">
+                <p className="text-sm font-semibold tracking-tight">AI Check</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Live analyse
+                </p>
+              </div>
             </div>
-            <span className="font-mono text-[11px] text-muted-foreground">03 / 15</span>
+            <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
+              03 / 15
+            </span>
           </div>
 
-          <div className="mt-5 space-y-3.5">
+          <div className="mt-6 space-y-4">
             {QUESTIONS.map((item, i) => (
               <div key={i}>
                 <motion.p
                   initial={{ opacity: 0, x: -4 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.25 + i * PER_QUESTION, duration: 0.3 }}
-                  className="text-[12px] font-medium text-muted-foreground"
+                  transition={{ delay: 0.3 + i * PER_QUESTION, duration: 0.3 }}
+                  className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground"
                 >
                   {item.q}
                 </motion.p>
                 <motion.div
-                  initial={{ scale: 0.95, opacity: 0, y: 6 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.45 + i * PER_QUESTION,
+                    delay: 0.5 + i * PER_QUESTION,
                     duration: FILL_DURATION,
                     ease: easeOutExpo,
                   }}
-                  className="mt-1.5 flex items-center justify-between rounded-2xl border border-brand/40 px-4 py-2.5"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, color-mix(in oklab, var(--brand) 12%, transparent), color-mix(in oklab, var(--brand) 4%, transparent))",
-                  }}
+                  className="mt-2 flex items-center justify-between rounded-2xl border border-border/70 bg-background/40 px-4 py-3"
                 >
                   <span className="text-[13px] font-medium text-foreground">{item.a}</span>
                   <motion.span
-                    initial={{ scale: 0, rotate: -90 }}
-                    animate={{ scale: 1, rotate: 0 }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
                     transition={{
-                      delay: 0.6 + i * PER_QUESTION,
+                      delay: 0.65 + i * PER_QUESTION,
                       duration: 0.35,
                       ease: easeOutExpo,
                     }}
-                    className="flex h-5 w-5 items-center justify-center rounded-full bg-brand shadow-md shadow-brand/30"
+                    className="flex h-5 w-5 items-center justify-center rounded-full bg-brand"
                   >
                     <Check className="h-3 w-3 text-white" strokeWidth={3} />
                   </motion.span>
@@ -139,119 +132,120 @@ export function HeroAnimation() {
             ))}
           </div>
 
-          <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-secondary/70">
-            <motion.div
-              initial={{ width: "8%" }}
-              animate={{ width: "100%" }}
-              transition={{
-                delay: 0.4,
-                duration: PER_QUESTION * QUESTIONS.length,
-                ease: easeOutExpo,
-              }}
-              className="h-full rounded-full"
-              style={{
-                background:
-                  "linear-gradient(90deg, color-mix(in oklab, var(--brand) 70%, transparent), var(--brand))",
-              }}
-            />
+          <div className="mt-7 flex items-center gap-3">
+            <div className="h-1 flex-1 overflow-hidden rounded-full bg-secondary">
+              <motion.div
+                initial={{ width: "8%" }}
+                animate={{ width: "100%" }}
+                transition={{
+                  delay: 0.4,
+                  duration: PER_QUESTION * QUESTIONS.length,
+                  ease: easeOutExpo,
+                }}
+                className="h-full rounded-full bg-brand"
+              />
+            </div>
+            <span className="font-mono text-[10px] tabular-nums text-muted-foreground">20%</span>
           </div>
         </motion.div>
 
         {/* REPORT */}
         <motion.div
-          initial={{ opacity: 0, x: 80, scale: 0.94, rotate: 2 }}
-          animate={{ opacity: 1, x: 0, scale: 1, rotate: 0 }}
+          initial={{ opacity: 0, x: 56, scale: 0.96 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: SWAP_DELAY, duration: 0.85, ease: easeOutExpo }}
-          className="surface absolute inset-x-0 top-0 overflow-hidden rounded-[28px] p-6 shadow-2xl shadow-foreground/15 backdrop-blur-xl"
+          className="absolute inset-x-0 top-0 overflow-hidden rounded-[32px] border border-border/60 p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.22)] backdrop-blur-2xl"
           style={{
             background:
-              "linear-gradient(180deg, color-mix(in oklab, var(--card) 95%, transparent) 0%, color-mix(in oklab, var(--card) 82%, transparent) 100%)",
+              "linear-gradient(180deg, color-mix(in oklab, var(--card) 98%, transparent) 0%, color-mix(in oklab, var(--card) 88%, transparent) 100%)",
           }}
         >
-          {/* top sheen */}
+          {/* hairline top sheen */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-px"
+            className="pointer-events-none absolute inset-x-6 top-0 h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--brand) 80%, transparent), transparent)",
+                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 30%, transparent), transparent)",
             }}
           />
 
-          <div className="flex items-center justify-between border-b border-border/60 pb-3">
-            <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4 text-brand" />
-              <span className="text-sm font-semibold tracking-tight">
-                Acme B.V. · AI Roadmap.pdf
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground/5">
+                <FileText className="h-3.5 w-3.5 text-foreground" />
               </span>
+              <div className="leading-tight">
+                <p className="text-sm font-semibold tracking-tight">AI Roadmap</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                  Acme B.V. · 12 pagina's
+                </p>
+              </div>
             </div>
             <motion.span
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: SWAP_DELAY + 0.3, duration: 0.4, ease: easeOutExpo }}
-              className="rounded-full bg-brand/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand"
+              className="rounded-full bg-brand/12 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand"
             >
               Klaar
             </motion.span>
           </div>
 
-          <div className="mt-5 space-y-2.5">
+          {/* Estimated value — clean, no shimmer */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: SWAP_DELAY + 0.45, duration: 0.55, ease: easeOutExpo }}
+            className="mt-6 rounded-2xl border border-border/70 bg-background/40 p-5"
+          >
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Geschatte jaarwaarde
+              </p>
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-brand">
+                <TrendingUp className="h-3 w-3" /> +28%
+              </span>
+            </div>
+            <p className="mt-2 text-[44px] font-medium leading-none tracking-tighter text-foreground">
+              € 184.000
+            </p>
+            <p className="mt-2 text-[11px] text-muted-foreground">Per jaar, na 90 dagen</p>
+          </motion.div>
+
+          {/* Breakdown lines */}
+          <div className="mt-4 space-y-2">
             {REPORT_LINES.map((line, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: 14, filter: "blur(4px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: SWAP_DELAY + 0.45 + i * 0.22,
-                  duration: 0.5,
+                  delay: SWAP_DELAY + 0.7 + i * 0.15,
+                  duration: 0.45,
                   ease: easeOutExpo,
                 }}
-                className="flex items-start gap-2 rounded-xl border border-border/50 bg-secondary/40 px-3 py-2"
+                className="flex items-center justify-between rounded-xl border border-border/50 bg-secondary/30 px-3.5 py-2.5"
               >
-                <span className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-brand shadow-[0_0_8px_var(--brand)]" />
-                <p className="text-[12px] leading-snug text-foreground/85">{line}</p>
+                <div className="flex items-center gap-2.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                  <p className="text-[12px] font-medium text-foreground/85">{line.label}</p>
+                </div>
+                <p className="font-mono text-[12px] tabular-nums text-foreground">{line.value}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* Estimated value */}
           <motion.div
-            initial={{ opacity: 0, y: 14, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: SWAP_DELAY + 1.4, duration: 0.55, ease: easeOutExpo }}
-            className="relative mt-5 overflow-hidden rounded-2xl border border-brand/30 p-4"
-            style={{
-              background:
-                "linear-gradient(135deg, color-mix(in oklab, var(--brand) 14%, transparent), color-mix(in oklab, var(--brand) 4%, transparent))",
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: SWAP_DELAY + 1.2, duration: 0.4 }}
+            className="mt-5 flex items-center justify-between border-t border-border/60 pt-4"
           >
-            {/* shimmer */}
-            <motion.div
-              aria-hidden
-              initial={{ x: "-120%" }}
-              animate={{ x: "220%" }}
-              transition={{
-                delay: SWAP_DELAY + 1.8,
-                duration: 1.6,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatDelay: 2.2,
-              }}
-              className="pointer-events-none absolute inset-y-0 w-1/3"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, color-mix(in oklab, var(--brand) 30%, transparent), transparent)",
-              }}
-            />
-            <div className="flex items-center gap-1.5 text-brand">
-              <TrendingUp className="h-3 w-3" />
-              <p className="text-[10px] font-semibold uppercase tracking-wider">
-                Geschatte jaarlijkse waarde
-              </p>
-            </div>
-            <p className="mt-1.5 text-3xl font-semibold tracking-tighter text-foreground">
-              € 184.000
-            </p>
+            <p className="text-[11px] text-muted-foreground">Volledig rapport · PDF</p>
+            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-foreground">
+              Bekijken <ArrowUpRight className="h-3 w-3" />
+            </span>
           </motion.div>
         </motion.div>
       </motion.div>
