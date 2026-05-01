@@ -737,44 +737,45 @@ export function analyze(a: AuditAnswers): AuditResult {
   };
   const churn = a.churnRate ? (CHURN_MID[a.churnRate] ?? 0.10) : 0.10;
 
-  // ----- LABOR SAVINGS (goal-weighted) -----
-  // Base: 6% per pain-point, capped at 30%.
+  // ----- LABOR SAVINGS share (goal-weighted) -----
   let automatableShare = Math.min(0.06 * painCount, 0.30);
-  // If "operationele kosten verlagen" or "productiviteit" is a goal, push harder.
   const wantsCostCut = goals.has("Operationele kosten verlagen");
   const wantsProductivity = goals.has("Productiviteit medewerkers");
   if (wantsCostCut) automatableShare += 0.08;
   if (wantsProductivity) automatableShare += 0.05;
-  // If user is NOT chasing cost cuts, dampen labor savings.
   if (!wantsCostCut && !wantsProductivity) automatableShare *= 0.55;
-  automatableShare = Math.min(automatableShare, 0.40);
-  const laborSavings = Math.round(fte * FTE_COST * automatableShare);
+  automatableShare = Math.min(Math.max(automatableShare, 0.03), 0.40);
 
-  // ----- REVENUE UPLIFT (goal-weighted) -----
-  // Base: 1% per goal, capped at 4%.
+  // ----- REVENUE UPLIFT pct (goal-weighted) -----
   let revenueUpliftPct = Math.min(0.01 * goalCount, 0.04);
   const wantsRevenue = goals.has("Omzet verhogen");
   const wantsLeads = pains.has("Lead generatie");
-  if (wantsRevenue) revenueUpliftPct += 0.05;       // big push when goal is omzet
+  if (wantsRevenue) revenueUpliftPct += 0.05;
   if (wantsLeads) revenueUpliftPct += 0.025;
   if (!wantsRevenue && !wantsLeads) revenueUpliftPct *= 0.4;
-  revenueUpliftPct = Math.min(revenueUpliftPct, 0.10);
-  const revenueUplift = Math.round(revenue * revenueUpliftPct);
+  revenueUpliftPct = Math.min(Math.max(revenueUpliftPct, 0.005), 0.10);
 
-  // ----- RETENTION GAIN (CX-weighted, gevoed door churn-input) -----
-  // We schatten dat AI 15-30% van churn weghaalt afhankelijk van CX-focus.
+  // ----- RETENTION recovery pct -----
   let churnRecoveryPct = 0.15;
   if (goals.has("Klantbeleving verbeteren")) churnRecoveryPct += 0.10;
   if (pains.has("Trage klantenservice")) churnRecoveryPct += 0.08;
   if (!goals.has("Klantbeleving verbeteren") && !pains.has("Trage klantenservice")) churnRecoveryPct = 0.10;
-  const retentionPct = churn * churnRecoveryPct; // werkelijke retentie-uplift
-  const retentionGain = Math.round(customers * customerValue * retentionPct);
 
-  // ----- TOOLING EFFICIENCY -----
-  const efficiencyGain = stackCount * 2_500;
-
-  const estimatedAnnualValue =
-    Math.round((laborSavings + revenueUplift + retentionGain + efficiencyGain) / 1_000) * 1_000;
+  // ----- Compute via shared pure function so client-side overrides use the same math -----
+  const valueModel = recomputeValueModel({
+    fte,
+    fteCost: FTE_COST,
+    automatableShare,
+    revenue,
+    revenueUpliftPct,
+    customers,
+    customerValue,
+    churn,
+    churnRecoveryPct,
+    stackCount,
+  });
+  const { laborSavings, revenueUplift, retentionGain, efficiencyGain } = valueModel.valueBreakdown;
+  const estimatedAnnualValue = valueModel.estimatedAnnualValue;
 
   // ----- SCORES with rationale -----
   // Quick-check overrides: if quiz answers present, base scores on those for higher fidelity.
