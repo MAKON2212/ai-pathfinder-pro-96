@@ -55,17 +55,6 @@ function Index() {
                 <span className="text-brand">Doe de AI-scan.</span>
               </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
-              >
-                Er bestaan AI verbeteringen waar 96% van de ondernemers nog niets van weet —
-                en die direct geld opleveren. ScanAI rekent voor jouw bedrijf uit hoeveel,
-                en hoe je het binnen 90 dagen verzilvert.
-              </motion.p>
-
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
