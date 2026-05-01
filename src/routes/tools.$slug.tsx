@@ -111,7 +111,7 @@ function ToolDetailPage() {
           <section className="mt-16">
             <h2 className="text-2xl font-medium tracking-tight">Use-cases voor jouw bedrijf</h2>
             <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
-              {detail.useCases.map((u) => (
+              {detail.useCases.map((u: string) => (
                 <li key={u} className="surface flex items-start gap-3 rounded-2xl p-4">
                   <span className="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-brand/10">
                     <Check className="h-3 w-3 text-brand" strokeWidth={3} />
@@ -128,7 +128,7 @@ function ToolDetailPage() {
           <section className="mt-20">
             <h2 className="text-2xl font-medium tracking-tight">Voor / na</h2>
             <div className="mt-6 space-y-4">
-              {detail.beforeAfter.map((ba, i) => (
+              {detail.beforeAfter.map((ba: { before: string; after: string }, i: number) => (
                 <div key={i} className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div className="surface-2 rounded-2xl p-5">
                     <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Voor</p>
@@ -152,7 +152,7 @@ function ToolDetailPage() {
             <h2 className="text-2xl font-medium tracking-tight">Instapstappen</h2>
             <p className="mt-2 text-sm text-muted-foreground">In deze volgorde — schat 1-3 weken voor de hele lijst.</p>
             <ol className="mt-8 space-y-4">
-              {detail.steps.map((s, i) => (
+              {detail.steps.map((s: { title: string; body?: string }, i: number) => (
                 <li key={s.title} className="surface flex gap-4 rounded-2xl p-5">
                   <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand text-sm font-semibold text-accent-foreground">
                     {i + 1}
