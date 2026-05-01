@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       reports: {
         Row: {
+          access_token: string
           annual_value_cents: number | null
           answers: Json | null
           company: string | null
@@ -34,6 +35,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          access_token: string
           annual_value_cents?: number | null
           answers?: Json | null
           company?: string | null
@@ -52,6 +54,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          access_token?: string
           annual_value_cents?: number | null
           answers?: Json | null
           company?: string | null
