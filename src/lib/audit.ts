@@ -38,7 +38,43 @@ export type AuditAnswers = {
   ecommercePlatform?: string;      // Shopify, WooCommerce, Magento ...
   serviceModel?: string;           // project-based, retainer, SaaS
   manufacturingType?: string;      // make-to-stock, make-to-order, custom
+
+  // ----- Quick-check 5 vragen (uit /check flow) -----
+  /** Q1 — welke systemen voor klantdata. */
+  dataSystems?: string[];
+  /** Q2 — process-documentatie volwassenheid 0-100. */
+  processMaturity?: number;
+  /** Q3 — open input grootste tijdvreter, max 200 chars. */
+  biggestTimeWaster?: string;
+  /** Q4 — terugkerende beslissing-pijn. */
+  decisionPain?: string;
+  /** Q5 — maximaal budget per maand voor AI tool. */
+  maxToolBudget?: string;
 };
+
+export const DATA_SYSTEMS = [
+  "CRM (HubSpot, Salesforce, Pipedrive…)",
+  "Excel / Google Sheets",
+  "Eigen database / tool",
+  "Email inbox is onze CRM",
+  "Geen idee / geen systeem",
+];
+
+export const DECISION_PAINS = [
+  "Welke leads bellen we eerst",
+  "Welke prijs vragen we deze klant",
+  "Welke voorraad bestellen we",
+  "Welke content maken we",
+  "Welke medewerker zetten we waarop",
+];
+
+export const MAX_TOOL_BUDGETS = [
+  "< € 100",
+  "€ 100 – € 500",
+  "€ 500 – € 2.000",
+  "€ 2.000+",
+  "Geen idee, hangt van ROI af",
+];
 
 export const INDUSTRIES = [
   "Retail & E-commerce",
