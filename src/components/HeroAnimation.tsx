@@ -7,10 +7,34 @@ const QUESTIONS = [
   { q: "Grootste pijn?", a: "Klantenservice" },
 ];
 
+const favicon = (domain: string) =>
+  `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+
 const REPORT_LINES = [
-  { label: "Klantenservice automatisering", value: "€ 84K" },
-  { label: "Outbound AI agents", value: "€ 62K" },
-  { label: "Content productie", value: "€ 38K" },
+  {
+    label: "Klantenservice automatisering",
+    value: "€ 84K",
+    tool: { name: "Intercom Fin", logo: favicon("intercom.com") },
+  },
+  {
+    label: "Outbound AI agents",
+    value: "€ 62K",
+    tool: { name: "Clay", logo: favicon("clay.com") },
+  },
+  {
+    label: "Content productie",
+    value: "€ 38K",
+    tool: { name: "Jasper", logo: favicon("jasper.ai") },
+  },
+];
+
+const TOOL_STACK = [
+  { name: "ChatGPT", logo: favicon("openai.com") },
+  { name: "Claude", logo: favicon("anthropic.com") },
+  { name: "Gemini", logo: favicon("gemini.google.com") },
+  { name: "n8n", logo: favicon("n8n.io") },
+  { name: "Zapier", logo: favicon("zapier.com") },
+  { name: "Notion AI", logo: favicon("notion.so") },
 ];
 
 const FILL_DURATION = 0.5;
