@@ -485,6 +485,31 @@ export type SensitivityScenario = {
   rationale: string;
 };
 
+/** A single editable numeric input that drives the value calculation. */
+export type Assumption = {
+  id: AssumptionId;
+  label: string;          // human label, e.g. "FTE in bedrijf"
+  value: number;          // current numeric value
+  unit: "fte" | "eur" | "pct" | "count";
+  confidence: "high" | "low";  // 'high' = derived from public data / explicit input, 'low' = estimated band
+  source: string;         // e.g. "Geschat uit team-grootte band 11–50"
+  min: number;
+  max: number;
+  step?: number;
+};
+
+export type AssumptionId =
+  | "fte"
+  | "fteCost"
+  | "automatableShare"
+  | "revenue"
+  | "revenueUpliftPct"
+  | "customers"
+  | "customerValue"
+  | "churn"
+  | "churnRecoveryPct"
+  | "stackCount";
+
 export type AuditResult = {
   readinessScore: number;
   automationScore: number;
@@ -503,6 +528,8 @@ export type AuditResult = {
   };
   /** Transparent line-items behind the headline number. */
   valueLineItems: ValueLineItem[];
+  /** Editable numeric inputs that drive the value calculation client-side. */
+  assumptions: Assumption[];
   summary: string;
   roadmap: { phase: string; title: string; description: string }[];
   tools: ToolRec[];
@@ -514,6 +541,84 @@ export type AuditResult = {
   /** Worst / base / best case ROI scenario's. */
   sensitivity: SensitivityScenario[];
 };
+
+/**
+ * Pure recompute: given the 10 editable assumptions, return the headline value,
+ * breakdown, line-items and ±25% confidence band. Used by both the server
+ * (initial render) and the client (when the user edits a variable).
+ */
+export type ValueModel = {
+  estimatedAnnualValue: number;
+  valueBreakdown: {
+    laborSavings: number;
+    revenueUplift: number;
+    retentionGain: number;
+    efficiencyGain: number;
+  };
+  valueLineItems: ValueLineItem[];
+  /** ±25% confidence band around the headline number. */
+  band: { low: number; high: number };
+};
+
+const _fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
+
+export function recomputeValueModel(values: Record<AssumptionId, number>): ValueModel {
+  const fte = values.fte;
+  const fteCost = values.fteCost;
+  const automatableShare = values.automatableShare;
+  const revenue = values.revenue;
+  const revenueUpliftPct = values.revenueUpliftPct;
+  const customers = values.customers;
+  const customerValue = values.customerValue;
+  const churn = values.churn;
+  const churnRecoveryPct = values.churnRecoveryPct;
+  const stackCount = values.stackCount;
+
+  const laborSavings = Math.round(fte * fteCost * automatableShare);
+  const revenueUplift = Math.round(revenue * revenueUpliftPct);
+  const retentionPct = churn * churnRecoveryPct;
+  const retentionGain = Math.round(customers * customerValue * retentionPct);
+  const efficiencyGain = Math.round(stackCount * 2_500);
+
+  const total = Math.round((laborSavings + revenueUplift + retentionGain + efficiencyGain) / 1_000) * 1_000;
+
+  const valueLineItems: ValueLineItem[] = [
+    {
+      label: "Loonbesparing",
+      amount: laborSavings,
+      formula: `${Math.round(fte)} FTE × ${_fmt(fteCost)} × ${(automatableShare * 100).toFixed(0)}% automatiseerbaar`,
+      rationale: `Loaded jaarkost per FTE × deel dat AI/automatisering kan wegnemen.`,
+    },
+    {
+      label: "Omzet-uplift",
+      amount: revenueUplift,
+      formula: `${_fmt(revenue)} jaaromzet × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
+      rationale: `Extra omzet via betere conversie, AI-outbound en upsell.`,
+    },
+    {
+      label: "Retentie-winst",
+      amount: retentionGain,
+      formula: `${Math.round(customers).toLocaleString("nl-NL")} klanten × ${_fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% van ${(churn * 100).toFixed(1)}% churn)`,
+      rationale: `Deel van de jaarlijkse churn dat herstelbaar is via 24/7 AI support en proactieve outreach.`,
+    },
+    {
+      label: "Tooling-efficiëntie",
+      amount: efficiencyGain,
+      formula: `${Math.round(stackCount)} bestaande tools × € 2.500 koppel-winst`,
+      rationale: `Bestaande stack koppelen via n8n / Make levert kleine maar zekere winst per tool.`,
+    },
+  ];
+
+  return {
+    estimatedAnnualValue: total,
+    valueBreakdown: { laborSavings, revenueUplift, retentionGain, efficiencyGain },
+    valueLineItems,
+    band: {
+      low: Math.round((total * 0.75) / 1_000) * 1_000,
+      high: Math.round((total * 1.25) / 1_000) * 1_000,
+    },
+  };
+}
 
 const SIZE_FTE: Record<string, number> = {
   "1–10": 5,
