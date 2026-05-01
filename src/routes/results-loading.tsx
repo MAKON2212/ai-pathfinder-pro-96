@@ -81,7 +81,7 @@ function LoadingPage() {
       .then(([report]) => {
         sessionStorage.setItem("audit_report", JSON.stringify(report));
         sessionStorage.setItem("audit_report_expires_at", String(Date.now() + 10 * 60 * 1000));
-        navigate({ to: "/results", search: () => ({}) });
+        navigate({ to: "/results", search: { session_id: undefined, checkout: undefined } });
       })
       .catch((e) => {
         console.error(e);
