@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      sales: {
+        Row: {
+          amount_cents: number | null
+          created_at: string
+          currency: string | null
+          customer_email: string | null
+          environment: string
+          id: string
+          report_id: string | null
+          status: string
+          stripe_session_id: string
+        }
+        Insert: {
+          amount_cents?: number | null
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          environment: string
+          id?: string
+          report_id?: string | null
+          status?: string
+          stripe_session_id: string
+        }
+        Update: {
+          amount_cents?: number | null
+          created_at?: string
+          currency?: string | null
+          customer_email?: string | null
+          environment?: string
+          id?: string
+          report_id?: string | null
+          status?: string
+          stripe_session_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
