@@ -152,7 +152,7 @@ function ToolDetailPage() {
             <h2 className="text-2xl font-medium tracking-tight">Instapstappen</h2>
             <p className="mt-2 text-sm text-muted-foreground">In deze volgorde — schat 1-3 weken voor de hele lijst.</p>
             <ol className="mt-8 space-y-4">
-              {detail.steps.map((s: { title: string; body?: string }, i: number) => (
+              {detail.steps.map((s: { title: string; detail?: string }, i: number) => (
                 <li key={s.title} className="surface flex gap-4 rounded-2xl p-5">
                   <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand text-sm font-semibold text-accent-foreground">
                     {i + 1}
