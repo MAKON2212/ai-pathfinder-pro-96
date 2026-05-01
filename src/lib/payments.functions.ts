@@ -56,7 +56,7 @@ export const verifyCheckoutSession = createServerFn({ method: 'POST' })
       // Record sale (idempotent via unique stripe_session_id)
       try {
         await supabaseAdmin.from('sales').upsert(
-          {
+          [{
             stripe_session_id: session.id,
             report_id: reportId,
             customer_email: customerEmail,
@@ -64,11 +64,23 @@ export const verifyCheckoutSession = createServerFn({ method: 'POST' })
             currency: session.currency ?? null,
             environment: data.environment,
             status: 'paid',
-          },
+          }],
           { onConflict: 'stripe_session_id' },
         );
       } catch (err) {
         console.error('[sales] failed to record sale', err);
+      }
+
+      // Mark linked report as paid
+      if (reportId && /^[0-9a-f-]{36}$/.test(reportId)) {
+        try {
+          await supabaseAdmin
+            .from('reports')
+            .update({ paid: true, stripe_session_id: session.id, updated_at: new Date().toISOString() })
+            .eq('id', reportId);
+        } catch (err) {
+          console.error('[reports] failed to mark paid', err);
+        }
       }
     }
 
