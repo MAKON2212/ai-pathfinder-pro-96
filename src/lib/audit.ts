@@ -995,6 +995,7 @@ export function analyze(a: AuditAnswers): AuditResult {
     estimatedAnnualValue,
     valueBreakdown: { laborSavings, revenueUplift, retentionGain, efficiencyGain },
     valueLineItems,
+    assumptions,
     summary,
     roadmap,
     tools: matchTools(a),
