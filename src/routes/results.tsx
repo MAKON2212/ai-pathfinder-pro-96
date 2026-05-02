@@ -236,13 +236,6 @@ function ResultsPage() {
     }
   };
 
-  // Build magic link once we know token
-  useEffect(() => {
-    if (paid && report?.reportId && report?.accessToken && typeof window !== "undefined") {
-      setMagicLink(`${window.location.origin}/r/${report.reportId}?token=${report.accessToken}`);
-    }
-  }, [paid, report?.reportId, report?.accessToken]);
-
   const returnUrl = typeof window !== "undefined"
     ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
     : "/results";
