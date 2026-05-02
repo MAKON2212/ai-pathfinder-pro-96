@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as ResultsLoadingRouteImport } from './routes/results-loading'
 import { Route as ResultsRouteImport } from './routes/results'
+import { Route as DevSeedRouteImport } from './routes/dev-seed'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckRouteImport } from './routes/check'
 import { Route as AuditRouteImport } from './routes/audit'
@@ -37,6 +38,11 @@ const ResultsLoadingRoute = ResultsLoadingRouteImport.update({
 const ResultsRoute = ResultsRouteImport.update({
   id: '/results',
   path: '/results',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevSeedRoute = DevSeedRouteImport.update({
+  id: '/dev-seed',
+  path: '/dev-seed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/audit': typeof AuditRoute
   '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
+  '/dev-seed': typeof DevSeedRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/audit': typeof AuditRoute
   '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
+  '/dev-seed': typeof DevSeedRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/audit': typeof AuditRoute
   '/check': typeof CheckRoute
   '/contact': typeof ContactRoute
+  '/dev-seed': typeof DevSeedRoute
   '/results': typeof ResultsRoute
   '/results-loading': typeof ResultsLoadingRoute
   '/tools': typeof ToolsRouteWithChildren
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/audit'
     | '/check'
     | '/contact'
+    | '/dev-seed'
     | '/results'
     | '/results-loading'
     | '/tools'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/audit'
     | '/check'
     | '/contact'
+    | '/dev-seed'
     | '/results'
     | '/results-loading'
     | '/tools'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/audit'
     | '/check'
     | '/contact'
+    | '/dev-seed'
     | '/results'
     | '/results-loading'
     | '/tools'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   AuditRoute: typeof AuditRoute
   CheckRoute: typeof CheckRoute
   ContactRoute: typeof ContactRoute
+  DevSeedRoute: typeof DevSeedRoute
   ResultsRoute: typeof ResultsRoute
   ResultsLoadingRoute: typeof ResultsLoadingRoute
   ToolsRoute: typeof ToolsRouteWithChildren
@@ -229,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/results'
       fullPath: '/results'
       preLoaderRoute: typeof ResultsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev-seed': {
+      id: '/dev-seed'
+      path: '/dev-seed'
+      fullPath: '/dev-seed'
+      preLoaderRoute: typeof DevSeedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -340,6 +360,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuditRoute: AuditRoute,
   CheckRoute: CheckRoute,
   ContactRoute: ContactRoute,
+  DevSeedRoute: DevSeedRoute,
   ResultsRoute: ResultsRoute,
   ResultsLoadingRoute: ResultsLoadingRoute,
   ToolsRoute: ToolsRouteWithChildren,
