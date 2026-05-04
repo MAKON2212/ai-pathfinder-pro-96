@@ -81,35 +81,6 @@ export function HeroAnimation() {
             </span>
           </div>
 
-          {/* Live value range — grows as form is filled */}
-          <motion.div
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.4, ease: easeExpo }}
-            className="mt-5 rounded-2xl border border-brand/20 bg-brand/5 px-4 py-3"
-          >
-            <div className="flex items-center justify-between">
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
-                Geschatte waarde · live
-              </p>
-              <motion.span
-                key="pulse"
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brand"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                berekenen
-              </motion.span>
-            </div>
-            <p className="mt-1.5 font-mono text-[18px] font-semibold tabular-nums leading-none text-brand">
-              <ValueRange delays={QUESTIONS.map((_, i) => 0.5 + i * PER_QUESTION)} />
-            </p>
-            <p className="mt-1.5 text-[10px] text-muted-foreground">
-              Potentiële jaarwaarde voor jouw bedrijf
-            </p>
-          </motion.div>
-
           <div className="mt-5 space-y-4">
             {QUESTIONS.map((item, i) => (
               <div key={i}>
@@ -361,56 +332,4 @@ function CountUp({ to, delayMs }: { to: number; delayMs: number }) {
   return <>€ {n.toLocaleString("nl-NL")}</>;
 }
 
-/**
- * Live waarde-range die meegroeit per ingevulde vraag.
- * Start op € 0 – € 0, eindigt op de full range.
- */
-const RANGE_STEPS: Array<[number, number]> = [
-  [0, 0],
-  [12_000, 45_000],
-  [38_000, 110_000],
-  [84_000, 184_000],
-];
-
-function ValueRange({ delays }: { delays: number[] }) {
-  const [step, setStep] = useState(0);
-
-  useEffect(() => {
-    const timers = delays.map((d, i) =>
-      window.setTimeout(() => setStep(i + 1), d * 1000),
-    );
-    return () => timers.forEach((t) => window.clearTimeout(t));
-  }, [delays]);
-
-  const [from, to] = RANGE_STEPS[Math.min(step, RANGE_STEPS.length - 1)];
-  return (
-    <span className="inline-flex items-baseline gap-1.5">
-      <Counter value={from} />
-      <span className="text-muted-foreground">–</span>
-      <Counter value={to} />
-    </span>
-  );
-}
-
-function Counter({ value }: { value: number }) {
-  const [display, setDisplay] = useState(value);
-  useEffect(() => {
-    const start = display;
-    const delta = value - start;
-    if (delta === 0) return;
-    const dur = 700;
-    const t0 = performance.now();
-    let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min(1, (t - t0) / dur);
-      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-      setDisplay(Math.round(start + delta * eased));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
-  return <span>€ {display.toLocaleString("nl-NL")}</span>;
-}
 

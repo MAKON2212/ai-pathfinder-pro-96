@@ -31,6 +31,7 @@ import {
   type AuditAnswers,
 } from "@/lib/audit";
 import { cn } from "@/lib/utils";
+import { LiveValueRange } from "@/components/LiveValueRange";
 
 export const Route = createFileRoute("/audit")({
   head: () => ({
@@ -331,7 +332,7 @@ function AuditPage() {
           </span>
         </div>
 
-        <div className="mb-12 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div className="mb-8 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
           <motion.div
             initial={false}
             animate={{ width: `${progress}%` }}
@@ -339,6 +340,8 @@ function AuditPage() {
             className="h-full rounded-full bg-brand"
           />
         </div>
+
+        <LiveValueRange answers={answers} />
 
         <AnimatePresence mode="wait">
           <motion.div
