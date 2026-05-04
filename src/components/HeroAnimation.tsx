@@ -62,9 +62,16 @@ export function HeroAnimation() {
           }}
           className="absolute inset-x-0 top-0 overflow-hidden rounded-[28px] border border-border bg-card p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.12)]"
         >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-6 top-0 h-px"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 25%, transparent), transparent)",
+            }}
+          />
 
-
-          <div className="flex items-center justify-between">
+          <div className="flex items-start justify-between">
             <div className="flex items-center gap-2.5">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/12">
                 <Sparkles className="h-3.5 w-3.5 text-brand" />
@@ -72,71 +79,78 @@ export function HeroAnimation() {
               <div className="leading-tight">
                 <p className="text-sm font-semibold tracking-tight">AI Check</p>
                 <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Live analyse
+                  Live analyse · 15 vragen
                 </p>
               </div>
             </div>
-            <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
-              03 / 15
+            <span className="rounded-full bg-brand/12 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-brand">
+              Live
             </span>
           </div>
 
-          <div className="mt-5 space-y-4">
-            {QUESTIONS.map((item, i) => (
-              <div key={i}>
-                <motion.p
-                  initial={{ opacity: 0, x: -4 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 + i * PER_QUESTION, duration: 0.3 }}
-                  className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground"
-                >
-                  › {item.q}
-                </motion.p>
+          {/* Progress accent box — mirrors output's value box */}
+          <div className="mt-6 rounded-2xl border border-brand/20 bg-brand/5 p-5">
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                Voortgang
+              </p>
+              <span className="font-mono text-[11px] tabular-nums text-brand">03 / 15</span>
+            </div>
+            <div className="mt-3 flex items-center gap-3">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-secondary">
                 <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ width: "8%" }}
+                  animate={{ width: "100%" }}
                   transition={{
-                    delay: 0.35 + i * PER_QUESTION,
-                    duration: 0.4,
+                    delay: 0.2,
+                    duration: PER_QUESTION * QUESTIONS.length,
                     ease: easeExpo,
                   }}
-                  className="mt-2 flex items-center justify-between rounded-2xl border border-border bg-secondary/40 px-4 py-3"
-                >
-                  <span className="text-[13px] font-medium text-brand">{item.a}</span>
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                      delay: 0.5 + i * PER_QUESTION,
-                      duration: 0.3,
-                      ease: easeExpo,
-                    }}
-                    className="flex h-5 w-5 items-center justify-center rounded-full bg-brand"
-                  >
-                    <Check className="h-3 w-3 text-white" strokeWidth={3} />
-                  </motion.span>
-                </motion.div>
+                  className="h-full rounded-full bg-brand"
+                  style={{ boxShadow: `0 0 8px ${BLUE}` }}
+                />
               </div>
-            ))}
+              <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
+                20%
+              </span>
+            </div>
           </div>
 
-          <div className="mt-6 flex items-center gap-3">
-            <div className="h-1 flex-1 overflow-hidden rounded-full bg-secondary">
+          <div className="mt-4 space-y-2">
+            {QUESTIONS.map((item, i) => (
               <motion.div
-                initial={{ width: "8%" }}
-                animate={{ width: "100%" }}
+                key={i}
+                initial={{ opacity: 0, x: -6 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  delay: 0.3,
-                  duration: PER_QUESTION * QUESTIONS.length,
+                  delay: 0.15 + i * PER_QUESTION,
+                  duration: 0.35,
                   ease: easeExpo,
                 }}
-                className="h-full rounded-full bg-brand"
-                style={{ boxShadow: `0 0 8px ${BLUE}` }}
-              />
-            </div>
-            <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
-              20%
-            </span>
+                className="flex items-center justify-between rounded-xl border border-border bg-secondary/40 px-3.5 py-2.5"
+              >
+                <div className="min-w-0">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
+                    {item.q}
+                  </p>
+                  <p className="mt-0.5 truncate text-[12px] font-medium text-foreground/85">
+                    {item.a}
+                  </p>
+                </div>
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{
+                    delay: 0.3 + i * PER_QUESTION,
+                    duration: 0.25,
+                    ease: easeExpo,
+                  }}
+                  className="ml-3 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand"
+                >
+                  <Check className="h-3 w-3 text-white" strokeWidth={3} />
+                </motion.span>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 
