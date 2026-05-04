@@ -32,7 +32,7 @@ function DevSeed() {
       contentPiecesPerMonth: "5-10",
       leadsPerMonth: "100-500",
     };
-    sessionStorage.setItem("auditAnswers", JSON.stringify(answers));
+    sessionStorage.setItem("audit_answers", JSON.stringify(answers));
     navigate({ to: "/results-loading" });
   }, [navigate]);
   return <div className="p-8">Seeding test data en doorsturen...</div>;
