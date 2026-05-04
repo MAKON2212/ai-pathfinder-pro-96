@@ -726,10 +726,25 @@ const fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
  * revenue, revenue-uplift dominates. If they ask for cost cuts, labor
  * savings dominate.
  */
-export function analyze(a: AuditAnswers): AuditResult {
-  const fte = SIZE_FTE[a.size] ?? 10;
+export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditResult {
+  const qaNotes: string[] = [];
+  const fteFromBand = SIZE_FTE[a.size] ?? 10;
+  let fte = fteFromBand;
+  if (siteSignals?.estimatedTeamSize && siteSignals.estimatedTeamSize > 0) {
+    const deviation = Math.abs(siteSignals.estimatedTeamSize - fteFromBand) / Math.max(fteFromBand, 1);
+    if (deviation > 0.5) {
+      fte = siteSignals.estimatedTeamSize;
+      qaNotes.push(`Team-grootte aangepast op basis van team-pagina (gedetecteerd: ${siteSignals.estimatedTeamSize}, was band ${a.size || "?"} → ${fteFromBand}).`);
+    }
+  }
   const revenue = REV_MID[a.revenue] ?? 200_000;
-  const customerValue = CUSTOMER_VALUE_MID[a.customerValue] ?? 500;
+  let customerValue = CUSTOMER_VALUE_MID[a.customerValue] ?? 500;
+  if ((!a.customerValue || a.customerValue === "Onbekend") && siteSignals?.pricePoints?.length) {
+    const sorted = [...siteSignals.pricePoints].sort((x, y) => x - y);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    customerValue = Math.round(median * 12);
+    qaNotes.push(`Klantwaarde geschat op basis van prijspagina (mediaan € ${median}/mnd × 12 = € ${customerValue}/jr).`);
+  }
   const customers = CUSTOMERS_MID[a.customersPerYear] ?? 100;
   const painCount = a.painPoints.length;
   const goalCount = a.goals.length;
