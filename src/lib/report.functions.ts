@@ -208,7 +208,6 @@ export const generateReport = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }): Promise<GeneratedReport> => {
     const { answers } = data;
-    const baseline = analyze(answers);
 
     // STEP 1: Multi-page Firecrawl (homepage + map + top 3 pages)
     const { pages, combined } = answers.website
@@ -216,6 +215,20 @@ export const generateReport = createServerFn({ method: "POST" })
       : { pages: [], combined: "" };
 
     console.log(`[Firecrawl] scraped ${pages.length} pages for ${answers.companyName}:`, pages.map((p) => p.url));
+
+    // STEP 1b: Detect tech-stack + business signals from scrape + headers.
+    let siteSignals: SiteSignals = EMPTY_SIGNALS;
+    if (answers.website) {
+      try {
+        siteSignals = await detectSiteSignals(answers.website, pages);
+        console.log(`[site-signals] ${siteSignals.detectedTech.length} tech, confidence ${siteSignals.signalConfidence}%`);
+      } catch (e) {
+        console.error("[site-signals] failed, continuing without", e);
+      }
+    }
+
+    // Now run deterministic model with the detected signals.
+    const baseline = analyze(answers, siteSignals);
 
     // STEP 2: Competitor brainstorm via AI
     const competitors = combined ? await suggestCompetitors(answers, combined) : [];
@@ -227,6 +240,7 @@ export const generateReport = createServerFn({ method: "POST" })
       scrapedFrom: pages.length > 0 ? answers.website : null,
       scrapedPages: pages.map((p) => p.url),
       competitors,
+      siteSignals,
     };
 
     // STEP 3: Build deep prompt with all financial follow-ups
