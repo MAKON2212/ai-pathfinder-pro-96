@@ -10,6 +10,7 @@ export type CompanyContext = {
   scrapedFrom: string | null;
   scrapedPages: string[];
   competitors: string[];
+  siteSignals: SiteSignals;
 };
 
 export type GeneratedReport = {
