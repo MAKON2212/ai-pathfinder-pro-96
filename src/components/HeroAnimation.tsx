@@ -504,30 +504,7 @@ export function HeroAnimation() {
   );
 }
 
-/** Animated count-up using framer-motion's animate. */
 function CountUp({ to, delayMs }: { to: number; delayMs: number }) {
-  return (
-    <motion.span
-      initial={{ "--n": 0 } as never}
-      animate={{ "--n": to } as never}
-      transition={{ delay: delayMs / 1000, duration: 1.2, ease: easeExpo }}
-    >
-      <motion.span>
-        {/* Use a child that reads the css var via JS isn't trivial — fallback: simple stagger via key frames */}
-      </motion.span>
-      <NumberTicker to={to} delayMs={delayMs} />
-    </motion.span>
-  );
-}
-
-function NumberTicker({ to, delayMs }: { to: number; delayMs: number }) {
-  // Render via requestAnimationFrame using state
-  return <Ticker to={to} delayMs={delayMs} />;
-}
-
-import { useEffect, useState } from "react";
-
-function Ticker({ to, delayMs }: { to: number; delayMs: number }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     let raf = 0;
@@ -539,7 +516,6 @@ function Ticker({ to, delayMs }: { to: number; delayMs: number }) {
         return;
       }
       const p = Math.min(1, (t - start) / dur);
-      // ease-out-expo
       const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
       setN(Math.round(to * eased));
       if (p < 1) raf = requestAnimationFrame(tick);
@@ -549,3 +525,4 @@ function Ticker({ to, delayMs }: { to: number; delayMs: number }) {
   }, [to, delayMs]);
   return <>€ {n.toLocaleString("nl-NL")}</>;
 }
+
