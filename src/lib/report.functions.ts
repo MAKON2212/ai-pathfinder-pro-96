@@ -314,6 +314,18 @@ ${followUps.length ? followUps.join("\n") : "(geen extra follow-ups ingevuld)"}
 WAARSCHIJNLIJKE CONCURRENTEN (door AI gesuggereerd op basis van scrape):
 ${competitors.length ? competitors.join(", ") : "(geen)"}
 
+GEDETECTEERDE WEBSITE-SIGNALEN (uit headers + HTML-patronen + content-parse, confidence ${siteSignals.signalConfidence}/100):
+- Tech-stack: ${siteSignals.detectedTech.join(", ") || "(niets gedetecteerd)"}
+- Tech-volwassenheid: ${siteSignals.techMaturityScore}/100
+- Team-grootte op website: ${siteSignals.estimatedTeamSize ?? "niet vindbaar"}
+- Klantvolume-signaal: ${siteSignals.estimatedCustomerVolume ?? "onbekend"}
+- Open vacatures: ${siteSignals.hasOpenRoles ? (siteSignals.openRoleCategories.join(", ") || "ja") : "geen"}
+- Prijzen op website: ${siteSignals.pricingDetected ? siteSignals.pricePoints.map((p) => `€ ${p}`).join(", ") || "ja, geen punten geparsed" : "niet publiek"}
+- Talen / internationale reach: ${siteSignals.internationalReach.join(", ")}
+- Content-frequentie: ${siteSignals.contentVelocity}
+
+INSTRUCTIE: Verwijs in hoofdstuk 1 expliciet naar deze signalen. Bijv. "jullie gebruiken al Shopify en Klaviyo, dat betekent dat...". Maak het persoonlijk en specifiek — geen algemeenheden.
+
 WEBSITE-SCRAPE (${pages.length} pagina's via Firecrawl — gebruik dit ACTIEF in je tekst):
 ${combined || "Geen scrape beschikbaar — werk met de overige inputs."}
 
