@@ -540,6 +540,24 @@ export type AuditResult = {
   weeklyPlan: WeeklyPlanItem[];
   /** Worst / base / best case ROI scenario's. */
   sensitivity: SensitivityScenario[];
+  /** QA-notes from deterministic overrides (e.g. teamgrootte aangepast door site-detectie). */
+  qaNotes?: string[];
+};
+
+/** Re-export — concrete shape lives in site-signals.server.ts but the type
+ *  is duplicated here so audit.ts blijft pure (geen server-only imports). */
+export type SiteSignalsLite = {
+  detectedTech: string[];
+  techMaturityScore: number;
+  estimatedTeamSize?: number;
+  estimatedCustomerVolume?: "low" | "medium" | "high";
+  hasOpenRoles: boolean;
+  openRoleCategories: string[];
+  pricingDetected: boolean;
+  pricePoints: number[];
+  internationalReach: string[];
+  contentVelocity: "none" | "low" | "medium" | "high";
+  signalConfidence: number;
 };
 
 /**
