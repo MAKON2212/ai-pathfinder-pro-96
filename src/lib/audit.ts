@@ -1061,5 +1061,6 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
     quickWins,
     weeklyPlan,
     sensitivity,
+    qaNotes: qaNotes.length ? qaNotes : undefined,
   };
 }
