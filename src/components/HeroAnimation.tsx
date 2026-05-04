@@ -72,20 +72,6 @@ export function HeroAnimation() {
             }}
           />
 
-          {/* Scanner sweep */}
-          <motion.div
-            aria-hidden
-            initial={{ y: "-10%" }}
-            animate={{ y: ["-10%", "120%"] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "linear" }}
-            className="pointer-events-none absolute inset-x-0 h-px"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${BLUE}, transparent)`,
-              boxShadow: `0 0 10px ${BLUE}`,
-              opacity: 0.5,
-            }}
-          />
-
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand/12">
@@ -103,7 +89,36 @@ export function HeroAnimation() {
             </span>
           </div>
 
-          <div className="mt-6 space-y-4">
+          {/* Live value range — grows as form is filled */}
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.4, ease: easeExpo }}
+            className="mt-5 rounded-2xl border border-brand/20 bg-brand/5 px-4 py-3"
+          >
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-muted-foreground">
+                Geschatte waarde · live
+              </p>
+              <motion.span
+                key="pulse"
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                className="flex items-center gap-1 font-mono text-[9px] uppercase tracking-[0.14em] text-brand"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+                berekenen
+              </motion.span>
+            </div>
+            <p className="mt-1.5 font-mono text-[18px] font-semibold tabular-nums leading-none text-brand">
+              <ValueRange delays={QUESTIONS.map((_, i) => 0.5 + i * PER_QUESTION)} />
+            </p>
+            <p className="mt-1.5 text-[10px] text-muted-foreground">
+              Potentiële jaarwaarde voor jouw bedrijf
+            </p>
+          </motion.div>
+
+          <div className="mt-5 space-y-4">
             {QUESTIONS.map((item, i) => (
               <div key={i}>
                 <motion.p
@@ -142,7 +157,7 @@ export function HeroAnimation() {
             ))}
           </div>
 
-          <div className="mt-7 flex items-center gap-3">
+          <div className="mt-6 flex items-center gap-3">
             <div className="h-1 flex-1 overflow-hidden rounded-full bg-secondary">
               <motion.div
                 initial={{ width: "8%" }}
