@@ -1016,6 +1016,21 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
       : { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
   ];
 
+  // OVERRIDE: low/no content velocity + revenue goal → content-engine quick win.
+  if (
+    siteSignals &&
+    (siteSignals.contentVelocity === "none" || siteSignals.contentVelocity === "low") &&
+    goals.has("Omzet verhogen")
+  ) {
+    quickWins.push({
+      title: `Content-engine met AI voor ${company}`,
+      effort: "1 week",
+      impact: "3-5× publicatie-frequentie zonder extra hires",
+      howTo: `We zagen weinig recente content op jullie site. Zet een ChatGPT/Claude-flow op die per week 3 blog-drafts + 5 social variaties produceert in jullie tone-of-voice.`,
+    });
+    qaNotes.push(`Content-velocity gedetecteerd: ${siteSignals.contentVelocity} → quick win 'Content-engine' toegevoegd.`);
+  }
+
   const weeklyPlan: WeeklyPlanItem[] = [
     { week: "Week 1", focus: "Foundation", actions: [`AI-policy + Team workspace voor ${company}`, "Audit van top-5 repetitieve taken", "Kies 1 quick win uit lijst hierboven"] },
     { week: "Week 2-3", focus: "Eerste automatisering", actions: [`Bouw n8n/Make workflow voor "${topPain}"`, "Meet baseline tijdwinst", "Train team op gebruik"] },
