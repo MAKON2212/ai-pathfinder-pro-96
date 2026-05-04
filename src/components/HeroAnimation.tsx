@@ -360,3 +360,57 @@ function CountUp({ to, delayMs }: { to: number; delayMs: number }) {
   }, [to, delayMs]);
   return <>€ {n.toLocaleString("nl-NL")}</>;
 }
+
+/**
+ * Live waarde-range die meegroeit per ingevulde vraag.
+ * Start op € 0 – € 0, eindigt op de full range.
+ */
+const RANGE_STEPS: Array<[number, number]> = [
+  [0, 0],
+  [12_000, 45_000],
+  [38_000, 110_000],
+  [84_000, 184_000],
+];
+
+function ValueRange({ delays }: { delays: number[] }) {
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const timers = delays.map((d, i) =>
+      window.setTimeout(() => setStep(i + 1), d * 1000),
+    );
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [delays]);
+
+  const [from, to] = RANGE_STEPS[Math.min(step, RANGE_STEPS.length - 1)];
+  return (
+    <span className="inline-flex items-baseline gap-1.5">
+      <Counter value={from} />
+      <span className="text-muted-foreground">–</span>
+      <Counter value={to} />
+    </span>
+  );
+}
+
+function Counter({ value }: { value: number }) {
+  const [display, setDisplay] = useState(value);
+  useEffect(() => {
+    const start = display;
+    const delta = value - start;
+    if (delta === 0) return;
+    const dur = 700;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+      setDisplay(Math.round(start + delta * eased));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+  return <span>€ {display.toLocaleString("nl-NL")}</span>;
+}
+
