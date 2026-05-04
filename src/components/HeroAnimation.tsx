@@ -27,10 +27,10 @@ const TOOL_STACK = [
 ];
 
 // Timing
-const PER_QUESTION = 0.9;
-const FORM_HOLD_AFTER = 1.4; // hold filled form before swap
-const FORM_VISIBLE = 0.2 + QUESTIONS.length * PER_QUESTION + FORM_HOLD_AFTER;
-const SWAP_DELAY = FORM_VISIBLE + 0.3;
+const PER_QUESTION = 0.55;
+const FORM_HOLD_AFTER = 0.6; // hold filled form before swap
+const FORM_VISIBLE = 0.15 + QUESTIONS.length * PER_QUESTION + FORM_HOLD_AFTER;
+const SWAP_DELAY = FORM_VISIBLE + 0.25;
 const REPORT_HOLD = 4.5;
 const TOTAL = SWAP_DELAY + REPORT_HOLD;
 
