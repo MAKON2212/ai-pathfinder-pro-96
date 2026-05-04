@@ -442,10 +442,13 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       tools: baseline.tools,
       companyContext,
       chapters: parsed.chapters && parsed.chapters.length > 0 ? parsed.chapters : fallbackChapters,
-      qaNotes: parsed.qaNotes && parsed.qaNotes.length > 0 ? parsed.qaNotes : [
-        `Aannames over team-grootte en klant-economics zijn op basis van eigen opgave van ${answers.companyName}.`,
-        `Berekening gaat uit van branche-benchmark van 30% automatiseerbare tijd.`,
-        `Werkelijke ROI hangt af van adoptie binnen het team — eerste 90 dagen kritisch.`,
+      qaNotes: [
+        ...(baseline.qaNotes ?? []),
+        ...(parsed.qaNotes && parsed.qaNotes.length > 0 ? parsed.qaNotes : [
+          `Aannames over team-grootte en klant-economics zijn op basis van eigen opgave van ${answers.companyName}.`,
+          `Berekening gaat uit van branche-benchmark van 30% automatiseerbare tijd.`,
+          `Werkelijke ROI hangt af van adoptie binnen het team — eerste 90 dagen kritisch.`,
+        ]),
       ],
       quickWins: baseline.quickWins,
       weeklyPlan: baseline.weeklyPlan,
