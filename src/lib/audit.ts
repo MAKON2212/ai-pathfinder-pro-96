@@ -786,6 +786,11 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
   if (wantsRevenue) revenueUpliftPct += 0.05;
   if (wantsLeads) revenueUpliftPct += 0.025;
   if (!wantsRevenue && !wantsLeads) revenueUpliftPct *= 0.4;
+  // OVERRIDE: site-detected sales hiring → bump uplift starting point.
+  if (siteSignals?.hasOpenRoles && siteSignals.openRoleCategories.includes("sales")) {
+    revenueUpliftPct += 0.015;
+    qaNotes.push("Vacature(s) sales gevonden op website → +1.5pp omzet-uplift starthypothese.");
+  }
   revenueUpliftPct = Math.min(Math.max(revenueUpliftPct, 0.005), 0.10);
 
   // ----- RETENTION recovery pct -----
