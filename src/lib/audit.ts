@@ -850,7 +850,12 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
     ];
   }
 
-  // AUTOMATION
+  // OVERRIDE: mature data-tooling detected on website → +10 readiness.
+  if (siteSignals?.detectedTech?.some((t) => ["Shopify", "HubSpot", "Salesforce"].includes(t))) {
+    const before = readinessScore;
+    readinessScore = Math.min(readinessScore + 10, 98);
+    qaNotes.push(`Volwassen data-stack gedetecteerd (${siteSignals.detectedTech.filter((t) => ["Shopify","HubSpot","Salesforce"].includes(t)).join(", ")}) → readiness +10 (${before} → ${readinessScore}).`);
+  }
   let automationScore: number;
   let automationDrivers: string[];
   if (hasQuiz) {
