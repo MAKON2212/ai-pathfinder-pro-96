@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { analyze, type AuditAnswers, type AuditResult } from "@/lib/audit";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { detectSiteSignals, EMPTY_SIGNALS, type SiteSignals } from "@/lib/site-signals.server";
 
 export type CompanyContext = {
   description: string;
