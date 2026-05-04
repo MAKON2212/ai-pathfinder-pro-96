@@ -313,6 +313,97 @@ function ResultsPage() {
           </div>
         </motion.div>
 
+        {/* SITE SIGNALS — wat we van jullie website hebben opgepikt */}
+        {report.companyContext.siteSignals && report.companyContext.siteSignals.signalConfidence > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="surface mt-8 rounded-2xl border border-border bg-card p-6"
+          >
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  Wat we van jullie website hebben opgepikt
+                </span>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {(() => {
+                    const s = report.companyContext.siteSignals;
+                    const filled = [
+                      s.detectedTech.length > 0,
+                      s.estimatedTeamSize !== undefined,
+                      s.estimatedCustomerVolume !== undefined,
+                      s.hasOpenRoles,
+                      s.pricingDetected,
+                      s.pricePoints.length > 0,
+                      s.internationalReach.length > 1,
+                      s.contentVelocity !== "none",
+                    ].filter(Boolean).length;
+                    return `${filled}/8 signalen gedetecteerd · confidence ${s.signalConfidence}%`;
+                  })()}
+                </p>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+              {report.companyContext.siteSignals.detectedTech.length > 0 && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Tech-stack</p>
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {report.companyContext.siteSignals.detectedTech.map((t) => (
+                      <span key={t} className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2.5 py-1 text-xs">
+                        <img
+                          src={`https://www.google.com/s2/favicons?domain=${t.toLowerCase().replace(/\s/g, "")}.com&sz=32`}
+                          alt=""
+                          className="h-3.5 w-3.5"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                        />
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {report.companyContext.siteSignals.estimatedTeamSize !== undefined && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Team-grootte (van team-pagina)</p>
+                  <p className="mt-2 text-sm">~{report.companyContext.siteSignals.estimatedTeamSize} personen zichtbaar</p>
+                </div>
+              )}
+              {report.companyContext.siteSignals.pricingDetected && report.companyContext.siteSignals.pricePoints.length > 0 && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Prijzen op website</p>
+                  <p className="mt-2 text-sm">
+                    vanaf € {Math.min(...report.companyContext.siteSignals.pricePoints)}
+                    {report.companyContext.siteSignals.pricePoints.length > 1 && ` — tot € ${Math.max(...report.companyContext.siteSignals.pricePoints)}`}
+                  </p>
+                </div>
+              )}
+              {report.companyContext.siteSignals.hasOpenRoles && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Open vacatures</p>
+                  <p className="mt-2 text-sm">
+                    {report.companyContext.siteSignals.openRoleCategories.length > 0
+                      ? report.companyContext.siteSignals.openRoleCategories.join(", ")
+                      : "ja"}
+                  </p>
+                </div>
+              )}
+              {report.companyContext.siteSignals.internationalReach.length > 1 && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Talen / markten</p>
+                  <p className="mt-2 text-sm">{report.companyContext.siteSignals.internationalReach.join(" · ")}</p>
+                </div>
+              )}
+              {report.companyContext.siteSignals.contentVelocity !== "none" && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Content-frequentie</p>
+                  <p className="mt-2 text-sm capitalize">{report.companyContext.siteSignals.contentVelocity}</p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+
         {/* PRIMARY VALUE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

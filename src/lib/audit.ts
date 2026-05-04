@@ -540,6 +540,24 @@ export type AuditResult = {
   weeklyPlan: WeeklyPlanItem[];
   /** Worst / base / best case ROI scenario's. */
   sensitivity: SensitivityScenario[];
+  /** QA-notes from deterministic overrides (e.g. teamgrootte aangepast door site-detectie). */
+  qaNotes?: string[];
+};
+
+/** Re-export — concrete shape lives in site-signals.server.ts but the type
+ *  is duplicated here so audit.ts blijft pure (geen server-only imports). */
+export type SiteSignalsLite = {
+  detectedTech: string[];
+  techMaturityScore: number;
+  estimatedTeamSize?: number;
+  estimatedCustomerVolume?: "low" | "medium" | "high";
+  hasOpenRoles: boolean;
+  openRoleCategories: string[];
+  pricingDetected: boolean;
+  pricePoints: number[];
+  internationalReach: string[];
+  contentVelocity: "none" | "low" | "medium" | "high";
+  signalConfidence: number;
 };
 
 /**
@@ -708,10 +726,25 @@ const fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
  * revenue, revenue-uplift dominates. If they ask for cost cuts, labor
  * savings dominate.
  */
-export function analyze(a: AuditAnswers): AuditResult {
-  const fte = SIZE_FTE[a.size] ?? 10;
+export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditResult {
+  const qaNotes: string[] = [];
+  const fteFromBand = SIZE_FTE[a.size] ?? 10;
+  let fte = fteFromBand;
+  if (siteSignals?.estimatedTeamSize && siteSignals.estimatedTeamSize > 0) {
+    const deviation = Math.abs(siteSignals.estimatedTeamSize - fteFromBand) / Math.max(fteFromBand, 1);
+    if (deviation > 0.5) {
+      fte = siteSignals.estimatedTeamSize;
+      qaNotes.push(`Team-grootte aangepast op basis van team-pagina (gedetecteerd: ${siteSignals.estimatedTeamSize}, was band ${a.size || "?"} → ${fteFromBand}).`);
+    }
+  }
   const revenue = REV_MID[a.revenue] ?? 200_000;
-  const customerValue = CUSTOMER_VALUE_MID[a.customerValue] ?? 500;
+  let customerValue = CUSTOMER_VALUE_MID[a.customerValue] ?? 500;
+  if ((!a.customerValue || a.customerValue === "Onbekend") && siteSignals?.pricePoints?.length) {
+    const sorted = [...siteSignals.pricePoints].sort((x, y) => x - y);
+    const median = sorted[Math.floor(sorted.length / 2)];
+    customerValue = Math.round(median * 12);
+    qaNotes.push(`Klantwaarde geschat op basis van prijspagina (mediaan € ${median}/mnd × 12 = € ${customerValue}/jr).`);
+  }
   const customers = CUSTOMERS_MID[a.customersPerYear] ?? 100;
   const painCount = a.painPoints.length;
   const goalCount = a.goals.length;
@@ -753,6 +786,11 @@ export function analyze(a: AuditAnswers): AuditResult {
   if (wantsRevenue) revenueUpliftPct += 0.05;
   if (wantsLeads) revenueUpliftPct += 0.025;
   if (!wantsRevenue && !wantsLeads) revenueUpliftPct *= 0.4;
+  // OVERRIDE: site-detected sales hiring → bump uplift starting point.
+  if (siteSignals?.hasOpenRoles && siteSignals.openRoleCategories.includes("sales")) {
+    revenueUpliftPct += 0.015;
+    qaNotes.push("Vacature(s) sales gevonden op website → +1.5pp omzet-uplift starthypothese.");
+  }
   revenueUpliftPct = Math.min(Math.max(revenueUpliftPct, 0.005), 0.10);
 
   // ----- RETENTION recovery pct -----
@@ -812,7 +850,12 @@ export function analyze(a: AuditAnswers): AuditResult {
     ];
   }
 
-  // AUTOMATION
+  // OVERRIDE: mature data-tooling detected on website → +10 readiness.
+  if (siteSignals?.detectedTech?.some((t) => ["Shopify", "HubSpot", "Salesforce"].includes(t))) {
+    const before = readinessScore;
+    readinessScore = Math.min(readinessScore + 10, 98);
+    qaNotes.push(`Volwassen data-stack gedetecteerd (${siteSignals.detectedTech.filter((t) => ["Shopify","HubSpot","Salesforce"].includes(t)).join(", ")}) → readiness +10 (${before} → ${readinessScore}).`);
+  }
   let automationScore: number;
   let automationDrivers: string[];
   if (hasQuiz) {
@@ -973,6 +1016,21 @@ export function analyze(a: AuditAnswers): AuditResult {
       : { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
   ];
 
+  // OVERRIDE: low/no content velocity + revenue goal → content-engine quick win.
+  if (
+    siteSignals &&
+    (siteSignals.contentVelocity === "none" || siteSignals.contentVelocity === "low") &&
+    goals.has("Omzet verhogen")
+  ) {
+    quickWins.push({
+      title: `Content-engine met AI voor ${company}`,
+      effort: "1 week",
+      impact: "3-5× publicatie-frequentie zonder extra hires",
+      howTo: `We zagen weinig recente content op jullie site. Zet een ChatGPT/Claude-flow op die per week 3 blog-drafts + 5 social variaties produceert in jullie tone-of-voice.`,
+    });
+    qaNotes.push(`Content-velocity gedetecteerd: ${siteSignals.contentVelocity} → quick win 'Content-engine' toegevoegd.`);
+  }
+
   const weeklyPlan: WeeklyPlanItem[] = [
     { week: "Week 1", focus: "Foundation", actions: [`AI-policy + Team workspace voor ${company}`, "Audit van top-5 repetitieve taken", "Kies 1 quick win uit lijst hierboven"] },
     { week: "Week 2-3", focus: "Eerste automatisering", actions: [`Bouw n8n/Make workflow voor "${topPain}"`, "Meet baseline tijdwinst", "Train team op gebruik"] },
@@ -1003,5 +1061,6 @@ export function analyze(a: AuditAnswers): AuditResult {
     quickWins,
     weeklyPlan,
     sensitivity,
+    qaNotes: qaNotes.length ? qaNotes : undefined,
   };
 }

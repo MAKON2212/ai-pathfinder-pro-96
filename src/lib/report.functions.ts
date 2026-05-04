@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { analyze, type AuditAnswers, type AuditResult } from "@/lib/audit";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { detectSiteSignals, EMPTY_SIGNALS, type SiteSignals } from "@/lib/site-signals.server";
 
 export type CompanyContext = {
   description: string;
@@ -9,6 +10,7 @@ export type CompanyContext = {
   scrapedFrom: string | null;
   scrapedPages: string[];
   competitors: string[];
+  siteSignals: SiteSignals;
 };
 
 export type GeneratedReport = {
@@ -206,7 +208,6 @@ export const generateReport = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }): Promise<GeneratedReport> => {
     const { answers } = data;
-    const baseline = analyze(answers);
 
     // STEP 1: Multi-page Firecrawl (homepage + map + top 3 pages)
     const { pages, combined } = answers.website
@@ -214,6 +215,20 @@ export const generateReport = createServerFn({ method: "POST" })
       : { pages: [], combined: "" };
 
     console.log(`[Firecrawl] scraped ${pages.length} pages for ${answers.companyName}:`, pages.map((p) => p.url));
+
+    // STEP 1b: Detect tech-stack + business signals from scrape + headers.
+    let siteSignals: SiteSignals = EMPTY_SIGNALS;
+    if (answers.website) {
+      try {
+        siteSignals = await detectSiteSignals(answers.website, pages);
+        console.log(`[site-signals] ${siteSignals.detectedTech.length} tech, confidence ${siteSignals.signalConfidence}%`);
+      } catch (e) {
+        console.error("[site-signals] failed, continuing without", e);
+      }
+    }
+
+    // Now run deterministic model with the detected signals.
+    const baseline = analyze(answers, siteSignals);
 
     // STEP 2: Competitor brainstorm via AI
     const competitors = combined ? await suggestCompetitors(answers, combined) : [];
@@ -225,6 +240,7 @@ export const generateReport = createServerFn({ method: "POST" })
       scrapedFrom: pages.length > 0 ? answers.website : null,
       scrapedPages: pages.map((p) => p.url),
       competitors,
+      siteSignals,
     };
 
     // STEP 3: Build deep prompt with all financial follow-ups
@@ -297,6 +313,18 @@ ${followUps.length ? followUps.join("\n") : "(geen extra follow-ups ingevuld)"}
 
 WAARSCHIJNLIJKE CONCURRENTEN (door AI gesuggereerd op basis van scrape):
 ${competitors.length ? competitors.join(", ") : "(geen)"}
+
+GEDETECTEERDE WEBSITE-SIGNALEN (uit headers + HTML-patronen + content-parse, confidence ${siteSignals.signalConfidence}/100):
+- Tech-stack: ${siteSignals.detectedTech.join(", ") || "(niets gedetecteerd)"}
+- Tech-volwassenheid: ${siteSignals.techMaturityScore}/100
+- Team-grootte op website: ${siteSignals.estimatedTeamSize ?? "niet vindbaar"}
+- Klantvolume-signaal: ${siteSignals.estimatedCustomerVolume ?? "onbekend"}
+- Open vacatures: ${siteSignals.hasOpenRoles ? (siteSignals.openRoleCategories.join(", ") || "ja") : "geen"}
+- Prijzen op website: ${siteSignals.pricingDetected ? siteSignals.pricePoints.map((p) => `€ ${p}`).join(", ") || "ja, geen punten geparsed" : "niet publiek"}
+- Talen / internationale reach: ${siteSignals.internationalReach.join(", ")}
+- Content-frequentie: ${siteSignals.contentVelocity}
+
+INSTRUCTIE: Verwijs in hoofdstuk 1 expliciet naar deze signalen. Bijv. "jullie gebruiken al Shopify en Klaviyo, dat betekent dat...". Maak het persoonlijk en specifiek — geen algemeenheden.
 
 WEBSITE-SCRAPE (${pages.length} pagina's via Firecrawl — gebruik dit ACTIEF in je tekst):
 ${combined || "Geen scrape beschikbaar — werk met de overige inputs."}
@@ -414,10 +442,13 @@ Lever het verfijnde rapport in dezelfde JSON-structuur.`;
       tools: baseline.tools,
       companyContext,
       chapters: parsed.chapters && parsed.chapters.length > 0 ? parsed.chapters : fallbackChapters,
-      qaNotes: parsed.qaNotes && parsed.qaNotes.length > 0 ? parsed.qaNotes : [
-        `Aannames over team-grootte en klant-economics zijn op basis van eigen opgave van ${answers.companyName}.`,
-        `Berekening gaat uit van branche-benchmark van 30% automatiseerbare tijd.`,
-        `Werkelijke ROI hangt af van adoptie binnen het team — eerste 90 dagen kritisch.`,
+      qaNotes: [
+        ...(baseline.qaNotes ?? []),
+        ...(parsed.qaNotes && parsed.qaNotes.length > 0 ? parsed.qaNotes : [
+          `Aannames over team-grootte en klant-economics zijn op basis van eigen opgave van ${answers.companyName}.`,
+          `Berekening gaat uit van branche-benchmark van 30% automatiseerbare tijd.`,
+          `Werkelijke ROI hangt af van adoptie binnen het team — eerste 90 dagen kritisch.`,
+        ]),
       ],
       quickWins: baseline.quickWins,
       weeklyPlan: baseline.weeklyPlan,
