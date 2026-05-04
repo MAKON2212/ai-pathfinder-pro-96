@@ -62,15 +62,7 @@ export function HeroAnimation() {
           }}
           className="absolute inset-x-0 top-0 overflow-hidden rounded-[28px] border border-border bg-card p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.12)]"
         >
-          {/* hairline top sheen */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-6 top-0 h-px"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 20%, transparent), transparent)",
-            }}
-          />
+
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
