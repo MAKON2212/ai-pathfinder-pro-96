@@ -40,7 +40,7 @@ function Index() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter text-foreground md:text-7xl"
               >
-                Weet je niet hoe AI jouw bedrijf geld oplevert?<br />
+                Weet je niet hoe <span className="text-brand">AI</span> jouw bedrijf geld oplevert?<br />
                 <span className="text-brand">Doe de AI-scan.</span>
               </motion.h1>
 
