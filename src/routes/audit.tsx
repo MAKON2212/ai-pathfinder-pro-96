@@ -53,7 +53,7 @@ type Step =
 
 const BASE_STEPS: Step[] = [
   { key: "companyName", title: "Wat is de naam van je bedrijf?", type: "text", placeholder: "Bijv. Acme B.V.", required: true, subtitle: "Het rapport wordt persoonlijk gemaakt op basis van deze naam." },
-  { key: "website", title: "Wat is jullie website?", type: "text", placeholder: "https://jouwbedrijf.nl", inputType: "url", required: true, subtitle: "We analyseren meerdere pagina's om het rapport te verrijken." },
+  { key: "website", title: "Wat is jullie website?", type: "text", placeholder: "https://jouwbedrijf.nl", inputType: "url", subtitle: "Optioneel — we analyseren meerdere pagina's om het rapport te verrijken." },
   { key: "linkedin", title: "Wat is jullie LinkedIn-pagina?", type: "text", placeholder: "https://linkedin.com/company/...", inputType: "url", subtitle: "Optioneel — helpt om context te verrijken." },
   { key: "socials", title: "Andere socials of bronnen?", type: "text", placeholder: "Instagram, X, blog, etc.", subtitle: "Optioneel — sla over als je niets wilt delen." },
   { key: "industry", title: "In welke branche werk je?", type: "single", options: INDUSTRIES, allowOther: true },
