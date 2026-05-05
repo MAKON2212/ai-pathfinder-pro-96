@@ -4,9 +4,9 @@ import { ArrowRight } from "lucide-react";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Over ons · AI Strategy Vault" },
-      { name: "description", content: "Wij helpen bedrijven met het ontdekken en implementeren van AI." },
-      { property: "og:title", content: "Over ons · AI Strategy Vault" },
+      { title: "Over ons · ScanAI" },
+      { name: "description", content: "ScanAI laat ondernemers in 3 minuten zien hoeveel AI hun bedrijf jaarlijks oplevert." },
+      { property: "og:title", content: "Over ons · ScanAI" },
       { property: "og:description", content: "Onze missie: AI vertalen naar concrete euro's voor jouw bedrijf." },
     ],
   }),
@@ -30,8 +30,8 @@ function AboutPage() {
             AI gebruiken is een vak.
           </h1>
           <p className="mt-8 max-w-2xl text-base text-muted-foreground md:text-lg">
-            AI Strategy Vault is opgericht om de kloof tussen AI-potentieel en bedrijfsrealiteit
-            te dichten. Wij combineren strategie, technologie en design tot een helder pad voorwaarts —
+            ScanAI is opgericht om de kloof tussen AI-potentieel en bedrijfsrealiteit te dichten.
+            Wij vertalen 200+ AI tools naar één heldere geldwaarde-analyse en 90-dagen roadmap —
             voor ondernemers die niet willen achterlopen, maar ook niet willen verdwalen in de hype.
           </p>
         </div>
