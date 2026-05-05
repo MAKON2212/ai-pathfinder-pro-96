@@ -341,7 +341,7 @@ function AuditPage() {
           />
         </div>
 
-        <LiveValueRange answers={answers} />
+        
 
         <AnimatePresence mode="wait">
           <motion.div
