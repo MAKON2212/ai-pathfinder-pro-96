@@ -267,14 +267,21 @@ export const generateReport = createServerFn({ method: "POST" })
 
     const systemPrompt = `Je bent een ervaren AI-strategie consultant in Nederland die voor MKB en scale-ups concrete, kwantificeerbare AI-adviezen schrijft. Je toon is rationeel, zakelijk en nuchter — geen marketing-fluff. Je kwantificeert ALTIJD waarde in euro's met expliciete rekensommen.
 
+KRITIEKE REGEL — BLIJF BIJ DE VRAAG VAN DE KLANT:
+De klant heeft specifieke doelen en pijnpunten opgegeven. Je rapport mag UITSLUITEND adviezen bevatten die direct aansluiten op die doelen en pijnpunten + de gewenste uitkomst.
+- Geef GEEN omzet- of lead-generatie tips als "Omzet verhogen" of "Lead generatie" niet bij de doelen of pijnpunten staat.
+- Geef GEEN klantenservice-advies als daar geen pijnpunt of doel rond is.
+- Geen ongevraagde "ook handig"-suggesties. Eén consultant-zin "andere kansen vallen buiten scope" mag wel.
+Doelen van deze klant: ${answers.goals.join(", ") || "(geen)"} | Pijnpunten: ${answers.painPoints.join(", ") || "(geen)"} | Gewenste uitkomst: ${answers.outcome || "(geen)"}.
+
 WERKWIJZE — chain-of-thought:
 1. Lees de website-scrape (meerdere pagina's) en bouw een mental model: wat doet dit bedrijf, voor wie, hoe verdienen ze, waar zit de operationele last.
-2. Vertaal elk pijnpunt naar 1-2 specifieke tools uit de aanbevolen lijst, mét de naam, prijs en eerste stap.
+2. Vertaal elk OPGEGEVEN pijnpunt/doel naar 1-2 specifieke tools uit de aanbevolen lijst, mét de naam, prijs en eerste stap.
 3. Onderbouw elke euro met een rekensom op basis van de meegegeven cijfers (uurloon × uren, marge × omzet, etc.).
-4. Verwijs minimaal 2× expliciet naar iets dat je uit de website-scrape hebt gehaald (propositie, klanten, dienst).
+4. Verwijs minimaal 2× expliciet naar iets dat je uit de website-scrape hebt gehaald (propositie, klanten, dienst) — alleen als er een scrape is.
 5. Schrijf in vlot Nederlands, formeel maar toegankelijk. Noem het bedrijf consequent bij naam.
 
-VASTE KOPPELINGEN:
+VASTE KOPPELINGEN (gebruik alleen als het pijnpunt/doel daadwerkelijk is opgegeven):
 - "Lead generatie" / "Omzet verhogen" → AI email marketing met Instantly.ai of Smartlead, gevoed door Clay-enrichment.
 - "Trage klantenservice" / "Klantbeleving verbeteren" → Vapi of Retell AI voor 24/7 telefoon; Chatbase voor websitechat; Intercom Fin voor email/chat-tickets.
 - "Repetitief handwerk" / "Data verspreid" → no-code automation via n8n of Make.com.
@@ -284,13 +291,13 @@ VASTE KOPPELINGEN:
 
 Antwoord ALLEEN met geldige JSON volgens dit schema:
 {
-  "executiveSummary": "4-6 zinnen, begint met de bedrijfsnaam, noemt de geschatte jaarwaarde en de top-2 hefbomen, refereert naar iets uit de scrape",
-  "reportSnippets": ["3 korte snippets van max 70 tekens, elk een kerninzicht"],
+  "executiveSummary": "4-6 zinnen, begint met de bedrijfsnaam, noemt de geschatte jaarwaarde en de top-2 hefbomen die binnen de opgegeven doelen vallen, refereert naar iets uit de scrape indien beschikbaar",
+  "reportSnippets": ["3 korte snippets van max 70 tekens, elk een kerninzicht binnen scope"],
   "chapters": [
-    {"title": "string", "body": "6-10 zinnen, met cijfers, bedrijfsnaam, concrete tool-namen en minstens 1 verwijzing naar de website-content"}
+    {"title": "string", "body": "6-10 zinnen, met cijfers, bedrijfsnaam, concrete tool-namen — strikt binnen de opgegeven doelen/pijnpunten"}
   ]
 }
-Maak EXACT 4 chapters met deze titels: "Wat ${answers.companyName} doet en waar de hefbomen liggen", "De drie grootste geld-kansen (met rekensom)", "Aanbevolen tool stack en hoe je hem inzet", "Risico's, aannames en wat we niet weten".`;
+Maak EXACT 4 chapters met deze titels: "Wat ${answers.companyName} doet en waar de hefbomen liggen", "De grootste kansen binnen jullie doelen (met rekensom)", "Aanbevolen tool stack en hoe je hem inzet", "Risico's, aannames en wat we niet weten".`;
 
     const userPrompt = `BEDRIJF: ${answers.companyName}
 WEBSITE: ${answers.website || "n.v.t."}
