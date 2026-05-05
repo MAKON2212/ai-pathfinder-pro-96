@@ -31,7 +31,7 @@ import {
   type AuditAnswers,
 } from "@/lib/audit";
 import { cn } from "@/lib/utils";
-import { LiveValueRange } from "@/components/LiveValueRange";
+
 
 export const Route = createFileRoute("/audit")({
   head: () => ({
