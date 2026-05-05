@@ -15,21 +15,21 @@ export const Route = createFileRoute("/tools")({
 });
 
 const TOOLS = [
-  { name: "OpenAI / ChatGPT", category: "Generative AI", desc: "Conversational AI voor schrijven, analyse en code.", url: "https://openai.com" },
-  { name: "Anthropic Claude", category: "Generative AI", desc: "Long-context model met sterke document-analyse.", url: "https://anthropic.com" },
-  { name: "Google Gemini", category: "Generative AI", desc: "Multimodale AI van Google.", url: "https://gemini.google.com" },
-  { name: "Midjourney", category: "Image Generation", desc: "State-of-the-art AI beeldgeneratie.", url: "https://midjourney.com" },
-  { name: "Runway", category: "Video", desc: "AI video generatie en editing.", url: "https://runwayml.com" },
-  { name: "ElevenLabs", category: "Voice", desc: "Realistische AI voice synthesis.", url: "https://elevenlabs.io" },
-  { name: "Perplexity", category: "Research", desc: "AI research engine met bronvermelding.", url: "https://perplexity.ai" },
-  { name: "Notion AI", category: "Productivity", desc: "AI in je knowledge base.", url: "https://notion.so/product/ai" },
-  { name: "Zapier AI", category: "Automation", desc: "No-code workflow automatisering met AI.", url: "https://zapier.com" },
-  { name: "Intercom Fin", category: "Customer Support", desc: "AI agent voor klantenservice.", url: "https://intercom.com/fin" },
-  { name: "HubSpot Breeze", category: "Sales & Marketing", desc: "AI agents in CRM en marketing.", url: "https://hubspot.com" },
-  { name: "GitHub Copilot", category: "Development", desc: "AI pair programmer.", url: "https://github.com/features/copilot" },
-  { name: "Pinecone", category: "Infrastructure", desc: "Vector database voor AI knowledge retrieval.", url: "https://pinecone.io" },
-  { name: "LangChain", category: "Infrastructure", desc: "Framework voor AI applicaties.", url: "https://langchain.com" },
-  { name: "Synthesia", category: "Video", desc: "AI video met avatars in 140+ talen.", url: "https://synthesia.io" },
+  { name: "OpenAI / ChatGPT", category: "Generatieve AI", desc: "Gespreks-AI voor schrijven, analyse en code.", url: "https://openai.com" },
+  { name: "Anthropic Claude", category: "Generatieve AI", desc: "Model met lange context en sterke documentanalyse.", url: "https://anthropic.com" },
+  { name: "Google Gemini", category: "Generatieve AI", desc: "Multimodale AI van Google.", url: "https://gemini.google.com" },
+  { name: "Midjourney", category: "Beeldgeneratie", desc: "Toonaangevende AI-beeldgeneratie.", url: "https://midjourney.com" },
+  { name: "Runway", category: "Video", desc: "AI-videogeneratie en -montage.", url: "https://runwayml.com" },
+  { name: "ElevenLabs", category: "Stem", desc: "Realistische AI-stemmen.", url: "https://elevenlabs.io" },
+  { name: "Perplexity", category: "Onderzoek", desc: "AI-zoekmachine met bronvermelding.", url: "https://perplexity.ai" },
+  { name: "Notion AI", category: "Productiviteit", desc: "AI in je kennisbank.", url: "https://notion.so/product/ai" },
+  { name: "Zapier AI", category: "Automatisering", desc: "No-code workflow-automatisering met AI.", url: "https://zapier.com" },
+  { name: "Intercom Fin", category: "Klantenservice", desc: "AI-agent voor klantenservice.", url: "https://intercom.com/fin" },
+  { name: "HubSpot Breeze", category: "Sales & Marketing", desc: "AI-agents in CRM en marketing.", url: "https://hubspot.com" },
+  { name: "GitHub Copilot", category: "Ontwikkeling", desc: "AI-assistent voor programmeurs.", url: "https://github.com/features/copilot" },
+  { name: "Pinecone", category: "Infrastructuur", desc: "Vector-database voor AI-kennis.", url: "https://pinecone.io" },
+  { name: "LangChain", category: "Infrastructuur", desc: "Framework voor AI-toepassingen.", url: "https://langchain.com" },
+  { name: "Synthesia", category: "Video", desc: "AI-video met avatars in 140+ talen.", url: "https://synthesia.io" },
 ];
 
 function ToolsPage() {
