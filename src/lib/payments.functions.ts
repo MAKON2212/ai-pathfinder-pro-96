@@ -19,22 +19,33 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
   .handler(async ({ data }) => {
     const stripe = createStripeClient(data.environment);
 
-    const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
-    if (!prices.data.length) throw new Error('Price not found');
-    const stripePrice = prices.data[0];
+    try {
+      const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
+      if (!prices.data.length) throw new Error('Price not found for lookup_key=' + data.priceId);
+      const stripePrice = prices.data[0];
 
-    const session = await stripe.checkout.sessions.create({
-      line_items: [{ price: stripePrice.id, quantity: 1 }],
-      mode: 'payment',
-      ui_mode: 'embedded_page',
-      return_url: data.returnUrl,
-      ...(data.customerEmail && { customer_email: data.customerEmail }),
-      metadata: {
-        reportId: data.reportId ?? '',
-      },
-    });
+      const session = await stripe.checkout.sessions.create({
+        line_items: [{ price: stripePrice.id, quantity: 1 }],
+        mode: 'payment',
+        ui_mode: 'embedded_page',
+        return_url: data.returnUrl,
+        ...(data.customerEmail && { customer_email: data.customerEmail }),
+        metadata: {
+          reportId: data.reportId ?? '',
+        },
+      });
 
-    return session.client_secret;
+      return session.client_secret;
+    } catch (err: any) {
+      console.error('[createCheckoutSession] Stripe error:', {
+        message: err?.message,
+        type: err?.type,
+        code: err?.code,
+        statusCode: err?.statusCode,
+        raw: err?.raw,
+      });
+      throw new Error(`Stripe checkout failed: ${err?.message ?? 'unknown'}`);
+    }
   });
 
 export const verifyCheckoutSession = createServerFn({ method: 'POST' })
