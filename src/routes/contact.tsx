@@ -7,10 +7,10 @@ import { z } from "zod";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact · AI Strategy Vault" },
+      { title: "Contact · ScanAI" },
       { name: "description", content: "Neem contact op met een AI specialist voor een persoonlijk gesprek." },
-      { property: "og:title", content: "Contact · AI Strategy Vault" },
-      { property: "og:description", content: "Plan een gesprek met een AI specialist." },
+      { property: "og:title", content: "Contact · ScanAI" },
+      { property: "og:description", content: "Plan een gesprek met een AI specialist van ScanAI." },
     ],
   }),
   component: ContactPage,
@@ -42,7 +42,7 @@ function ContactPage() {
     setErrors({});
     // Open mail client as fallback "send"
     const body = `Naam: ${form.name}%0D%0ABedrijf: ${form.company}%0D%0A%0D%0A${encodeURIComponent(form.message)}`;
-    window.location.href = `mailto:hello@aistrategyvault.com?subject=${encodeURIComponent(
+    window.location.href = `mailto:hello@scanai.nl?subject=${encodeURIComponent(
       "Contact via website",
     )}&body=${body}`;
     setSent(true);
@@ -134,7 +134,7 @@ function ContactPage() {
 
           {/* Sidebar */}
           <div className="space-y-4 lg:col-span-5">
-            <ContactCard icon={<Mail className="h-4 w-4" />} title="E-mail" value="hello@aistrategyvault.com" />
+            <ContactCard icon={<Mail className="h-4 w-4" />} title="E-mail" value="hello@scanai.nl" />
             <ContactCard icon={<Phone className="h-4 w-4" />} title="Telefoon" value="+31 (0)20 123 45 67" />
             <ContactCard icon={<MapPin className="h-4 w-4" />} title="Locatie" value="Amsterdam · Remote NL" />
             <div className="surface rounded-3xl p-6">

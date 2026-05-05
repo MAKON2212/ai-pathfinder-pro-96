@@ -5,10 +5,10 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 export const Route = createFileRoute("/tools")({
   head: () => ({
     meta: [
-      { title: "AI Tools · AI Strategy Vault" },
-      { name: "description", content: "Een curated selectie van de beste AI tools voor bedrijven." },
-      { property: "og:title", content: "AI Tools · AI Strategy Vault" },
-      { property: "og:description", content: "De beste AI tools voor bedrijven, gecategoriseerd." },
+      { title: "AI Tools · ScanAI" },
+      { name: "description", content: "Een curated selectie van 200+ AI tools die ScanAI dagelijks bijhoudt voor ondernemers." },
+      { property: "og:title", content: "AI Tools · ScanAI" },
+      { property: "og:description", content: "De beste AI tools voor bedrijven — handgekozen door ScanAI." },
     ],
   }),
   component: ToolsPage,
