@@ -37,7 +37,7 @@ function ToolsPage() {
     <div className="px-6">
       <div className="mx-auto max-w-7xl py-24">
         <div className="border-b border-border pb-12">
-          <span className="pill">· Curated toolset</span>
+          <span className="pill">· Handgekozen selectie</span>
           <h1 className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter md:text-7xl">
             AI Tools die <span className="text-brand">werken</span>.
           </h1>
