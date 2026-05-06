@@ -184,7 +184,7 @@ function ResultsPage() {
 
   const handleUnlock = async () => {
     if (!report || downloading) return;
-    if (!paid) { setEmailStep("asking"); setCheckoutOpen(true); return; }
+    if (!paid) { setCheckoutOpen(true); return; }
     setDownloading(true);
     try {
       const res = await generatePDF({ data: { companyName: companyName || "ScanAI", report } });
