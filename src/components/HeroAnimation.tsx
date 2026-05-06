@@ -38,6 +38,12 @@ const easeExpo = [0.16, 1, 0.3, 1] as const;
 const BLUE = "#0071e3";
 
 export function HeroAnimation() {
+  const [showInput, setShowInput] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setShowInput(false), (FORM_VISIBLE + 0.5) * 1000);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <div className="relative mx-auto h-[580px] w-full max-w-[520px]">
       {/* Soft brand glow behind cards */}
@@ -52,16 +58,13 @@ export function HeroAnimation() {
 
       <div className="relative h-full w-full">
         {/* INPUT CARD — visible immediately, no fade-in */}
+        {showInput && (
         <motion.div
-          initial={{ opacity: 1, y: 0, visibility: "visible" }}
-          animate={{
-            opacity: [1, 1, 0],
-            y: [0, 0, -8],
-            transitionEnd: { visibility: "hidden" },
-          }}
+          initial={{ opacity: 1, y: 0 }}
+          animate={{ opacity: [1, 1, 0], y: [0, 0, -8] }}
           transition={{
-            duration: TOTAL,
-            times: [0, FORM_VISIBLE / TOTAL, (FORM_VISIBLE + 0.5) / TOTAL],
+            duration: FORM_VISIBLE + 0.5,
+            times: [0, FORM_VISIBLE / (FORM_VISIBLE + 0.5), 1],
             ease: easeExpo,
           }}
           className="absolute inset-x-0 top-0 overflow-hidden rounded-[28px] border border-border bg-card p-7 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.12)]"
