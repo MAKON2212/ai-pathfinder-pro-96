@@ -128,10 +128,6 @@ function ResultsPage() {
   const [paid, setPaid] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [verifying, setVerifying] = useState(false);
-  const [emailStep, setEmailStep] = useState<"idle" | "asking" | "submitting">("idle");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [magicLink, setMagicLink] = useState<string | null>(null);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("audit_report");
