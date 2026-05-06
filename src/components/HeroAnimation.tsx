@@ -160,6 +160,7 @@ export function HeroAnimation() {
             ))}
           </div>
         </motion.div>
+        )}
 
         {/* OUTPUT CARD */}
         <motion.div
