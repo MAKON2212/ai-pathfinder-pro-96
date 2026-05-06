@@ -204,28 +204,7 @@ function ResultsPage() {
     }
   };
 
-  const openCheckout = () => { setEmailStep("asking"); setCheckoutOpen(true); };
-
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setEmailError(null);
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError("Vul een geldig e-mailadres in.");
-      return;
-    }
-    if (!report?.reportId) {
-      setEmailError("Rapport niet gevonden — laad de pagina opnieuw.");
-      return;
-    }
-    setEmailStep("submitting");
-    try {
-      await setReportEmail({ data: { reportId: report.reportId, email } });
-      setEmailStep("idle"); // proceed to checkout step within same dialog
-    } catch (err) {
-      setEmailError(err instanceof Error ? err.message : "Iets ging mis");
-      setEmailStep("asking");
-    }
-  };
+  const openCheckout = () => { setCheckoutOpen(true); };
 
   const returnUrl = typeof window !== "undefined"
     ? `${window.location.origin}/results?checkout=success&session_id={CHECKOUT_SESSION_ID}`
