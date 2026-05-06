@@ -53,8 +53,12 @@ export function HeroAnimation() {
       <div className="relative h-full w-full">
         {/* INPUT CARD — visible immediately, no fade-in */}
         <motion.div
-          initial={{ opacity: 1, y: 0 }}
-          animate={{ opacity: [1, 1, 0], y: [0, 0, -8] }}
+          initial={{ opacity: 1, y: 0, visibility: "visible" }}
+          animate={{
+            opacity: [1, 1, 0],
+            y: [0, 0, -8],
+            transitionEnd: { visibility: "hidden" },
+          }}
           transition={{
             duration: TOTAL,
             times: [0, FORM_VISIBLE / TOTAL, (FORM_VISIBLE + 0.5) / TOTAL],
