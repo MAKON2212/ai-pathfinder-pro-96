@@ -17,9 +17,8 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
     return data;
   })
   .handler(async ({ data }) => {
-    const stripe = createStripeClient(data.environment);
-
     try {
+      const stripe = createStripeClient(data.environment);
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
       if (!prices.data.length) throw new Error('Price not found for lookup_key=' + data.priceId);
       const stripePrice = prices.data[0];
@@ -37,14 +36,16 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
 
       return session.client_secret;
     } catch (err: any) {
-      console.error('[createCheckoutSession] Stripe error:', {
+      console.error('[createCheckoutSession] error:', {
         message: err?.message,
+        name: err?.name,
         type: err?.type,
         code: err?.code,
         statusCode: err?.statusCode,
         raw: err?.raw,
+        stack: err?.stack,
       });
-      throw new Error(`Stripe checkout failed: ${err?.message ?? 'unknown'}`);
+      throw new Error(`Checkout failed: ${err?.message ?? 'unknown'} (env=${data.environment})`);
     }
   });
 
