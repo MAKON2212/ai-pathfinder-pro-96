@@ -17,7 +17,6 @@ import { ReviewSlider } from "@/components/ReviewSlider";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { verifyCheckoutSession } from "@/lib/payments.functions";
-import { setReportEmail } from "@/lib/report.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
