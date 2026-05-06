@@ -11,7 +11,7 @@ interface Props {
 
 export function StripeEmbeddedCheckout({ priceId, customerEmail, reportId, returnUrl }: Props) {
   const fetchClientSecret = async (): Promise<string> => {
-    const secret = await createCheckoutSession({
+    const result = await createCheckoutSession({
       data: {
         priceId,
         customerEmail,
@@ -20,8 +20,14 @@ export function StripeEmbeddedCheckout({ priceId, customerEmail, reportId, retur
         environment: getStripeEnvironment(),
       },
     });
-    if (!secret) throw new Error('No client secret returned');
-    return secret;
+    if (!result || !result.ok) {
+      const msg = result && 'error' in result ? JSON.stringify(result.error) : 'Unknown error';
+      console.error('[StripeEmbeddedCheckout] createCheckoutSession failed:', result);
+      alert('Checkout error: ' + msg);
+      throw new Error('Checkout failed: ' + msg);
+    }
+    if (!result.clientSecret) throw new Error('No client secret returned');
+    return result.clientSecret;
   };
 
   return (

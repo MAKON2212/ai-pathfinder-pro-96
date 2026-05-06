@@ -10,7 +10,7 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
     environment: StripeEnv;
     reportId?: string;
   }) => {
-    console.log('[createCheckoutSession] validator entered', JSON.stringify(data));
+    console.error('[createCheckoutSession] validator entered', JSON.stringify(data));
     if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error('Invalid priceId');
     if (data.environment !== 'sandbox' && data.environment !== 'live') {
       throw new Error('Invalid environment');
@@ -18,12 +18,15 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
     return data;
   })
   .handler(async ({ data }) => {
-    console.log('[createCheckoutSession] handler entered', JSON.stringify(data));
+    console.error('[createCheckoutSession] handler entered', JSON.stringify(data));
     try {
       const stripe = createStripeClient(data.environment);
-      console.log('[createCheckoutSession] stripe client created');
+      console.error('[createCheckoutSession] stripe client created');
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
-      if (!prices.data.length) throw new Error('Price not found for lookup_key=' + data.priceId);
+      console.error('[createCheckoutSession] prices.list ok, count=', prices.data.length);
+      if (!prices.data.length) {
+        return { ok: false as const, stage: 'price_lookup', error: 'Price not found for lookup_key=' + data.priceId };
+      }
       const stripePrice = prices.data[0];
 
       const session = await stripe.checkout.sessions.create({
@@ -36,19 +39,21 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
           reportId: data.reportId ?? '',
         },
       });
+      console.error('[createCheckoutSession] session created', session.id);
 
-      return session.client_secret;
+      return { ok: true as const, clientSecret: session.client_secret };
     } catch (err: any) {
-      console.error('[createCheckoutSession] error:', {
-        message: err?.message,
-        name: err?.name,
-        type: err?.type,
-        code: err?.code,
-        statusCode: err?.statusCode,
-        raw: err?.raw,
-        stack: err?.stack,
-      });
-      throw new Error(`Checkout failed: ${err?.message ?? 'unknown'} (env=${data.environment})`);
+      const detail = {
+        message: String(err?.message ?? err),
+        name: String(err?.name ?? ''),
+        type: String(err?.type ?? ''),
+        code: String(err?.code ?? ''),
+        statusCode: err?.statusCode ?? null,
+        raw: err?.raw ? JSON.stringify(err.raw) : null,
+        stack: String(err?.stack ?? ''),
+      };
+      console.error('[createCheckoutSession] error:', detail);
+      return { ok: false as const, stage: 'exception', error: detail };
     }
   });
 
