@@ -167,12 +167,8 @@ function ResultsPage() {
     return () => { cancelled = true; };
   }, [search.session_id, paid]);
 
-  // Build magic link once we know token (must be before any conditional return)
-  useEffect(() => {
-    if (paid && report?.reportId && report?.accessToken && typeof window !== "undefined") {
-      setMagicLink(`${window.location.origin}/r/${report.reportId}?token=${report.accessToken}`);
-    }
-  }, [paid, report?.reportId, report?.accessToken]);
+  // (no magic link — paid users get full report directly on this page)
+
 
   if (!report) {
     return (
