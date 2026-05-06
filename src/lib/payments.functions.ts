@@ -10,6 +10,7 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
     environment: StripeEnv;
     reportId?: string;
   }) => {
+    console.log('[createCheckoutSession] validator entered', JSON.stringify(data));
     if (!/^[a-zA-Z0-9_-]+$/.test(data.priceId)) throw new Error('Invalid priceId');
     if (data.environment !== 'sandbox' && data.environment !== 'live') {
       throw new Error('Invalid environment');
@@ -17,8 +18,10 @@ export const createCheckoutSession = createServerFn({ method: 'POST' })
     return data;
   })
   .handler(async ({ data }) => {
+    console.log('[createCheckoutSession] handler entered', JSON.stringify(data));
     try {
       const stripe = createStripeClient(data.environment);
+      console.log('[createCheckoutSession] stripe client created');
       const prices = await stripe.prices.list({ lookup_keys: [data.priceId] });
       if (!prices.data.length) throw new Error('Price not found for lookup_key=' + data.priceId);
       const stripePrice = prices.data[0];
