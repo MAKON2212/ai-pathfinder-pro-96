@@ -277,14 +277,9 @@ export function HeroAnimation() {
             transition={{ delay: SWAP_DELAY + 1.15, duration: 0.5, ease: easeExpo }}
             className="mt-5 border-t border-border pt-4"
           >
-            <div className="flex items-center justify-between">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                Aanbevolen stack
-              </p>
-              <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
-                12 tools
-              </span>
-            </div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              Aanbevolen stack
+            </p>
             <div className="mt-3 flex items-center gap-2">
               {TOOL_STACK.map((tool, i) => (
                 <motion.span
