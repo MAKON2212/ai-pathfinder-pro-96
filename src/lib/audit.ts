@@ -84,9 +84,23 @@ export const INDUSTRIES = [
   "Zakelijke dienstverlening",
   "Onderwijs",
   "Marketing & Media",
-  "Logistiek",
+  "Logistiek & Transport",
   "Bouw & Vastgoed",
   "Horeca & Toerisme",
+  "Bakker / Slager / Versspecialist",
+  "Installatie (loodgieter, elektricien, cv)",
+  "Auto & Garage",
+  "Schoonmaak & Facility",
+  "IT & Software",
+  "Cybersecurity",
+  "Juridisch & Notariaat",
+  "Accountancy & Boekhouding",
+  "Architectuur & Design",
+  "Beauty & Wellness",
+  "Sport & Fitness",
+  "Agrarisch / Tuinbouw",
+  "Non-profit / Stichting",
+  "Overheid / Publiek",
 ];
 
 export const SIZES = ["1–10", "11–50", "51–200", "201–1000", "1000+"];
@@ -728,13 +742,15 @@ const fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
  */
 export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditResult {
   const qaNotes: string[] = [];
-  const fteFromBand = SIZE_FTE[a.size] ?? 10;
+  const sizeNum = Number(a.size);
+  const fteFromBand = Number.isFinite(sizeNum) && sizeNum > 0 ? sizeNum : (SIZE_FTE[a.size] ?? 10);
   let fte = fteFromBand;
-  if (siteSignals?.estimatedTeamSize && siteSignals.estimatedTeamSize > 0) {
+  const userProvidedExactSize = Number.isFinite(sizeNum) && sizeNum > 0;
+  if (!userProvidedExactSize && siteSignals?.estimatedTeamSize && siteSignals.estimatedTeamSize > 0) {
     const deviation = Math.abs(siteSignals.estimatedTeamSize - fteFromBand) / Math.max(fteFromBand, 1);
     if (deviation > 0.5) {
       fte = siteSignals.estimatedTeamSize;
-      qaNotes.push(`Team-grootte aangepast op basis van team-pagina (gedetecteerd: ${siteSignals.estimatedTeamSize}, was band ${a.size || "?"} → ${fteFromBand}).`);
+      qaNotes.push(`Team-grootte afgeleid van team-pagina (gedetecteerd: ${siteSignals.estimatedTeamSize}).`);
     }
   }
   const revenue = REV_MID[a.revenue] ?? 200_000;

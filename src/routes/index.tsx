@@ -27,18 +27,18 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div>
+    <div className="pb-24 md:pb-0">
       {/* HERO */}
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 pt-12 pb-16">
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12">
+        <div className="mx-auto max-w-7xl px-5 pt-6 pb-8 md:px-6 md:pt-12 md:pb-16">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Left content */}
             <div className="lg:col-span-6">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter text-foreground md:text-7xl"
+                className="mt-2 text-balance text-[2.25rem] font-medium leading-[1.05] tracking-tighter text-foreground md:mt-6 md:text-7xl"
               >
                 Weet je niet hoe <span className="text-brand">AI</span> jouw bedrijf geld oplevert?<br />
                 <span className="text-brand">Doe de AI-scan.</span>
@@ -48,7 +48,7 @@ function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-10 flex flex-wrap items-center gap-3"
+                className="mt-6 hidden flex-wrap items-center gap-3 md:mt-10 md:flex"
               >
                 <Link
                   to="/audit"
@@ -69,7 +69,7 @@ function Index() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="mt-8 flex items-center gap-4 text-xs text-muted-foreground"
+                className="mt-5 flex items-center gap-3 text-xs text-muted-foreground md:mt-8 md:gap-4"
               >
                 <div className="flex -space-x-2">
                   <img src={review1} alt="" className="h-7 w-7 rounded-full border-2 border-background object-cover" />
@@ -99,8 +99,8 @@ function Index() {
       </section>
 
       {/* HIDDEN VALUE / MONEY PROBLEM */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <span className="pill">· Wat je laat liggen</span>
             <h2 className="mt-6 text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -135,7 +135,7 @@ function Index() {
 
       {/* WHAT YOU GET */}
       <section className="border-y border-border bg-secondary/40">
-        <div className="mx-auto max-w-7xl px-6 py-24">
+        <div className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
           <div className="flex flex-col items-center text-center">
             <span className="pill">· Wat je krijgt</span>
             <h2 className="mt-6 max-w-2xl text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -146,7 +146,7 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-10 grid md:mt-14 grid-cols-1 gap-6 md:grid-cols-3">
             {[
               { n: "01", title: "Geldwaarde-analyse", desc: "Concrete jaarlijkse besparing en extra omzet — in euro's, niet percentages." },
               { n: "02", title: "90-dagen Roadmap", desc: "Vier fases van quick wins tot volledige AI-integratie. Stap voor stap." },
@@ -163,7 +163,7 @@ function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
         <div className="flex flex-col items-center text-center">
           <span className="pill">· Klanten</span>
           <h2 className="mt-6 max-w-2xl text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -171,7 +171,7 @@ function Index() {
           </h2>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-10 grid md:mt-14 grid-cols-1 gap-6 md:grid-cols-3">
           {[
             {
               img: review1,
@@ -223,8 +223,8 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="surface relative overflow-hidden rounded-[2rem] p-12 md:p-16">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <div className="surface relative overflow-hidden rounded-[2rem] p-6 md:p-16">
           <div className="absolute -top-1/2 -right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(0,113,227,0.08),transparent_60%)]" />
           <div className="relative grid grid-cols-1 gap-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
@@ -257,6 +257,17 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* MOBILE STICKY CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/90 px-4 py-3 backdrop-blur-xl md:hidden">
+        <Link
+          to="/audit"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-accent-foreground shadow-lg shadow-brand/20"
+        >
+          Start jouw AI Check
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }
