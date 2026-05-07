@@ -31,6 +31,7 @@ import {
   type AuditAnswers,
 } from "@/lib/audit";
 import { cn } from "@/lib/utils";
+import { trackAuditSession } from "@/lib/audit-tracking.functions";
 
 
 export const Route = createFileRoute("/audit")({
