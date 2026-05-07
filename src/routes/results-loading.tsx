@@ -16,13 +16,15 @@ export const Route = createFileRoute("/results-loading")({
 });
 
 const STEPS = [
-  { label: "Website analyseren", detail: "Firecrawl haalt jullie website op en leest de inhoud uit…" },
-  { label: "Bedrijfscontext interpreteren", detail: "We koppelen de scrape aan jullie branche, team en stack." },
-  { label: "Financiële berekening", detail: "Loonbesparing, omzet-uplift en retentie-winst worden uitgerekend." },
-  { label: "Tools verzamelen", detail: "We selecteren AI-tools uit 200+ opties op basis van jullie pijnpunten." },
-  { label: "Rapport schrijven", detail: "Een AI-consultant schrijft de hoofdstukken in heldere taal." },
-  { label: "Tweede AI-agent reviewt", detail: "Een onafhankelijke agent controleert aannames en cijfers." },
-  { label: "Verfijnen & afronden", detail: "Laatste polish, opmaak en voorvertoning klaarzetten." },
+  { label: "Research-agent gestart", detail: "Agent #1 opent jullie website en leest pagina voor pagina door…" },
+  { label: "Branche-agent activeert", detail: "Agent #2 vergelijkt jullie sector met 200+ benchmark-bedrijven." },
+  { label: "Tech-stack agent scant", detail: "Agent #3 detecteert tools, integraties en automatiserings-volwassenheid." },
+  { label: "Financiële agent rekent", detail: "Agent #4 berekent loonbesparing, omzet-uplift en retentie-winst per scenario." },
+  { label: "Tool-matching agent zoekt", detail: "Agent #5 doorzoekt 200+ AI-tools en matcht ze op jullie pijnpunten." },
+  { label: "Schrijf-agent schrijft", detail: "Agent #6 stelt de hoofdstukken op in heldere consultant-taal." },
+  { label: "Kritische review-agent leest mee", detail: "Agent #7 controleert aannames, cijfers en logica — en stelt vragen." },
+  { label: "Roadmap-agent plant 90 dagen", detail: "Agent #8 zet quick wins, fases en milestones op de tijdlijn." },
+  { label: "QA-agent polijst", detail: "Laatste agent doet eindcontrole, opmaak en voorvertoning." },
 ];
 
 const STEP_DURATION = 2200;
