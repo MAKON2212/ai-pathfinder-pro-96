@@ -27,18 +27,18 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div>
+    <div className="pb-24 md:pb-0">
       {/* HERO */}
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-6 pt-12 pb-16">
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12">
+        <div className="mx-auto max-w-7xl px-5 pt-6 pb-8 md:px-6 md:pt-12 md:pb-16">
+          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Left content */}
             <div className="lg:col-span-6">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter text-foreground md:text-7xl"
+                className="mt-2 text-balance text-[2.25rem] font-medium leading-[1.05] tracking-tighter text-foreground md:mt-6 md:text-7xl"
               >
                 Weet je niet hoe <span className="text-brand">AI</span> jouw bedrijf geld oplevert?<br />
                 <span className="text-brand">Doe de AI-scan.</span>
@@ -48,7 +48,7 @@ function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="mt-10 flex flex-wrap items-center gap-3"
+                className="mt-6 hidden flex-wrap items-center gap-3 md:mt-10 md:flex"
               >
                 <Link
                   to="/audit"
@@ -69,7 +69,7 @@ function Index() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="mt-8 flex items-center gap-4 text-xs text-muted-foreground"
+                className="mt-5 flex items-center gap-3 text-xs text-muted-foreground md:mt-8 md:gap-4"
               >
                 <div className="flex -space-x-2">
                   <img src={review1} alt="" className="h-7 w-7 rounded-full border-2 border-background object-cover" />
