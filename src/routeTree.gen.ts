@@ -22,6 +22,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ToolsSlugRouteImport } from './routes/tools.$slug'
 import { Route as RIdRouteImport } from './routes/r.$id'
 import { Route as AdminIdRouteImport } from './routes/admin.$id'
+import { Route as ApiPublicLinkedinTestRouteImport } from './routes/api/public/linkedin-test'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const ToolsRoute = ToolsRouteImport.update({
@@ -89,6 +90,11 @@ const AdminIdRoute = AdminIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicLinkedinTestRoute = ApiPublicLinkedinTestRouteImport.update({
+  id: '/api/public/linkedin-test',
+  path: '/api/public/linkedin-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicPaymentsWebhookRoute =
   ApiPublicPaymentsWebhookRouteImport.update({
     id: '/api/public/payments/webhook',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/linkedin-test': typeof ApiPublicLinkedinTestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/api/public/linkedin-test': typeof ApiPublicLinkedinTestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/r/$id': typeof RIdRoute
   '/tools/$slug': typeof ToolsSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/api/public/linkedin-test': typeof ApiPublicLinkedinTestRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/$slug'
     | '/admin/'
+    | '/api/public/linkedin-test'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/$slug'
     | '/admin'
+    | '/api/public/linkedin-test'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/r/$id'
     | '/tools/$slug'
     | '/admin/'
+    | '/api/public/linkedin-test'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -205,6 +217,7 @@ export interface RootRouteChildren {
   ResultsLoadingRoute: typeof ResultsLoadingRoute
   ToolsRoute: typeof ToolsRouteWithChildren
   RIdRoute: typeof RIdRoute
+  ApiPublicLinkedinTestRoute: typeof ApiPublicLinkedinTestRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -301,6 +314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/linkedin-test': {
+      id: '/api/public/linkedin-test'
+      path: '/api/public/linkedin-test'
+      fullPath: '/api/public/linkedin-test'
+      preLoaderRoute: typeof ApiPublicLinkedinTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/payments/webhook': {
       id: '/api/public/payments/webhook'
       path: '/api/public/payments/webhook'
@@ -344,8 +364,18 @@ const rootRouteChildren: RootRouteChildren = {
   ResultsLoadingRoute: ResultsLoadingRoute,
   ToolsRoute: ToolsRouteWithChildren,
   RIdRoute: RIdRoute,
+  ApiPublicLinkedinTestRoute: ApiPublicLinkedinTestRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
