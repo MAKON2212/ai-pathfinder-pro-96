@@ -185,9 +185,6 @@ export function HeroAnimation() {
               </span>
               <div className="leading-tight">
                 <p className="text-sm font-semibold tracking-tight">AI Roadmap</p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Acme B.V. · 12 pagina's
-                </p>
               </div>
             </div>
             <motion.span
