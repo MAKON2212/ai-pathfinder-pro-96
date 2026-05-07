@@ -99,8 +99,8 @@ function Index() {
       </section>
 
       {/* HIDDEN VALUE / MONEY PROBLEM */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
+        <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <span className="pill">· Wat je laat liggen</span>
             <h2 className="mt-6 text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -135,7 +135,7 @@ function Index() {
 
       {/* WHAT YOU GET */}
       <section className="border-y border-border bg-secondary/40">
-        <div className="mx-auto max-w-7xl px-6 py-24">
+        <div className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
           <div className="flex flex-col items-center text-center">
             <span className="pill">· Wat je krijgt</span>
             <h2 className="mt-6 max-w-2xl text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -146,7 +146,7 @@ function Index() {
             </p>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-10 grid md:mt-14 grid-cols-1 gap-6 md:grid-cols-3">
             {[
               { n: "01", title: "Geldwaarde-analyse", desc: "Concrete jaarlijkse besparing en extra omzet — in euro's, niet percentages." },
               { n: "02", title: "90-dagen Roadmap", desc: "Vier fases van quick wins tot volledige AI-integratie. Stap voor stap." },
@@ -163,7 +163,7 @@ function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
         <div className="flex flex-col items-center text-center">
           <span className="pill">· Klanten</span>
           <h2 className="mt-6 max-w-2xl text-balance text-4xl font-medium leading-tight tracking-tighter md:text-5xl">
@@ -171,7 +171,7 @@ function Index() {
           </h2>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-10 grid md:mt-14 grid-cols-1 gap-6 md:grid-cols-3">
           {[
             {
               img: review1,
@@ -223,7 +223,7 @@ function Index() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
         <div className="surface relative overflow-hidden rounded-[2rem] p-12 md:p-16">
           <div className="absolute -top-1/2 -right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(0,113,227,0.08),transparent_60%)]" />
           <div className="relative grid grid-cols-1 gap-10 md:grid-cols-12 md:items-end">
