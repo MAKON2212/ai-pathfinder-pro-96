@@ -215,6 +215,7 @@ export function HeroAnimation() {
             <p className="mt-2 text-[44px] font-medium leading-none tracking-tighter text-brand">
               <CountUp to={184000} delayMs={(SWAP_DELAY + 0.45) * 1000} />
             </p>
+            </p>
             <p className="mt-2 text-[11px] text-muted-foreground">Per jaar, na 90 dagen</p>
           </motion.div>
 
