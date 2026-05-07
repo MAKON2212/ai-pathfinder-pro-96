@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, AlertCircle } from "lucide-react";
 import {
   INDUSTRIES,
-  SIZES,
+  
   REVENUES,
   TIMELINES,
   TECH_STACK,
