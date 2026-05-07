@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { type StripeEnv, verifyWebhook } from "@/lib/stripe.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { sendLinkedInConversion } from "@/lib/linkedin.server";
 
 async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   const reportId = session.metadata?.reportId ?? null;
@@ -39,6 +40,15 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
     } catch (err) {
       console.error("[webhook] reports update failed", err);
     }
+  }
+
+  // Fire LinkedIn conversion (live env only)
+  if (env === "live") {
+    await sendLinkedInConversion({
+      email: customerEmail,
+      amountCents: session.amount_total ?? null,
+      currency: session.currency ?? null,
+    });
   }
 }
 
