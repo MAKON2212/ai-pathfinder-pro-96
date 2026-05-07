@@ -742,7 +742,8 @@ const fmt = (n: number) => `€ ${Math.round(n).toLocaleString("nl-NL")}`;
  */
 export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditResult {
   const qaNotes: string[] = [];
-  const fteFromBand = SIZE_FTE[a.size] ?? 10;
+  const sizeNum = Number(a.size);
+  const fteFromBand = Number.isFinite(sizeNum) && sizeNum > 0 ? sizeNum : (SIZE_FTE[a.size] ?? 10);
   let fte = fteFromBand;
   if (siteSignals?.estimatedTeamSize && siteSignals.estimatedTeamSize > 0) {
     const deviation = Math.abs(siteSignals.estimatedTeamSize - fteFromBand) / Math.max(fteFromBand, 1);
