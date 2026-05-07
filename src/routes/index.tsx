@@ -30,7 +30,7 @@ function Index() {
     <div className="pb-24 md:pb-0">
       {/* HERO */}
       <section className="relative">
-        <div className="mx-auto max-w-7xl px-5 pt-8 pb-6 md:px-6 md:pt-12 md:pb-16">
+        <div className="mx-auto max-w-7xl px-5 pt-8 pb-16 md:px-6 md:pt-12 md:pb-16">
           <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-16">
             {/* Left content */}
             <div className="lg:col-span-6">
