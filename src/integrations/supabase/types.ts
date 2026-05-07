@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_sessions: {
+        Row: {
+          answers: Json | null
+          company: string | null
+          completed: boolean
+          completed_at: string | null
+          created_at: string
+          current_step: number
+          id: string
+          industry: string | null
+          landing_path: string | null
+          last_step_key: string | null
+          max_step_reached: number
+          referrer: string | null
+          report_id: string | null
+          session_key: string
+          team_size: string | null
+          total_steps: number | null
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          answers?: Json | null
+          company?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_step?: number
+          id?: string
+          industry?: string | null
+          landing_path?: string | null
+          last_step_key?: string | null
+          max_step_reached?: number
+          referrer?: string | null
+          report_id?: string | null
+          session_key: string
+          team_size?: string | null
+          total_steps?: number | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          answers?: Json | null
+          company?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          created_at?: string
+          current_step?: number
+          id?: string
+          industry?: string | null
+          landing_path?: string | null
+          last_step_key?: string | null
+          max_step_reached?: number
+          referrer?: string | null
+          report_id?: string | null
+          session_key?: string
+          team_size?: string | null
+          total_steps?: number | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       reports: {
         Row: {
           access_token: string
