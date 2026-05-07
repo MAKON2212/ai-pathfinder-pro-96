@@ -329,16 +329,16 @@ function AuditPage() {
   const subtitle = "subtitle" in current && current.subtitle ? current.subtitle : subtitleDefault;
 
   return (
-    <div className="px-6">
-      <div className="mx-auto max-w-3xl py-24">
-        <div className="mb-8 flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+    <div className="px-5 md:px-6">
+      <div className="mx-auto max-w-3xl py-6 md:py-24">
+        <div className="mb-5 flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground md:mb-8">
           <span>AI Check</span>
           <span>
             <span className="text-brand">{stepLabel}</span> / {totalLabel}
           </span>
         </div>
 
-        <div className="mb-8 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div className="mb-6 h-1.5 w-full overflow-hidden rounded-full bg-secondary md:mb-8">
           <motion.div
             initial={false}
             animate={{ width: `${progress}%` }}
@@ -357,10 +357,10 @@ function AuditPage() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
           >
-            <h2 className="text-balance text-4xl font-medium tracking-tighter md:text-5xl">
+            <h2 className="text-balance text-[2rem] font-medium leading-[1.05] tracking-tighter md:text-5xl">
               {current.title}
             </h2>
-            <p className="mt-3 text-sm text-muted-foreground">{subtitle}</p>
+            <p className="mt-2.5 text-sm text-muted-foreground md:mt-3">{subtitle}</p>
 
             {current.type === "text" ? (
               <div className="mt-10">
