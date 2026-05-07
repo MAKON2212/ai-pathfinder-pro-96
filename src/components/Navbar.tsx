@@ -16,7 +16,7 @@ export function Navbar() {
         </nav>
         <Link
           to="/audit"
-          className="rounded-full bg-[#0071e3] px-4 py-1.5 text-[12px] font-normal text-white transition hover:bg-[#0077ed]"
+          className="hidden rounded-full bg-[#0071e3] px-4 py-1.5 text-[12px] font-normal text-white transition hover:bg-[#0077ed] md:inline-flex"
         >
           Start AI Check
         </Link>
