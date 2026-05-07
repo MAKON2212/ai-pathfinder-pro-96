@@ -41,6 +41,15 @@ async function handleCheckoutCompleted(session: any, env: StripeEnv) {
       console.error("[webhook] reports update failed", err);
     }
   }
+
+  // Fire LinkedIn conversion (live env only)
+  if (env === "live") {
+    await sendLinkedInConversion({
+      email: customerEmail,
+      amountCents: session.amount_total ?? null,
+      currency: session.currency ?? null,
+    });
+  }
 }
 
 export const Route = createFileRoute("/api/public/payments/webhook")({
