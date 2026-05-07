@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { type StripeEnv, verifyWebhook } from "@/lib/stripe.server";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
+import { sendLinkedInConversion } from "@/lib/linkedin.server";
 
 async function handleCheckoutCompleted(session: any, env: StripeEnv) {
   const reportId = session.metadata?.reportId ?? null;
