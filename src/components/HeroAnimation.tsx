@@ -260,9 +260,6 @@ export function HeroAnimation() {
                       <p className="truncate text-[12px] font-medium text-foreground/85">
                         {line.label}
                       </p>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
-                        via {line.tool.name}
-                      </p>
                     </div>
                   </div>
                   <p className="font-mono text-[12px] font-semibold tabular-nums text-brand">
