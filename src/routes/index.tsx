@@ -257,6 +257,17 @@ function Index() {
           </div>
         </div>
       </section>
+
+      {/* MOBILE STICKY CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/90 px-4 py-3 backdrop-blur-xl md:hidden">
+        <Link
+          to="/audit"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-accent-foreground shadow-lg shadow-brand/20"
+        >
+          Start jouw AI Check
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }
