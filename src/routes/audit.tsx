@@ -195,6 +195,12 @@ function AuditPage() {
       }
       // Verplicht
       if (v.length === 0) return "Vul dit veld in om verder te gaan.";
+      if (current.inputType === "number") {
+        const n = Number(v);
+        if (!Number.isFinite(n) || n < 1) return "Vul een geldig aantal medewerkers in (minimaal 1).";
+        if (n > 100000) return "Dat lijkt te hoog — vul een realistisch aantal in.";
+        return null;
+      }
       if (v.length < 2) return "Te kort — vul minimaal 2 tekens in.";
       if (current.inputType === "url" && !isValidUrl(v)) {
         return "Vul een geldige URL in, bijvoorbeeld https://jouwbedrijf.nl";
