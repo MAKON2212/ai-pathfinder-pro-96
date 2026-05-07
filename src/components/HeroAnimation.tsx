@@ -185,9 +185,6 @@ export function HeroAnimation() {
               </span>
               <div className="leading-tight">
                 <p className="text-sm font-semibold tracking-tight">AI Roadmap</p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                  Acme B.V. · 12 pagina's
-                </p>
               </div>
             </div>
             <motion.span
@@ -218,7 +215,6 @@ export function HeroAnimation() {
             <p className="mt-2 text-[44px] font-medium leading-none tracking-tighter text-brand">
               <CountUp to={184000} delayMs={(SWAP_DELAY + 0.45) * 1000} />
             </p>
-            <p className="mt-2 text-[11px] text-muted-foreground">Per jaar, na 90 dagen</p>
           </motion.div>
 
           {/* Breakdown */}
@@ -264,9 +260,6 @@ export function HeroAnimation() {
                       <p className="truncate text-[12px] font-medium text-foreground/85">
                         {line.label}
                       </p>
-                      <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted-foreground">
-                        via {line.tool.name}
-                      </p>
                     </div>
                   </div>
                   <p className="font-mono text-[12px] font-semibold tabular-nums text-brand">
@@ -284,14 +277,9 @@ export function HeroAnimation() {
             transition={{ delay: SWAP_DELAY + 1.15, duration: 0.5, ease: easeExpo }}
             className="mt-5 border-t border-border pt-4"
           >
-            <div className="flex items-center justify-between">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-                Aanbevolen stack
-              </p>
-              <span className="font-mono text-[10px] tabular-nums text-muted-foreground">
-                12 tools
-              </span>
-            </div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+              Aanbevolen stack
+            </p>
             <div className="mt-3 flex items-center gap-2">
               {TOOL_STACK.map((tool, i) => (
                 <motion.span
