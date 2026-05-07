@@ -243,8 +243,62 @@ function AuditPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [safeStep]);
 
+  // ── Sessie tracking ─────────────────────────────────────────────
+  const sessionKeyRef = useRef<string>("");
+  const maxStepRef = useRef<number>(0);
+  if (typeof window !== "undefined" && !sessionKeyRef.current) {
+    let k = sessionStorage.getItem("audit_session_key");
+    if (!k) {
+      k = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+      sessionStorage.setItem("audit_session_key", k);
+    }
+    sessionKeyRef.current = k;
+  }
+
+  // Debounced upsert bij elke stap-wissel.
+  useEffect(() => {
+    if (typeof window === "undefined" || !sessionKeyRef.current) return;
+    if (safeStep > maxStepRef.current) maxStepRef.current = safeStep;
+    const t = setTimeout(() => {
+      trackAuditSession({
+        data: {
+          sessionKey: sessionKeyRef.current,
+          currentStep: safeStep,
+          maxStepReached: maxStepRef.current,
+          totalSteps: steps.length,
+          lastStepKey: String(current.key),
+          company: typeof answers.companyName === "string" ? answers.companyName : undefined,
+          industry: typeof answers.industry === "string" ? answers.industry : undefined,
+          teamSize: typeof answers.size === "string" ? answers.size : undefined,
+          answers: answers as unknown as Record<string, unknown>,
+          userAgent: navigator.userAgent,
+          referrer: document.referrer || undefined,
+          landingPath: window.location.pathname,
+        },
+      }).catch(() => {});
+    }, 600);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [safeStep]);
+
   const finalize = (finalAnswers: AuditAnswers) => {
     sessionStorage.setItem("audit_answers", JSON.stringify(finalAnswers));
+    if (sessionKeyRef.current) {
+      trackAuditSession({
+        data: {
+          sessionKey: sessionKeyRef.current,
+          currentStep: steps.length,
+          maxStepReached: steps.length,
+          totalSteps: steps.length,
+          lastStepKey: String(current.key),
+          company: typeof finalAnswers.companyName === "string" ? finalAnswers.companyName : undefined,
+          industry: typeof finalAnswers.industry === "string" ? finalAnswers.industry : undefined,
+          teamSize: typeof finalAnswers.size === "string" ? finalAnswers.size : undefined,
+          answers: finalAnswers as unknown as Record<string, unknown>,
+          completed: true,
+        },
+      }).catch(() => {});
+    }
     navigate({ to: "/results-loading" });
   };
 
