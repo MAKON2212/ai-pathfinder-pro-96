@@ -330,7 +330,7 @@ function AuditPage() {
 
   return (
     <div className="px-5 md:px-6">
-      <div className="mx-auto max-w-3xl py-6 md:py-24">
+      <div className="mx-auto max-w-3xl pt-6 pb-40 md:py-24">
         <div className="mb-5 flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground md:mb-8">
           <span>AI Check</span>
           <span>
