@@ -84,7 +84,7 @@ function RootComponent() {
     <>
       <MeshBackground />
       <Navbar />
-      <main className="pt-24">
+      <main className="pt-12 md:pt-24">
         <Outlet />
       </main>
       <Footer />
