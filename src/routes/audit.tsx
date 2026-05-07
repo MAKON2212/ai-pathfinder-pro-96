@@ -363,7 +363,7 @@ function AuditPage() {
             <p className="mt-2.5 text-sm text-muted-foreground md:mt-3">{subtitle}</p>
 
             {current.type === "text" ? (
-              <div className="mt-10">
+              <div className="mt-6 md:mt-10">
                 <input
                   type={current.inputType || "text"}
                   autoFocus
@@ -387,7 +387,7 @@ function AuditPage() {
                 />
               </div>
             ) : current.type === "longtext" ? (
-              <div className="mt-10">
+              <div className="mt-6 md:mt-10">
                 <textarea
                   autoFocus
                   value={typeof value === "string" ? value : ""}
@@ -413,7 +413,7 @@ function AuditPage() {
                 </p>
               </div>
             ) : (
-              <div className="mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <div className="mt-6 md:mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
                   <button
                     key={opt}
@@ -480,7 +480,7 @@ function AuditPage() {
               )}
             </AnimatePresence>
 
-            <div className="mt-12 flex items-center justify-between">
+            <div className="mt-8 md:mt-12 flex items-center justify-between">
               <button
                 onClick={goBack}
                 disabled={step === 0}
