@@ -57,7 +57,7 @@ const BASE_STEPS: Step[] = [
   { key: "linkedin", title: "Wat is jullie LinkedIn-pagina?", type: "text", placeholder: "https://linkedin.com/company/...", inputType: "url", subtitle: "Optioneel — helpt om context te verrijken." },
   { key: "socials", title: "Andere socials of bronnen?", type: "text", placeholder: "Instagram, X, blog, etc.", subtitle: "Optioneel — sla over als je niets wilt delen." },
   { key: "industry", title: "In welke branche werk je?", type: "single", options: INDUSTRIES, allowOther: true },
-  { key: "size", title: "Hoe groot is jullie team?", type: "single", options: SIZES },
+  { key: "size", title: "Hoeveel mensen werken er bij jullie?", type: "text", inputType: "number", required: true, placeholder: "Bijv. 14", subtitle: "Vul het exacte aantal medewerkers in (FTE of headcount). Hoe nauwkeuriger, hoe beter het rapport." },
   { key: "revenue", title: "Wat is jullie jaaromzet?", type: "single", options: REVENUES },
   { key: "grossMargin", title: "Wat is jullie indicatieve bruto marge?", type: "single", options: GROSS_MARGINS, subtitle: "Bepaalt hoe hard omzet-uplift doorrekent op je winst." },
   { key: "avgHourlyCost", title: "Gemiddeld uurloon (incl. werkgeverslasten)?", type: "single", options: HOURLY_COSTS, subtitle: "Voor een eerlijke loonbesparing-rekensom." },
