@@ -57,7 +57,7 @@ export function HeroAnimation() {
   }, []);
 
   return (
-    <div className="relative mx-auto h-[440px] w-full max-w-[420px] md:h-[580px] md:max-w-[520px]">
+    <div className="relative mx-auto h-[360px] w-full max-w-[340px] md:h-[580px] md:max-w-[520px]">
       {/* Soft brand glow behind cards */}
       <div
         aria-hidden
