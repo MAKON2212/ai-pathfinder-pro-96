@@ -224,7 +224,7 @@ function Index() {
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-5 py-14 md:px-6 md:py-24">
-        <div className="surface relative overflow-hidden rounded-[2rem] p-12 md:p-16">
+        <div className="surface relative overflow-hidden rounded-[2rem] p-6 md:p-16">
           <div className="absolute -top-1/2 -right-1/4 h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(0,113,227,0.08),transparent_60%)]" />
           <div className="relative grid grid-cols-1 gap-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-8">
