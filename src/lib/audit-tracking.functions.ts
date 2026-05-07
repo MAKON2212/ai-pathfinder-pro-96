@@ -25,7 +25,7 @@ export const trackAuditSession = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     try {
-      const payload: Record<string, unknown> = {
+      const payload = {
         session_key: data.sessionKey,
         current_step: data.currentStep,
         max_step_reached: data.maxStepReached,
@@ -34,13 +34,13 @@ export const trackAuditSession = createServerFn({ method: "POST" })
         company: data.company ?? null,
         industry: data.industry ?? null,
         team_size: data.teamSize ?? null,
-        answers: data.answers ?? null,
+        answers: (data.answers ?? null) as never,
         completed: data.completed ?? false,
-        ...(data.completed ? { completed_at: new Date().toISOString() } : {}),
-        ...(data.reportId ? { report_id: data.reportId } : {}),
-        ...(data.userAgent ? { user_agent: data.userAgent } : {}),
-        ...(data.referrer ? { referrer: data.referrer } : {}),
-        ...(data.landingPath ? { landing_path: data.landingPath } : {}),
+        completed_at: data.completed ? new Date().toISOString() : null,
+        report_id: data.reportId ?? null,
+        user_agent: data.userAgent ?? null,
+        referrer: data.referrer ?? null,
+        landing_path: data.landingPath ?? null,
       };
 
       await supabaseAdmin
