@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/scanai_logo.png";
 
-const NAV = [
+const NAV: { to: "/" | "/audit" | "/tools" | "/about" | "/contact"; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/audit", label: "AI Check" },
   { to: "/tools", label: "Tools" },
   { to: "/about", label: "Over ons" },
   { to: "/contact", label: "Contact" },
-] as const;
+];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
