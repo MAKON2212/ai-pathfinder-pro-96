@@ -158,19 +158,15 @@ function CheckPage() {
   return (
     <div className="px-6">
       <div className="mx-auto max-w-3xl py-24">
-        <div className="mb-8 flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          <span>AI Quick Check · 2 min</span>
-          <span>
-            <span className="text-brand">{String(step + 1).padStart(2, "0")}</span> / {String(TOTAL).padStart(2, "0")}
-          </span>
-        </div>
+        <HypeBanner index={step} />
 
-        <div className="mb-12 h-1.5 w-full overflow-hidden rounded-full bg-secondary">
+        <div className="mb-10 h-1 w-full overflow-hidden rounded-full bg-secondary">
           <motion.div
             initial={false}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4 }}
             className="h-full rounded-full bg-brand"
+            style={{ boxShadow: "0 0 8px var(--brand)" }}
           />
         </div>
 
