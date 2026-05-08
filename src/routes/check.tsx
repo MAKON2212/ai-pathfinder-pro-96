@@ -372,6 +372,8 @@ function CheckPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        <ReportPreview />
       </div>
     </div>
   );
