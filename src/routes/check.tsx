@@ -9,6 +9,7 @@ import {
   type AuditAnswers,
 } from "@/lib/audit";
 import { cn } from "@/lib/utils";
+import { HypeBanner, ReportPreview } from "@/components/HypeBanner";
 
 export const Route = createFileRoute("/check")({
   head: () => ({
