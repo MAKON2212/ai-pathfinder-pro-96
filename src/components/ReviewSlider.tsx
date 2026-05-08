@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star } from "lucide-react";
-import review1 from "@/assets/review-1.jpg";
-import review2 from "@/assets/review-2.jpg";
-import review3 from "@/assets/review-3.jpg";
-
 const REVIEWS = [
-  { img: review1, name: "Mark de Vries", company: "Logistiek MKB", quote: "€ 92K/jr eruit gehaald in 3 maanden." },
-  { img: review2, name: "Linda Hoekstra", company: "E-commerce", quote: "+40% omzet zonder extra ad-spend." },
-  { img: review3, name: "Pieter Janssen", company: "Adviesbureau", quote: "2 FTE admin vervangen, geen ontslagen." },
+  {
+    img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=240&h=240&fit=crop&crop=faces",
+    name: "Mark de Vries",
+    company: "Logistiek MKB",
+    quote: "€ 92K/jr eruit gehaald in 3 maanden.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=240&h=240&fit=crop&crop=faces",
+    name: "Linda Hoekstra",
+    company: "E-commerce",
+    quote: "+40% omzet zonder extra ad-spend.",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=240&h=240&fit=crop&crop=faces",
+    name: "Pieter Janssen",
+    company: "Adviesbureau",
+    quote: "2 FTE admin vervangen, geen ontslagen.",
+  },
 ];
 
 export function ReviewSlider() {
