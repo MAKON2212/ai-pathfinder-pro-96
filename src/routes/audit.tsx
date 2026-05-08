@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { HypeBanner, ReportPreview } from "@/components/HypeBanner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, AlertCircle } from "lucide-react";
@@ -386,23 +387,18 @@ function AuditPage() {
   return (
     <div className="px-5 md:px-6">
       <div className="mx-auto max-w-3xl pt-6 pb-40 md:py-24">
-        <div className="mb-5 flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground md:mb-8">
-          <span>AI Check</span>
-          <span>
-            <span className="text-brand">{stepLabel}</span> / {totalLabel}
-          </span>
-        </div>
+        <HypeBanner index={safeStep} />
 
-        <div className="mb-6 h-1.5 w-full overflow-hidden rounded-full bg-secondary md:mb-8">
+        <div className="mb-6 h-1 w-full overflow-hidden rounded-full bg-secondary md:mb-8">
           <motion.div
             initial={false}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4 }}
             className="h-full rounded-full bg-brand"
+            style={{ boxShadow: "0 0 8px var(--brand)" }}
           />
         </div>
 
-        
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -561,6 +557,8 @@ function AuditPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        <ReportPreview />
       </div>
     </div>
   );
