@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Sparkles, TrendingUp, Quote, Zap } from "lucide-react";
 
 type HypeItem =
   | {
@@ -8,7 +7,6 @@ type HypeItem =
       role: string;
       avatar: string;
       tool: string;
-      toolLogo: string;
       result: string;
     }
   | {
@@ -22,175 +20,165 @@ type HypeItem =
       kind: "tool";
       tool: string;
       toolLogo: string;
-      impact: string;
+      headline: string;
       detail: string;
     };
 
 const favicon = (domain: string) =>
   `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
 
-const avatar = (seed: string) =>
-  `https://api.dicebear.com/7.x/notionists/svg?seed=${encodeURIComponent(seed)}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
+// Real photos – Wikipedia (CEOs) + Unsplash (entrepreneurs, royalty-free)
+const PHOTOS = {
+  pichai:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Sundar_Pichai_WEF_2023_%28cropped%29.jpg/256px-Sundar_Pichai_WEF_2023_%28cropped%29.jpg",
+  huang:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Jensen_Huang_-_Web_Summit_Rio_2024_%28cropped%29.jpg/256px-Jensen_Huang_-_Web_Summit_Rio_2024_%28cropped%29.jpg",
+  altman:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg/256px-Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg",
+  mark: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=240&h=240&fit=crop&crop=faces",
+  linda: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=240&h=240&fit=crop&crop=faces",
+  pieter: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=240&h=240&fit=crop&crop=faces",
+};
 
 export const HYPE_ITEMS: HypeItem[] = [
   {
     kind: "result",
     person: "Mark de Vries",
     role: "Eigenaar logistiek MKB",
-    avatar: avatar("Mark de Vries"),
+    avatar: PHOTOS.mark,
     tool: "ChatGPT",
-    toolLogo: favicon("openai.com"),
-    result: "€ 92K/jr bespaard in 3 maanden door offertes te automatiseren",
+    result: "€ 92K per jaar bespaard door offertes te automatiseren.",
   },
   {
     kind: "quote",
     person: "Sundar Pichai",
     role: "CEO Google",
-    avatar: avatar("Sundar Pichai"),
+    avatar: PHOTOS.pichai,
     quote: "AI is more profound than fire or electricity.",
   },
   {
     kind: "tool",
     tool: "Intercom Fin",
     toolLogo: favicon("intercom.com"),
-    impact: "72% van support tickets",
-    detail: "wordt volledig autonoom afgehandeld bij 1.000+ bedrijven",
+    headline: "72% van support tickets",
+    detail: "wordt volledig autonoom afgehandeld bij 1.000+ bedrijven.",
   },
   {
     kind: "result",
     person: "Linda Hoekstra",
     role: "Founder e-commerce",
-    avatar: avatar("Linda Hoekstra"),
+    avatar: PHOTOS.linda,
     tool: "Klaviyo AI",
-    toolLogo: favicon("klaviyo.com"),
-    result: "+40% omzet zonder extra ad-spend in één kwartaal",
+    result: "+40% omzet zonder extra ad-spend in één kwartaal.",
   },
   {
     kind: "quote",
     person: "Jensen Huang",
     role: "CEO NVIDIA",
-    avatar: avatar("Jensen Huang"),
+    avatar: PHOTOS.huang,
     quote: "Iedereen is nu een programmeur — je hoeft alleen tegen AI te praten.",
   },
   {
     kind: "tool",
     tool: "Clay",
     toolLogo: favicon("clay.com"),
-    impact: "10× meer leads",
-    detail: "verrijkt en gepersonaliseerd t.o.v. handmatig prospecten",
+    headline: "10× meer leads",
+    detail: "verrijkt en gepersonaliseerd t.o.v. handmatig prospecten.",
   },
   {
     kind: "result",
     person: "Pieter Janssen",
     role: "Adviesbureau",
-    avatar: avatar("Pieter Janssen"),
+    avatar: PHOTOS.pieter,
     tool: "n8n",
-    toolLogo: favicon("n8n.io"),
-    result: "2 FTE administratie vervangen — geen ontslagen, mensen op klantwerk",
+    result: "2 FTE administratie vervangen — mensen nu op klantwerk.",
   },
   {
     kind: "quote",
     person: "Sam Altman",
     role: "CEO OpenAI",
-    avatar: avatar("Sam Altman"),
+    avatar: PHOTOS.altman,
     quote: "De productiefste mensen zijn al solo-bedrijven van $1M+ met AI.",
   },
 ];
+
+function Label({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+      {children}
+    </span>
+  );
+}
 
 export function HypeBanner({ index }: { index: number }) {
   const item = HYPE_ITEMS[index % HYPE_ITEMS.length];
 
   return (
-    <div className="mb-6">
+    <div className="mb-8">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.4 }}
-          className="surface relative overflow-hidden rounded-2xl border border-brand/20 bg-card/60 p-4 backdrop-blur"
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.35 }}
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 -z-10 opacity-60"
-            style={{
-              background:
-                "radial-gradient(80% 80% at 0% 0%, color-mix(in oklab, var(--brand) 14%, transparent), transparent 60%)",
-            }}
-          />
-
           {item.kind === "result" && (
-            <div className="flex items-center gap-3">
+            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
               <img
                 src={item.avatar}
                 alt={item.person}
-                className="h-11 w-11 flex-none rounded-full border border-border bg-secondary object-cover"
+                loading="lazy"
+                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
               />
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-brand/12 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-brand">
-                    <TrendingUp className="h-2.5 w-2.5" /> Resultaat
-                  </span>
-                  <span className="truncate text-[11px] text-muted-foreground">
-                    {item.person} · {item.role}
-                  </span>
-                </div>
-                <p className="mt-1 text-sm font-medium leading-snug text-foreground">
+                <Label>Resultaat · met {item.tool}</Label>
+                <p className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
                   {item.result}
                 </p>
+                <figcaption className="mt-1.5 text-sm text-muted-foreground">
+                  {item.person} — {item.role}
+                </figcaption>
               </div>
-              <span
-                title={item.tool}
-                className="flex h-9 w-9 flex-none items-center justify-center overflow-hidden rounded-lg border border-border bg-card"
-              >
-                <img src={item.toolLogo} alt={item.tool} className="h-5 w-5 object-contain" />
-              </span>
-            </div>
+            </figure>
           )}
 
           {item.kind === "quote" && (
-            <div className="flex items-center gap-3">
+            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
               <img
                 src={item.avatar}
                 alt={item.person}
-                className="h-11 w-11 flex-none rounded-full border border-border bg-secondary object-cover"
+                loading="lazy"
+                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
               />
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-brand/12 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-brand">
-                    <Quote className="h-2.5 w-2.5" /> Quote
-                  </span>
-                  <span className="truncate text-[11px] text-muted-foreground">
-                    {item.person} · {item.role}
-                  </span>
-                </div>
-                <p className="mt-1 text-sm italic leading-snug text-foreground">
-                  "{item.quote}"
-                </p>
+                <Label>Over AI</Label>
+                <blockquote className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
+                  &ldquo;{item.quote}&rdquo;
+                </blockquote>
+                <figcaption className="mt-1.5 text-sm text-muted-foreground">
+                  {item.person} — {item.role}
+                </figcaption>
               </div>
-            </div>
+            </figure>
           )}
 
           {item.kind === "tool" && (
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 flex-none items-center justify-center overflow-hidden rounded-xl border border-border bg-card">
-                <img src={item.toolLogo} alt={item.tool} className="h-6 w-6 object-contain" />
+            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
+              <span className="flex h-16 w-16 flex-none items-center justify-center rounded-full border border-border bg-card">
+                <img
+                  src={item.toolLogo}
+                  alt={item.tool}
+                  className="h-8 w-8 object-contain"
+                />
               </span>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-brand/12 px-2 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-brand">
-                    <Zap className="h-2.5 w-2.5" /> AI Impact
-                  </span>
-                  <span className="truncate text-[11px] text-muted-foreground">{item.tool}</span>
-                </div>
-                <p className="mt-1 text-sm leading-snug text-foreground">
-                  <span className="font-semibold text-brand">{item.impact}</span>{" "}
-                  <span className="text-foreground/80">{item.detail}</span>
+                <Label>AI-impact · {item.tool}</Label>
+                <p className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
+                  <span className="text-brand">{item.headline}</span> {item.detail}
                 </p>
               </div>
-              <Sparkles className="h-4 w-4 flex-none text-brand" />
-            </div>
+            </figure>
           )}
         </motion.div>
       </AnimatePresence>
@@ -200,40 +188,30 @@ export function HypeBanner({ index }: { index: number }) {
 
 export function ReportPreview() {
   const items = [
-    { label: "Geschatte jaarwaarde van AI", value: "€ 80K – € 250K" },
-    { label: "Top 3 quick wins op maat", value: "Direct toepasbaar" },
-    { label: "Aanbevolen tool stack", value: "Met prijzen & links" },
-    { label: "90-dagen roadmap", value: "Week voor week" },
+    { n: "01", label: "Geschatte jaarwaarde van AI in jouw bedrijf" },
+    { n: "02", label: "Top 3 quick wins, direct toepasbaar" },
+    { n: "03", label: "Aanbevolen tool stack met prijzen & links" },
+    { n: "04", label: "90-dagen roadmap, week voor week" },
   ];
   return (
-    <div className="mt-12 rounded-3xl border border-border bg-card/60 p-6 backdrop-blur">
-      <div className="flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/12">
-          <Sparkles className="h-3.5 w-3.5 text-brand" />
-        </span>
-        <p className="text-sm font-semibold tracking-tight">Wat je straks krijgt</p>
-      </div>
-      <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <section className="mt-14 border-t border-border pt-10">
+      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        In jouw rapport
+      </p>
+      <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+        Wat je straks krijgt
+      </h2>
+      <ul className="mt-6 divide-y divide-border">
         {items.map((it) => (
-          <div
-            key={it.label}
-            className="flex items-start gap-2 rounded-xl border border-border bg-background/40 px-3 py-2.5"
-          >
-            <span className="mt-0.5 flex h-4 w-4 flex-none items-center justify-center rounded-full bg-brand/15">
-              <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-[12px] font-medium text-foreground/90">{it.label}</p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
-                {it.value}
-              </p>
-            </div>
-          </div>
+          <li key={it.n} className="flex items-baseline gap-5 py-4">
+            <span className="font-mono text-sm text-brand">{it.n}</span>
+            <span className="text-base text-foreground sm:text-lg">{it.label}</span>
+          </li>
         ))}
-      </div>
-      <p className="mt-4 text-[11px] text-muted-foreground">
+      </ul>
+      <p className="mt-6 text-sm text-muted-foreground">
         Persoonlijk rapport · klaar binnen 2 minuten · 800+ ondernemers gingen je voor.
       </p>
-    </div>
+    </section>
   );
 }
