@@ -557,6 +557,8 @@ function AuditPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        <ReportPreview />
       </div>
     </div>
   );
