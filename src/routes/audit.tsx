@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { HypeBanner, ReportPreview } from "@/components/HypeBanner";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, AlertCircle } from "lucide-react";
