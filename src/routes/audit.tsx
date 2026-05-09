@@ -384,21 +384,32 @@ function AuditPage() {
         : "Klik om te kiezen — je gaat automatisch verder.";
   const subtitle = "subtitle" in current && current.subtitle ? current.subtitle : subtitleDefault;
 
+  const stepKindLabel =
+    current.type === "text"
+      ? "Invoeren"
+      : current.type === "longtext"
+        ? "Vertel kort"
+        : current.type === "multi"
+          ? "Meerdere mogelijk"
+          : "Kies één";
+
   return (
     <div className="px-5 md:px-6">
-      <div className="mx-auto max-w-3xl pt-6 pb-40 md:py-24">
-        <HypeBanner index={safeStep} />
+      {/* Top thin progress bar — sits flush under the navbar */}
+      <div className="fixed left-0 right-0 top-[64px] z-30 h-[3px] bg-transparent">
+        <motion.div
+          initial={false}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.4 }}
+          className="h-full bg-brand"
+        />
+      </div>
 
-        <div className="mb-6 h-1 w-full overflow-hidden rounded-full bg-secondary md:mb-8">
-          <motion.div
-            initial={false}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4 }}
-            className="h-full rounded-full bg-brand"
-            style={{ boxShadow: "0 0 8px var(--brand)" }}
-          />
+      <div className="mx-auto max-w-2xl pt-10 pb-40 md:pt-16 md:pb-32">
+        {/* HypeBanner card */}
+        <div className="surface mb-8 px-7 py-6 md:px-9 md:py-7">
+          <HypeBanner index={safeStep} />
         </div>
-
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -407,11 +418,15 @@ function AuditPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
+            className="surface px-7 py-9 md:px-12 md:py-12"
           >
-            <h2 className="text-balance text-[2rem] font-medium leading-[1.05] tracking-tighter md:text-5xl">
+            <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
+              {stepKindLabel}
+            </span>
+            <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-tight md:text-[40px]">
               {current.title}
             </h2>
-            <p className="mt-2.5 text-sm text-muted-foreground md:mt-3">{subtitle}</p>
+            <p className="mt-3 text-sm text-muted-foreground md:text-base">{subtitle}</p>
 
             {current.type === "text" ? (
               <div className="mt-6 md:mt-10">
@@ -531,11 +546,11 @@ function AuditPage() {
               )}
             </AnimatePresence>
 
-            <div className="mt-8 md:mt-12 flex items-center justify-between">
+            <div className="mt-10 border-t border-border pt-5 flex items-center justify-between md:mt-12">
               <button
                 onClick={goBack}
                 disabled={step === 0}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium transition hover:bg-secondary disabled:opacity-30"
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground disabled:opacity-30"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Terug
@@ -545,10 +560,10 @@ function AuditPage() {
                 aria-disabled={!isValid}
                 title={!isValid && errorMsg ? errorMsg : undefined}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition",
+                  "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition",
                   isValid
-                    ? "bg-brand text-accent-foreground hover:opacity-90"
-                    : "bg-brand/40 text-accent-foreground hover:bg-brand/50",
+                    ? "bg-brand text-white shadow-sm hover:opacity-90"
+                    : "bg-brand/30 text-white/90",
                 )}
               >
                 {safeStep === steps.length - 1 ? "Genereer rapport" : "Volgende"}
@@ -558,7 +573,9 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <ReportPreview />
+        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-10">
+          <ReportPreview />
+        </div>
       </div>
     </div>
   );

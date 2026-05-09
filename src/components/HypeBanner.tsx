@@ -194,11 +194,11 @@ export function ReportPreview() {
     { n: "04", label: "90-dagen roadmap, week voor week" },
   ];
   return (
-    <section className="mt-14 border-t border-border pt-10">
-      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+    <section>
+      <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
         In jouw rapport
-      </p>
-      <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+      </span>
+      <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-[40px]">
         Wat je straks krijgt
       </h2>
       <ul className="mt-6 divide-y divide-border">
