@@ -79,13 +79,6 @@ export const HYPE_ITEMS: HypeItem[] = [
     result: "+40% omzet zonder extra ad-spend in één kwartaal.",
   },
   {
-    kind: "quote",
-    person: "Jensen Huang",
-    role: "CEO NVIDIA",
-    avatar: PHOTOS.huang,
-    quote: "Iedereen is nu een programmeur — je hoeft alleen tegen AI te praten.",
-  },
-  {
     kind: "tool",
     tool: "Clay",
     toolLogo: favicon("clay.com"),
