@@ -1,4 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
+import huangImg from "@/assets/ceo-huang.png";
+import pichaiImg from "@/assets/ceo-pichai.png";
+import altmanImg from "@/assets/ceo-altman.png";
 
 type HypeItem =
   | {
@@ -29,12 +32,9 @@ const favicon = (domain: string) =>
 
 // Real photos – Wikipedia (CEOs) + Unsplash (entrepreneurs, royalty-free)
 const PHOTOS = {
-  pichai:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Sundar_Pichai_WEF_2023_%28cropped%29.jpg/256px-Sundar_Pichai_WEF_2023_%28cropped%29.jpg",
-  huang:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Jensen_Huang_-_Web_Summit_Rio_2024_%28cropped%29.jpg/256px-Jensen_Huang_-_Web_Summit_Rio_2024_%28cropped%29.jpg",
-  altman:
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg/256px-Sam_Altman_TechCrunch_SF_2019_Day_2_Oct_3_%28cropped%29.jpg",
+  pichai: pichaiImg,
+  huang: huangImg,
+  altman: altmanImg,
   mark: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=240&h=240&fit=crop&crop=faces",
   linda: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=240&h=240&fit=crop&crop=faces",
   pieter: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=240&h=240&fit=crop&crop=faces",
@@ -129,7 +129,7 @@ export function HypeBanner({ index }: { index: number }) {
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
+                className="h-16 w-16 flex-none rounded-full object-cover"
               />
               <div className="min-w-0 flex-1">
                 <Label>Resultaat · met {item.tool}</Label>
@@ -149,7 +149,7 @@ export function HypeBanner({ index }: { index: number }) {
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
+                className="h-16 w-16 flex-none rounded-full object-cover"
               />
               <div className="min-w-0 flex-1">
                 <Label>Over AI</Label>

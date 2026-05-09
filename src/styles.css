@@ -49,36 +49,35 @@
 }
 
 :root {
-  --radius: 1.75rem; /* 28px — signature Apple card radius */
+  --radius: 1.75rem;
 
-  /* Apple gallery palette — Fog canvas, Snow cards, Ink type, Azure CTA */
-  --background: #f5f5f7;       /* Fog */
-  --foreground: #1d1d1f;       /* Ink */
-  --card: #ffffff;             /* Snow */
-  --card-foreground: #1d1d1f;
+  /* Cosmos palette — pale fog canvas, deep navy ink, electric blue accent */
+  --background: #eef1f6;       /* Fog */
+  --foreground: #0b1530;       /* Ink */
+  --card: #ffffff;             /* Snow card */
+  --card-foreground: #0b1530;
   --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
-  --primary: #1d1d1f;          /* Ink — for primary text/buttons */
+  --popover-foreground: #0b1530;
+  --primary: #0b1530;          /* Ink for primary text/buttons */
   --primary-foreground: #ffffff;
-  --secondary: #f5f5f7;
-  --secondary-foreground: #1d1d1f;
-  --muted: #f5f5f7;
-  --muted-foreground: #707070; /* Graphite */
-  --accent: #0071e3;           /* Azure — sole CTA color */
+  --secondary: #eef1f6;
+  --secondary-foreground: #0b1530;
+  --muted: #eef1f6;
+  --muted-foreground: #6c7593; /* Cosmos muted */
+  --accent: #0066df;           /* Cosmos accent */
   --accent-foreground: #ffffff;
-  --destructive: #b64400;      /* Caution */
+  --destructive: #b64400;
   --destructive-foreground: #ffffff;
-  --border: #e8e8ed;           /* Silver Mist */
-  --input: #e8e8ed;
-  --ring: #0071e3;
+  --border: rgba(11, 21, 48, 0.10);
+  --input: rgba(11, 21, 48, 0.18);
+  --ring: #0066df;
 
-  --brand: #0071e3;            /* Azure */
-  --brand-soft: #e8e8ed;       /* Silver Mist */
-  --surface: #ffffff;
-  --surface-2: #f5f5f7;
+  --brand: #0066df;            /* Cosmos accent-strong */
+  --brand-soft: rgba(0, 102, 223, 0.10);
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-2: #eef1f6;
 
-  /* Apple uses no shadows — value-only elevation */
-  --shadow-soft: none;
+  --shadow-soft: 0 1px 2px rgba(11, 21, 48, 0.04);
 }
 
 @layer base {
