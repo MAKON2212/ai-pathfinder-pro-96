@@ -405,9 +405,9 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-10 pb-40 md:pt-16 md:pb-32">
+      <div className="mx-auto max-w-2xl pt-10 pb-40 md:max-w-5xl md:pt-16 md:pb-32">
         {/* HypeBanner card */}
-        <div className="surface mb-8 px-7 py-6 md:px-9 md:py-7">
+        <div className="surface mb-6 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
           <HypeBanner index={safeStep} />
         </div>
 
