@@ -546,11 +546,11 @@ function AuditPage() {
               )}
             </AnimatePresence>
 
-            <div className="mt-8 md:mt-12 flex items-center justify-between">
+            <div className="mt-10 border-t border-border pt-5 flex items-center justify-between md:mt-12">
               <button
                 onClick={goBack}
                 disabled={step === 0}
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium transition hover:bg-secondary disabled:opacity-30"
+                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground disabled:opacity-30"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Terug
@@ -560,10 +560,10 @@ function AuditPage() {
                 aria-disabled={!isValid}
                 title={!isValid && errorMsg ? errorMsg : undefined}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition",
+                  "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition",
                   isValid
-                    ? "bg-brand text-accent-foreground hover:opacity-90"
-                    : "bg-brand/40 text-accent-foreground hover:bg-brand/50",
+                    ? "bg-brand text-white shadow-sm hover:opacity-90"
+                    : "bg-brand/30 text-white/90",
                 )}
               >
                 {safeStep === steps.length - 1 ? "Genereer rapport" : "Volgende"}
@@ -573,7 +573,9 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <ReportPreview />
+        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-10">
+          <ReportPreview />
+        </div>
       </div>
     </div>
   );
