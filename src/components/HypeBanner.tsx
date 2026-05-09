@@ -42,6 +42,13 @@ const PHOTOS = {
 
 export const HYPE_ITEMS: HypeItem[] = [
   {
+    kind: "quote",
+    person: "Jensen Huang",
+    role: "CEO NVIDIA",
+    avatar: PHOTOS.huang,
+    quote: "Iedereen is nu een programmeur — je hoeft alleen tegen AI te praten.",
+  },
+  {
     kind: "result",
     person: "Mark de Vries",
     role: "Eigenaar logistiek MKB",
