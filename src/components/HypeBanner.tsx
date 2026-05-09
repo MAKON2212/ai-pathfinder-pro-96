@@ -129,7 +129,7 @@ export function HypeBanner({ index }: { index: number }) {
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
+                className="h-16 w-16 flex-none rounded-full object-cover"
               />
               <div className="min-w-0 flex-1">
                 <Label>Resultaat · met {item.tool}</Label>
@@ -149,7 +149,7 @@ export function HypeBanner({ index }: { index: number }) {
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover grayscale"
+                className="h-16 w-16 flex-none rounded-full object-cover"
               />
               <div className="min-w-0 flex-1">
                 <Label>Over AI</Label>
