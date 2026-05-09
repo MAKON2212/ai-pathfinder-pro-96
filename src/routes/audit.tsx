@@ -384,21 +384,32 @@ function AuditPage() {
         : "Klik om te kiezen — je gaat automatisch verder.";
   const subtitle = "subtitle" in current && current.subtitle ? current.subtitle : subtitleDefault;
 
+  const stepKindLabel =
+    current.type === "text"
+      ? "Invoeren"
+      : current.type === "longtext"
+        ? "Vertel kort"
+        : current.type === "multi"
+          ? "Meerdere mogelijk"
+          : "Kies één";
+
   return (
     <div className="px-5 md:px-6">
-      <div className="mx-auto max-w-3xl pt-6 pb-40 md:py-24">
-        <HypeBanner index={safeStep} />
+      {/* Top thin progress bar — sits flush under the navbar */}
+      <div className="fixed left-0 right-0 top-[64px] z-30 h-[3px] bg-transparent">
+        <motion.div
+          initial={false}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.4 }}
+          className="h-full bg-brand"
+        />
+      </div>
 
-        <div className="mb-6 h-1 w-full overflow-hidden rounded-full bg-secondary md:mb-8">
-          <motion.div
-            initial={false}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.4 }}
-            className="h-full rounded-full bg-brand"
-            style={{ boxShadow: "0 0 8px var(--brand)" }}
-          />
+      <div className="mx-auto max-w-2xl pt-10 pb-40 md:pt-16 md:pb-32">
+        {/* HypeBanner card */}
+        <div className="surface mb-8 px-7 py-6 md:px-9 md:py-7">
+          <HypeBanner index={safeStep} />
         </div>
-
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -407,11 +418,15 @@ function AuditPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
+            className="surface px-7 py-9 md:px-12 md:py-12"
           >
-            <h2 className="text-balance text-[2rem] font-medium leading-[1.05] tracking-tighter md:text-5xl">
+            <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
+              {stepKindLabel}
+            </span>
+            <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-tight md:text-[40px]">
               {current.title}
             </h2>
-            <p className="mt-2.5 text-sm text-muted-foreground md:mt-3">{subtitle}</p>
+            <p className="mt-3 text-sm text-muted-foreground md:text-base">{subtitle}</p>
 
             {current.type === "text" ? (
               <div className="mt-6 md:mt-10">
