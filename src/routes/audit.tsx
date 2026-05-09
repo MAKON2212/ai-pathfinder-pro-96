@@ -418,7 +418,7 @@ function AuditPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="surface px-7 py-9 md:px-12 md:py-12"
+            className="surface px-7 py-7 md:px-12 md:py-9"
           >
             <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
               {stepKindLabel}
