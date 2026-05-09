@@ -405,9 +405,9 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-10 pb-40 md:pt-16 md:pb-32">
+      <div className="mx-auto max-w-2xl pt-10 pb-40 md:max-w-5xl md:pt-16 md:pb-32">
         {/* HypeBanner card */}
-        <div className="surface mb-8 px-7 py-6 md:px-9 md:py-7">
+        <div className="surface mb-6 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
           <HypeBanner index={safeStep} />
         </div>
 
@@ -418,7 +418,7 @@ function AuditPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="surface px-7 py-9 md:px-12 md:py-12"
+            className="surface px-7 py-7 md:px-12 md:py-9"
           >
             <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
               {stepKindLabel}
@@ -573,7 +573,7 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-10">
+        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-8">
           <ReportPreview />
         </div>
       </div>

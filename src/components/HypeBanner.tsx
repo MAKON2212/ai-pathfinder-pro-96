@@ -42,6 +42,13 @@ const PHOTOS = {
 
 export const HYPE_ITEMS: HypeItem[] = [
   {
+    kind: "quote",
+    person: "Jensen Huang",
+    role: "CEO NVIDIA",
+    avatar: PHOTOS.huang,
+    quote: "Iedereen is nu een programmeur — je hoeft alleen tegen AI te praten.",
+  },
+  {
     kind: "result",
     person: "Mark de Vries",
     role: "Eigenaar logistiek MKB",
@@ -70,13 +77,6 @@ export const HYPE_ITEMS: HypeItem[] = [
     avatar: PHOTOS.linda,
     tool: "Klaviyo AI",
     result: "+40% omzet zonder extra ad-spend in één kwartaal.",
-  },
-  {
-    kind: "quote",
-    person: "Jensen Huang",
-    role: "CEO NVIDIA",
-    avatar: PHOTOS.huang,
-    quote: "Iedereen is nu een programmeur — je hoeft alleen tegen AI te praten.",
   },
   {
     kind: "tool",
@@ -114,7 +114,7 @@ export function HypeBanner({ index }: { index: number }) {
   const item = HYPE_ITEMS[index % HYPE_ITEMS.length];
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 sm:mb-8">
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
@@ -124,19 +124,19 @@ export function HypeBanner({ index }: { index: number }) {
           transition={{ duration: 0.35 }}
         >
           {item.kind === "result" && (
-            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
+            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
               <img
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover"
+                className="h-9 w-9 flex-none rounded-full object-cover sm:h-16 sm:w-16"
               />
               <div className="min-w-0 flex-1">
                 <Label>Resultaat · met {item.tool}</Label>
-                <p className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
+                <p className="mt-0.5 text-[13px] font-medium leading-snug text-foreground sm:mt-1 sm:text-xl">
                   {item.result}
                 </p>
-                <figcaption className="mt-1.5 text-sm text-muted-foreground">
+                <figcaption className="mt-0.5 text-[11px] text-muted-foreground sm:mt-1.5 sm:text-sm">
                   {item.person} — {item.role}
                 </figcaption>
               </div>
@@ -144,19 +144,19 @@ export function HypeBanner({ index }: { index: number }) {
           )}
 
           {item.kind === "quote" && (
-            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
+            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
               <img
                 src={item.avatar}
                 alt={item.person}
                 loading="lazy"
-                className="h-16 w-16 flex-none rounded-full object-cover"
+                className="h-9 w-9 flex-none rounded-full object-cover sm:h-16 sm:w-16"
               />
               <div className="min-w-0 flex-1">
                 <Label>Over AI</Label>
-                <blockquote className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
+                <blockquote className="mt-0.5 text-[13px] font-medium leading-snug text-foreground sm:mt-1 sm:text-xl">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="mt-1.5 text-sm text-muted-foreground">
+                <figcaption className="mt-0.5 text-[11px] text-muted-foreground sm:mt-1.5 sm:text-sm">
                   {item.person} — {item.role}
                 </figcaption>
               </div>
@@ -164,17 +164,17 @@ export function HypeBanner({ index }: { index: number }) {
           )}
 
           {item.kind === "tool" && (
-            <figure className="flex items-center gap-5 border-l-2 border-brand pl-5">
-              <span className="flex h-16 w-16 flex-none items-center justify-center rounded-full border border-border bg-card">
+            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
+              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full border border-border bg-card sm:h-16 sm:w-16">
                 <img
                   src={item.toolLogo}
                   alt={item.tool}
-                  className="h-8 w-8 object-contain"
+                  className="h-5 w-5 object-contain sm:h-8 sm:w-8"
                 />
               </span>
               <div className="min-w-0 flex-1">
                 <Label>AI-impact · {item.tool}</Label>
-                <p className="mt-1 text-lg font-medium leading-snug text-foreground sm:text-xl">
+                <p className="mt-0.5 text-[13px] font-medium leading-snug text-foreground sm:mt-1 sm:text-xl">
                   <span className="text-brand">{item.headline}</span> {item.detail}
                 </p>
               </div>
