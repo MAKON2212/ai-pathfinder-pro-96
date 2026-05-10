@@ -147,7 +147,16 @@ function isValidUrl(raw: string): boolean {
   }
 }
 
-function AuditPage() {
+function detectDeviceType(): string {
+  if (typeof window === "undefined") return "unknown";
+  const ua = navigator.userAgent;
+  const w = window.innerWidth;
+  const isTabletUA = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua);
+  const isMobileUA = /Mobi|iPhone|iPod|Android.*Mobile|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  if (isTabletUA || (w >= 768 && w < 1024 && /Touch|Android|iPad/i.test(ua))) return "tablet";
+  if (isMobileUA || w < 768) return "mobile";
+  return "desktop";
+}
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<AuditAnswers>({
