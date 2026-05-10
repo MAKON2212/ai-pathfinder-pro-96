@@ -491,7 +491,7 @@ function AuditPage() {
                 </p>
               </div>
             ) : (
-              <div className="mt-6 md:mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <div className="mt-4 sm:mt-6 md:mt-10 grid grid-cols-1 gap-2 sm:gap-2.5 sm:grid-cols-2">
                 {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
                   <button
                     key={opt}
