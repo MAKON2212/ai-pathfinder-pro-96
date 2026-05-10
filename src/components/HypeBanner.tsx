@@ -206,7 +206,7 @@ export function ReportPreview() {
             <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand/10 text-brand sm:h-11 sm:w-11">
               <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
             </span>
-            <span className="text-sm text-foreground sm:text-lg">{label}</span>
+            <span className="font-display text-sm font-medium tracking-tight text-foreground sm:text-lg">{label}</span>
           </li>
         ))}
       </ul>
