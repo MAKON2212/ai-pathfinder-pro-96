@@ -42,6 +42,7 @@ export const trackAuditSession = createServerFn({ method: "POST" })
         user_agent: data.userAgent ?? null,
         referrer: data.referrer ?? null,
         landing_path: data.landingPath ?? null,
+        device_type: data.deviceType ?? null,
       };
 
       await supabaseAdmin
