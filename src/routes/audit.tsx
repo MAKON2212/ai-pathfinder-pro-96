@@ -275,6 +275,7 @@ function AuditPage() {
           userAgent: navigator.userAgent,
           referrer: document.referrer || undefined,
           landingPath: window.location.pathname,
+          deviceType: detectDeviceType(),
         },
       }).catch(() => {});
     }, 600);
