@@ -186,30 +186,34 @@ export function HypeBanner({ index }: { index: number }) {
   );
 }
 
+import { TrendingUp, Zap, Wrench, CalendarRange } from "lucide-react";
+
 export function ReportPreview() {
   const items = [
-    { n: "01", label: "Geschatte jaarwaarde van AI in jouw bedrijf" },
-    { n: "02", label: "Top 3 quick wins, direct toepasbaar" },
-    { n: "03", label: "Aanbevolen tool stack met prijzen & links" },
-    { n: "04", label: "90-dagen roadmap, week voor week" },
+    { Icon: TrendingUp, label: "Geschatte jaarwaarde van AI in jouw bedrijf" },
+    { Icon: Zap, label: "Top 3 quick wins, direct toepasbaar" },
+    { Icon: Wrench, label: "Aanbevolen tool stack met prijzen & links" },
+    { Icon: CalendarRange, label: "90-dagen roadmap, week voor week" },
   ];
   return (
     <section>
       <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
         In jouw rapport
       </span>
-      <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-[40px]">
+      <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:mt-5 sm:text-3xl md:text-[40px]">
         Wat je straks krijgt
       </h2>
-      <ul className="mt-6 divide-y divide-border">
-        {items.map((it) => (
-          <li key={it.n} className="flex items-baseline gap-5 py-4">
-            <span className="font-mono text-sm text-brand">{it.n}</span>
-            <span className="text-base text-foreground sm:text-lg">{it.label}</span>
+      <ul className="mt-4 divide-y divide-border sm:mt-6">
+        {items.map(({ Icon, label }) => (
+          <li key={label} className="flex items-center gap-4 py-3 sm:py-4">
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand/10 text-brand sm:h-11 sm:w-11">
+              <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
+            </span>
+            <span className="text-sm text-foreground sm:text-lg">{label}</span>
           </li>
         ))}
       </ul>
-      <p className="mt-6 text-sm text-muted-foreground">
+      <p className="mt-4 text-xs text-muted-foreground sm:mt-6 sm:text-sm">
         Persoonlijk rapport · klaar binnen 2 minuten · 800+ ondernemers gingen je voor.
       </p>
     </section>
