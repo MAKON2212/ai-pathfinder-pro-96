@@ -17,6 +17,7 @@ export const trackAuditSession = createServerFn({ method: "POST" })
     userAgent?: string;
     referrer?: string;
     landingPath?: string;
+    deviceType?: string;
   }) => {
     if (!data.sessionKey || data.sessionKey.length > 80) {
       throw new Error("Invalid sessionKey");
@@ -41,6 +42,7 @@ export const trackAuditSession = createServerFn({ method: "POST" })
         user_agent: data.userAgent ?? null,
         referrer: data.referrer ?? null,
         landing_path: data.landingPath ?? null,
+        device_type: data.deviceType ?? null,
       };
 
       await supabaseAdmin

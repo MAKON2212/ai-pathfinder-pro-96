@@ -22,6 +22,7 @@ export type Database = {
           completed_at: string | null
           created_at: string
           current_step: number
+          device_type: string | null
           id: string
           industry: string | null
           landing_path: string | null
@@ -42,6 +43,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           current_step?: number
+          device_type?: string | null
           id?: string
           industry?: string | null
           landing_path?: string | null
@@ -62,6 +64,7 @@ export type Database = {
           completed_at?: string | null
           created_at?: string
           current_step?: number
+          device_type?: string | null
           id?: string
           industry?: string | null
           landing_path?: string | null

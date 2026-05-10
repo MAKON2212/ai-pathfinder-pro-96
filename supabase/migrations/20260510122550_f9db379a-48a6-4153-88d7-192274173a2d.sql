@@ -1,0 +1,1 @@
+ALTER TABLE public.audit_sessions ADD COLUMN IF NOT EXISTS device_type text;

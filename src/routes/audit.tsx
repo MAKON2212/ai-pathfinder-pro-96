@@ -147,6 +147,17 @@ function isValidUrl(raw: string): boolean {
   }
 }
 
+function detectDeviceType(): string {
+  if (typeof window === "undefined") return "unknown";
+  const ua = navigator.userAgent;
+  const w = window.innerWidth;
+  const isTabletUA = /iPad|Tablet|PlayBook|Silk|(Android(?!.*Mobile))/i.test(ua);
+  const isMobileUA = /Mobi|iPhone|iPod|Android.*Mobile|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  if (isTabletUA || (w >= 768 && w < 1024 && /Touch|Android|iPad/i.test(ua))) return "tablet";
+  if (isMobileUA || w < 768) return "mobile";
+  return "desktop";
+}
+
 function AuditPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
@@ -275,6 +286,7 @@ function AuditPage() {
           userAgent: navigator.userAgent,
           referrer: document.referrer || undefined,
           landingPath: window.location.pathname,
+          deviceType: detectDeviceType(),
         },
       }).catch(() => {});
     }, 600);
@@ -394,7 +406,7 @@ function AuditPage() {
           : "Kies één";
 
   return (
-    <div className="px-5 md:px-6">
+    <div className="px-4 sm:px-5 md:px-6">
       {/* Top thin progress bar — sits flush under the navbar */}
       <div className="fixed left-0 right-0 top-[64px] z-30 h-[3px] bg-transparent">
         <motion.div
@@ -405,9 +417,9 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-10 pb-40 md:max-w-5xl md:pt-16 md:pb-32">
+      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-5xl md:pt-16 md:pb-32">
         {/* HypeBanner card */}
-        <div className="surface mb-6 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
+        <div className="surface mb-3 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
           <HypeBanner index={safeStep} />
         </div>
 
@@ -418,18 +430,18 @@ function AuditPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.3 }}
-            className="surface px-7 py-7 md:px-12 md:py-9"
+            className="surface px-4 py-5 sm:px-7 sm:py-7 md:px-12 md:py-9"
           >
             <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
               {stepKindLabel}
             </span>
-            <h2 className="mt-5 text-balance text-3xl font-semibold leading-[1.1] tracking-tight md:text-[40px]">
+            <h2 className="mt-3 text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:mt-5 sm:text-3xl md:text-[40px]">
               {current.title}
             </h2>
-            <p className="mt-3 text-sm text-muted-foreground md:text-base">{subtitle}</p>
+            <p className="mt-2 text-sm text-muted-foreground sm:mt-3 md:text-base">{subtitle}</p>
 
             {current.type === "text" ? (
-              <div className="mt-6 md:mt-10">
+              <div className="mt-4 sm:mt-6 md:mt-10">
                 <input
                   type={current.inputType || "text"}
                   autoFocus
@@ -453,7 +465,7 @@ function AuditPage() {
                 />
               </div>
             ) : current.type === "longtext" ? (
-              <div className="mt-6 md:mt-10">
+              <div className="mt-4 sm:mt-6 md:mt-10">
                 <textarea
                   autoFocus
                   value={typeof value === "string" ? value : ""}
@@ -479,7 +491,7 @@ function AuditPage() {
                 </p>
               </div>
             ) : (
-              <div className="mt-6 md:mt-10 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <div className="mt-4 sm:mt-6 md:mt-10 grid grid-cols-1 gap-2 sm:gap-2.5 sm:grid-cols-2">
                 {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
                   <button
                     key={opt}
@@ -546,7 +558,7 @@ function AuditPage() {
               )}
             </AnimatePresence>
 
-            <div className="mt-10 border-t border-border pt-5 flex items-center justify-between md:mt-12">
+            <div className="mt-6 border-t border-border pt-4 flex items-center justify-between sm:mt-10 sm:pt-5 md:mt-12">
               <button
                 onClick={goBack}
                 disabled={step === 0}
@@ -573,7 +585,7 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-8">
+        <div className="surface mt-4 px-4 py-5 sm:mt-8 sm:px-7 sm:py-8 md:px-12 md:py-8">
           <ReportPreview />
         </div>
       </div>
