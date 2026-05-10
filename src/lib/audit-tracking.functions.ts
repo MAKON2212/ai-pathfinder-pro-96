@@ -17,6 +17,7 @@ export const trackAuditSession = createServerFn({ method: "POST" })
     userAgent?: string;
     referrer?: string;
     landingPath?: string;
+    deviceType?: string;
   }) => {
     if (!data.sessionKey || data.sessionKey.length > 80) {
       throw new Error("Invalid sessionKey");
