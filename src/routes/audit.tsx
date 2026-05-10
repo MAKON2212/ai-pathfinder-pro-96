@@ -465,7 +465,7 @@ function AuditPage() {
                 />
               </div>
             ) : current.type === "longtext" ? (
-              <div className="mt-6 md:mt-10">
+              <div className="mt-4 sm:mt-6 md:mt-10">
                 <textarea
                   autoFocus
                   value={typeof value === "string" ? value : ""}
