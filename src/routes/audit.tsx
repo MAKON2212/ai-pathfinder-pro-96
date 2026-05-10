@@ -558,7 +558,7 @@ function AuditPage() {
               )}
             </AnimatePresence>
 
-            <div className="mt-10 border-t border-border pt-5 flex items-center justify-between md:mt-12">
+            <div className="mt-6 border-t border-border pt-4 flex items-center justify-between sm:mt-10 sm:pt-5 md:mt-12">
               <button
                 onClick={goBack}
                 disabled={step === 0}
