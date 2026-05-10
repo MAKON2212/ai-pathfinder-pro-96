@@ -157,6 +157,8 @@ function detectDeviceType(): string {
   if (isMobileUA || w < 768) return "mobile";
   return "desktop";
 }
+
+function AuditPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<AuditAnswers>({
