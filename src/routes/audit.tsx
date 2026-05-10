@@ -585,7 +585,7 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="surface mt-8 px-7 py-8 md:px-12 md:py-8">
+        <div className="surface mt-4 px-4 py-5 sm:mt-8 sm:px-7 sm:py-8 md:px-12 md:py-8">
           <ReportPreview />
         </div>
       </div>
