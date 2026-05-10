@@ -171,7 +171,7 @@ export function HypeBanner({ index }: { index: number }) {
               </span>
               <div className="min-w-0 flex-1">
                 <Label>AI-impact · {item.tool}</Label>
-                <p className="mt-0.5 text-[13px] font-medium leading-snug text-foreground sm:mt-1 sm:text-xl">
+                <p className="mt-0.5 font-display text-[13px] font-semibold leading-snug tracking-tight text-foreground sm:mt-1 sm:text-xl">
                   <span className="text-brand">{item.headline}</span> {item.detail}
                 </p>
               </div>
@@ -206,7 +206,7 @@ export function ReportPreview() {
             <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand/10 text-brand sm:h-11 sm:w-11">
               <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
             </span>
-            <span className="text-sm text-foreground sm:text-lg">{label}</span>
+            <span className="font-display text-sm font-medium tracking-tight text-foreground sm:text-lg">{label}</span>
           </li>
         ))}
       </ul>
