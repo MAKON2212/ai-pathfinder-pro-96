@@ -418,176 +418,180 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-5xl md:pt-16 md:pb-32">
-        {/* HypeBanner card */}
+      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 lg:max-w-6xl md:pt-16 md:pb-32">
+        {/* HypeBanner card — full width above */}
         <div className="surface mb-3 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
           <HypeBanner index={safeStep} />
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
-            className="surface px-4 py-5 sm:px-7 sm:py-7 md:px-12 md:py-9"
-          >
-            <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
-              {stepKindLabel}
-            </span>
-            <h2 className="mt-3 text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:mt-5 sm:text-3xl md:text-[40px]">
-              {current.title}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground sm:mt-3 md:text-base">{subtitle}</p>
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.3 }}
+              className="surface px-4 py-5 sm:px-7 sm:py-7 md:px-10 md:py-9"
+            >
+              <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
+                {stepKindLabel}
+              </span>
+              <h2 className="mt-3 text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:mt-5 sm:text-3xl md:text-[36px]">
+                {current.title}
+              </h2>
+              <p className="mt-2 text-sm text-muted-foreground sm:mt-3 md:text-base">{subtitle}</p>
 
-            {current.type === "text" ? (
-              <div className="mt-4 sm:mt-6 md:mt-10">
-                <input
-                  type={current.inputType || "text"}
-                  autoFocus
-                  value={typeof value === "string" ? value : ""}
-                  placeholder={current.placeholder}
-                  onChange={(e) => {
-                    setAnswers({ ...answers, [current.key]: e.target.value });
-                    // Verberg fout zodra gebruiker begint met typen.
-                    if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
-                  }}
-                  onBlur={() => setShowError({ ...showError, [otherKey]: true })}
-                  onKeyDown={(e) => { if (e.key === "Enter") goNext(); }}
-                  aria-invalid={errorVisible}
-                  aria-describedby={errorVisible ? `${otherKey}-error` : undefined}
-                  className={cn(
-                    "w-full rounded-2xl border bg-card px-5 py-4 text-base outline-none transition placeholder:text-muted-foreground/60",
-                    errorVisible
-                      ? "border-destructive focus:border-destructive"
-                      : "border-border focus:border-brand",
-                  )}
-                />
-              </div>
-            ) : current.type === "longtext" ? (
-              <div className="mt-4 sm:mt-6 md:mt-10">
-                <textarea
-                  autoFocus
-                  value={typeof value === "string" ? value : ""}
-                  placeholder={current.placeholder}
-                  onChange={(e) => {
-                    setAnswers({ ...answers, [current.key]: e.target.value });
-                    if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
-                  }}
-                  onBlur={() => setShowError({ ...showError, [otherKey]: true })}
-                  aria-invalid={errorVisible}
-                  className={cn(
-                    "min-h-[160px] w-full rounded-2xl border bg-card px-5 py-4 text-base outline-none transition placeholder:text-muted-foreground/60",
-                    errorVisible
-                      ? "border-destructive focus:border-destructive"
-                      : "border-border focus:border-brand",
-                  )}
-                />
-                <p className={cn(
-                  "mt-2 text-xs",
-                  (typeof value === "string" ? value.trim().length : 0) >= 20 ? "text-brand" : "text-muted-foreground",
-                )}>
-                  {typeof value === "string" ? value.trim().length : 0} / 20 tekens
-                </p>
-              </div>
-            ) : (
-              <div className="mt-4 sm:mt-6 md:mt-10 grid grid-cols-1 gap-2 sm:gap-2.5 sm:grid-cols-2">
-                {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => handleSelect(opt)}
+              {current.type === "text" ? (
+                <div className="mt-4 sm:mt-6 md:mt-8">
+                  <input
+                    type={current.inputType || "text"}
+                    autoFocus
+                    value={typeof value === "string" ? value : ""}
+                    placeholder={current.placeholder}
+                    onChange={(e) => {
+                      setAnswers({ ...answers, [current.key]: e.target.value });
+                      if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
+                    }}
+                    onBlur={() => setShowError({ ...showError, [otherKey]: true })}
+                    onKeyDown={(e) => { if (e.key === "Enter") goNext(); }}
+                    aria-invalid={errorVisible}
+                    aria-describedby={errorVisible ? `${otherKey}-error` : undefined}
                     className={cn(
-                      "group flex items-center justify-between rounded-2xl border bg-card px-4 py-3.5 text-left text-sm transition",
-                      isSelected(opt)
-                        ? "border-brand bg-brand/10 text-foreground"
-                        : errorVisible
-                          ? "border-destructive/50 hover:border-destructive"
-                          : "border-border hover:border-brand/40",
+                      "w-full rounded-2xl border bg-card px-5 py-4 text-base outline-none transition placeholder:text-muted-foreground/60",
+                      errorVisible
+                        ? "border-destructive focus:border-destructive"
+                        : "border-border focus:border-brand",
                     )}
-                  >
-                    <span>{opt}</span>
-                    {isSelected(opt) && (
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
-                      </span>
+                  />
+                </div>
+              ) : current.type === "longtext" ? (
+                <div className="mt-4 sm:mt-6 md:mt-8">
+                  <textarea
+                    autoFocus
+                    value={typeof value === "string" ? value : ""}
+                    placeholder={current.placeholder}
+                    onChange={(e) => {
+                      setAnswers({ ...answers, [current.key]: e.target.value });
+                      if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
+                    }}
+                    onBlur={() => setShowError({ ...showError, [otherKey]: true })}
+                    aria-invalid={errorVisible}
+                    className={cn(
+                      "min-h-[160px] w-full rounded-2xl border bg-card px-5 py-4 text-base outline-none transition placeholder:text-muted-foreground/60",
+                      errorVisible
+                        ? "border-destructive focus:border-destructive"
+                        : "border-border focus:border-brand",
                     )}
-                  </button>
-                ))}
-              </div>
-            )}
+                  />
+                  <p className={cn(
+                    "mt-2 text-xs",
+                    (typeof value === "string" ? value.trim().length : 0) >= 20 ? "text-brand" : "text-muted-foreground",
+                  )}>
+                    {typeof value === "string" ? value.trim().length : 0} / 20 tekens
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-4 sm:mt-6 md:mt-8 grid grid-cols-1 gap-2 sm:gap-2.5 sm:grid-cols-2">
+                  {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => handleSelect(opt)}
+                      className={cn(
+                        "group flex items-center justify-between rounded-2xl border bg-card px-4 py-3.5 text-left text-sm transition",
+                        isSelected(opt)
+                          ? "border-brand bg-brand/10 text-foreground"
+                          : errorVisible
+                            ? "border-destructive/50 hover:border-destructive"
+                            : "border-border hover:border-brand/40",
+                      )}
+                    >
+                      <span>{opt}</span>
+                      {isSelected(opt) && (
+                        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand">
+                          <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
 
-            {isOtherActive && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                className="mt-4"
-              >
-                <textarea
-                  autoFocus
-                  value={otherVal}
-                  onChange={(e) => {
-                    setOtherText({ ...otherText, [otherKey]: e.target.value });
-                    if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
-                  }}
-                  onBlur={() => setShowError({ ...showError, [otherKey]: true })}
-                  placeholder="Vertel ons in eigen woorden (minimaal 4 tekens)…"
-                  className={cn(
-                    "min-h-[100px] w-full rounded-2xl border bg-card px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60",
-                    errorVisible
-                      ? "border-destructive focus:border-destructive"
-                      : "border-border focus:border-brand",
-                  )}
-                />
-              </motion.div>
-            )}
-
-            {/* Inline foutmelding — verschijnt na blur of na klik op Volgende */}
-            <AnimatePresence>
-              {errorVisible && errorMsg && (
+              {isOtherActive && (
                 <motion.div
-                  id={`${otherKey}-error`}
-                  role="alert"
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  className="mt-4 flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="mt-4"
                 >
-                  <AlertCircle className="mt-0.5 h-4 w-4 flex-none" />
-                  <span>{errorMsg}</span>
+                  <textarea
+                    autoFocus
+                    value={otherVal}
+                    onChange={(e) => {
+                      setOtherText({ ...otherText, [otherKey]: e.target.value });
+                      if (showError[otherKey]) setShowError({ ...showError, [otherKey]: false });
+                    }}
+                    onBlur={() => setShowError({ ...showError, [otherKey]: true })}
+                    placeholder="Vertel ons in eigen woorden (minimaal 4 tekens)…"
+                    className={cn(
+                      "min-h-[100px] w-full rounded-2xl border bg-card px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60",
+                      errorVisible
+                        ? "border-destructive focus:border-destructive"
+                        : "border-border focus:border-brand",
+                    )}
+                  />
                 </motion.div>
               )}
-            </AnimatePresence>
 
-            <div className="mt-6 border-t border-border pt-4 flex items-center justify-between sm:mt-10 sm:pt-5 md:mt-12">
-              <button
-                onClick={goBack}
-                disabled={step === 0}
-                className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground disabled:opacity-30"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Terug
-              </button>
-              <button
-                onClick={goNext}
-                aria-disabled={!isValid}
-                title={!isValid && errorMsg ? errorMsg : undefined}
-                className={cn(
-                  "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition",
-                  isValid
-                    ? "bg-brand text-white shadow-sm hover:opacity-90"
-                    : "bg-brand/30 text-white/90",
+              <AnimatePresence>
+                {errorVisible && errorMsg && (
+                  <motion.div
+                    id={`${otherKey}-error`}
+                    role="alert"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    className="mt-4 flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+                  >
+                    <AlertCircle className="mt-0.5 h-4 w-4 flex-none" />
+                    <span>{errorMsg}</span>
+                  </motion.div>
                 )}
-              >
-                {safeStep === steps.length - 1 ? "Genereer rapport" : "Volgende"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+              </AnimatePresence>
 
-        <div className="surface mt-4 px-4 py-5 sm:mt-8 sm:px-7 sm:py-8 md:px-12 md:py-8">
-          <ReportPreview />
+              <div className="mt-6 border-t border-border pt-4 flex items-center justify-between sm:mt-10 sm:pt-5 md:mt-12">
+                <button
+                  onClick={goBack}
+                  disabled={step === 0}
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground disabled:opacity-30"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Terug
+                </button>
+                <button
+                  onClick={goNext}
+                  aria-disabled={!isValid}
+                  title={!isValid && errorMsg ? errorMsg : undefined}
+                  className={cn(
+                    "inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition",
+                    isValid
+                      ? "bg-brand text-white shadow-sm hover:opacity-90"
+                      : "bg-brand/30 text-white/90",
+                  )}
+                >
+                  {safeStep === steps.length - 1 ? "Genereer rapport" : "Volgende"}
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <LiveReportPreview
+            answers={answers}
+            unlockedCount={Math.min(safeStep, 4)}
+            onCta={() => {
+              if (safeStep >= 4) finalize(answers);
+            }}
+          />
         </div>
       </div>
     </div>
