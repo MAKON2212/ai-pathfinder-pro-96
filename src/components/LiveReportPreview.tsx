@@ -24,14 +24,9 @@ export function LiveReportPreview({
   return (
     <aside className="surface px-4 py-5 sm:px-6 sm:py-7 md:px-7 md:py-8 lg:sticky lg:top-24 lg:self-start">
       <div className="mb-5 flex items-center justify-between gap-3">
-        <div>
-          <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
-            Live preview
-          </span>
-          <h3 className="mt-3 text-lg font-semibold tracking-tight sm:text-xl">
-            Jouw rapport — in opbouw
-          </h3>
-        </div>
+        <h3 className="text-lg font-semibold tracking-tight sm:text-xl">
+          Jouw rapport — in opbouw
+        </h3>
         <div className="text-right">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
             Voltooid
