@@ -121,7 +121,7 @@ export function HypeBanner({ index }: { index: number }) {
           transition={{ duration: 0.35 }}
         >
           {item.kind === "result" && (
-            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
+            <figure className="flex items-center gap-3 sm:gap-5">
               <img
                 src={item.avatar}
                 alt={item.person}
@@ -141,7 +141,7 @@ export function HypeBanner({ index }: { index: number }) {
           )}
 
           {item.kind === "quote" && (
-            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
+            <figure className="flex items-center gap-3 sm:gap-5">
               <img
                 src={item.avatar}
                 alt={item.person}
@@ -161,7 +161,7 @@ export function HypeBanner({ index }: { index: number }) {
           )}
 
           {item.kind === "tool" && (
-            <figure className="flex items-center gap-3 border-l-2 border-brand pl-3 sm:gap-5 sm:pl-5">
+            <figure className="flex items-center gap-3 sm:gap-5">
               <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full border border-border bg-card sm:h-16 sm:w-16">
                 <img
                   src={item.toolLogo}
