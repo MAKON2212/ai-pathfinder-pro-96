@@ -167,18 +167,13 @@ export function LiveReportPreview({
 
   return (
     <section className="surface relative overflow-hidden p-4 sm:p-6 md:p-7">
-      <header className="flex items-center justify-between gap-3">
-        <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
-          In jouw rapport
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-          {answered} / 4 vragen
-        </span>
-      </header>
-
       {/* Geblurde inhoud */}
-      <div className="relative mt-4">
-        <div
+      <div className="relative">
+        <motion.div
+          key={`${industry}-${answers.size}-${(answers.painPoints ?? []).join(",")}-${(answers.goals ?? []).join(",")}`}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
           aria-hidden
           className="pointer-events-none select-none"
           style={{ filter: "blur(7px)" }}
@@ -282,7 +277,7 @@ export function LiveReportPreview({
               </AnimatePresence>
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* Spinner overlay */}
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
