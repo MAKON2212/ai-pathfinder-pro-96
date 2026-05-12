@@ -430,10 +430,7 @@ function AuditPage() {
             transition={{ duration: 0.3 }}
             className="surface px-4 py-5 sm:px-7 sm:py-7 md:px-12 md:py-9"
           >
-            <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
-              {stepKindLabel}
-            </span>
-            <h2 className="mt-3 text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:mt-5 sm:text-3xl md:text-[40px]">
+            <h2 className="text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:text-3xl md:text-[40px]">
               {current.title}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground sm:mt-3 md:text-base">{subtitle}</p>
