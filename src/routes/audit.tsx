@@ -411,6 +411,9 @@ function AuditPage() {
       </div>
 
       <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-6xl md:pt-16 md:pb-32">
+        <div className="mb-5 sm:mb-8 md:mb-10">
+          <HypeBanner />
+        </div>
         <div className="grid gap-4 sm:gap-6 md:grid-cols-2 md:gap-8 md:items-start">
           <div>
 
