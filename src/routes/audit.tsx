@@ -396,14 +396,6 @@ function AuditPage() {
         : "Klik om te kiezen — je gaat automatisch verder.";
   const subtitle = "subtitle" in current && current.subtitle ? current.subtitle : subtitleDefault;
 
-  const stepKindLabel =
-    current.type === "text"
-      ? "Invoeren"
-      : current.type === "longtext"
-        ? "Vertel kort"
-        : current.type === "multi"
-          ? "Meerdere mogelijk"
-          : "Kies één";
 
   return (
     <div className="px-4 sm:px-5 md:px-6">
