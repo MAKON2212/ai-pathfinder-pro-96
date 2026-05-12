@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { HypeBanner, ReportPreview } from "@/components/HypeBanner";
+import { LiveReportPreview } from "@/components/LiveReportPreview";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, AlertCircle } from "lucide-react";
@@ -396,14 +396,6 @@ function AuditPage() {
         : "Klik om te kiezen — je gaat automatisch verder.";
   const subtitle = "subtitle" in current && current.subtitle ? current.subtitle : subtitleDefault;
 
-  const stepKindLabel =
-    current.type === "text"
-      ? "Invoeren"
-      : current.type === "longtext"
-        ? "Vertel kort"
-        : current.type === "multi"
-          ? "Meerdere mogelijk"
-          : "Kies één";
 
   return (
     <div className="px-4 sm:px-5 md:px-6">
@@ -417,11 +409,9 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-5xl md:pt-16 md:pb-32">
-        {/* HypeBanner card */}
-        <div className="surface mb-3 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
-          <HypeBanner index={safeStep} />
-        </div>
+      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-6xl md:pt-16 md:pb-32">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 md:gap-8 md:items-start">
+          <div>
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -432,10 +422,7 @@ function AuditPage() {
             transition={{ duration: 0.3 }}
             className="surface px-4 py-5 sm:px-7 sm:py-7 md:px-12 md:py-9"
           >
-            <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand-soft px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-brand">
-              {stepKindLabel}
-            </span>
-            <h2 className="mt-3 text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:mt-5 sm:text-3xl md:text-[40px]">
+            <h2 className="text-balance text-2xl font-semibold leading-[1.15] tracking-tight sm:text-3xl md:text-[40px]">
               {current.title}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground sm:mt-3 md:text-base">{subtitle}</p>
@@ -585,8 +572,11 @@ function AuditPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="surface mt-4 px-4 py-5 sm:mt-8 sm:px-7 sm:py-8 md:px-12 md:py-8">
-          <ReportPreview />
+          </div>
+
+          <aside className="md:sticky md:top-24">
+            <LiveReportPreview answers={answers} pulseKey={safeStep} />
+          </aside>
         </div>
       </div>
     </div>
