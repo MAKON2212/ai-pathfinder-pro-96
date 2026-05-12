@@ -417,11 +417,9 @@ function AuditPage() {
         />
       </div>
 
-      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-5xl md:pt-16 md:pb-32">
-        {/* HypeBanner card */}
-        <div className="surface mb-3 px-4 py-3 sm:mb-8 sm:px-7 sm:py-6 md:px-9 md:py-7">
-          <HypeBanner index={safeStep} />
-        </div>
+      <div className="mx-auto max-w-2xl pt-5 pb-24 sm:pt-10 sm:pb-40 md:max-w-6xl md:pt-16 md:pb-32">
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-2 md:gap-8 md:items-start">
+          <div>
 
         <AnimatePresence mode="wait">
           <motion.div
