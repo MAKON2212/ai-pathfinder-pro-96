@@ -482,7 +482,7 @@ function AuditPage() {
                 </p>
               </div>
             ) : (
-              {(() => {
+              (() => {
                 const allOpts = [...current.options, ...(current.allowOther ? [OTHER] : [])];
                 const dense = allOpts.length > 6;
                 return (
