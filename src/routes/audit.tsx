@@ -482,29 +482,43 @@ function AuditPage() {
                 </p>
               </div>
             ) : (
-              <div className="mt-4 sm:mt-6 md:mt-10 grid grid-cols-1 gap-2 sm:gap-2.5 sm:grid-cols-2">
-                {[...current.options, ...(current.allowOther ? [OTHER] : [])].map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => handleSelect(opt)}
+              {(() => {
+                const allOpts = [...current.options, ...(current.allowOther ? [OTHER] : [])];
+                const dense = allOpts.length > 6;
+                return (
+                  <div
                     className={cn(
-                      "group flex items-center justify-between rounded-2xl border bg-card px-4 py-3.5 text-left text-sm transition",
-                      isSelected(opt)
-                        ? "border-brand bg-brand/10 text-foreground"
-                        : errorVisible
-                          ? "border-destructive/50 hover:border-destructive"
-                          : "border-border hover:border-brand/40",
+                      "mt-4 sm:mt-6 md:mt-10 grid gap-2 sm:gap-2.5",
+                      dense
+                        ? "grid-cols-2 sm:grid-cols-2 md:grid-cols-3"
+                        : "grid-cols-1 sm:grid-cols-2",
                     )}
                   >
-                    <span>{opt}</span>
-                    {isSelected(opt) && (
-                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand">
-                        <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
+                    {allOpts.map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => handleSelect(opt)}
+                        className={cn(
+                          "group flex items-center justify-between rounded-2xl border bg-card text-left transition",
+                          dense ? "px-3 py-2.5 text-xs sm:text-sm" : "px-4 py-3.5 text-sm",
+                          isSelected(opt)
+                            ? "border-brand bg-brand/10 text-foreground"
+                            : errorVisible
+                              ? "border-destructive/50 hover:border-destructive"
+                              : "border-border hover:border-brand/40",
+                        )}
+                      >
+                        <span className="leading-tight">{opt}</span>
+                        {isSelected(opt) && (
+                          <span className="flex h-4 w-4 flex-none items-center justify-center rounded-full bg-brand">
+                            <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                );
+              })()}
             )}
 
             {isOtherActive && (
