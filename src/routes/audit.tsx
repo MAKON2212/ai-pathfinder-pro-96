@@ -518,7 +518,7 @@ function AuditPage() {
                     ))}
                   </div>
                 );
-              })()}
+              })()
             )}
 
             {isOtherActive && (
