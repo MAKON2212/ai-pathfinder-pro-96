@@ -35,6 +35,7 @@
   --color-brand-soft: var(--brand-soft);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-money: var(--money);
 
   --font-sans:
     "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", Arial, sans-serif;
@@ -46,38 +47,44 @@
   --animate-float: float 7s ease-in-out infinite;
   --animate-shimmer: shimmer 2.5s linear infinite;
   --animate-typing: typing 2s steps(28) infinite;
+  --animate-glow-pulse: glow-pulse 2.4s ease-in-out infinite;
 }
 
 :root {
-  --radius: 1.75rem;
+  --radius: 1.5rem;
 
-  /* Cosmos palette — pale fog canvas, deep navy ink, electric blue accent */
-  --background: #eef1f6;       /* Fog */
-  --foreground: #0b1530;       /* Ink */
-  --card: #ffffff;             /* Snow card */
-  --card-foreground: #0b1530;
-  --popover: #ffffff;
-  --popover-foreground: #0b1530;
-  --primary: #0b1530;          /* Ink for primary text/buttons */
+  /* Midnight Indigo — dark, money-themed */
+  --background: #0a0a1a;
+  --foreground: #e8eaf3;
+  --card: #141432;
+  --card-foreground: #e8eaf3;
+  --popover: #141432;
+  --popover-foreground: #e8eaf3;
+  --primary: #4f46e5;
   --primary-foreground: #ffffff;
-  --secondary: #eef1f6;
-  --secondary-foreground: #0b1530;
-  --muted: #eef1f6;
-  --muted-foreground: #6c7593; /* Cosmos muted */
-  --accent: #0066df;           /* Cosmos accent */
+  --secondary: #1e1e5a;
+  --secondary-foreground: #e8eaf3;
+  --muted: #1a1a3a;
+  --muted-foreground: #8a90b8;
+  --accent: #4f46e5;
   --accent-foreground: #ffffff;
-  --destructive: #b64400;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(11, 21, 48, 0.10);
-  --input: rgba(11, 21, 48, 0.18);
-  --ring: #0066df;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #4f46e5;
 
-  --brand: #0066df;            /* Cosmos accent-strong */
-  --brand-soft: rgba(0, 102, 223, 0.10);
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-2: #eef1f6;
+  --brand: #4f46e5;
+  --brand-soft: rgba(79, 70, 229, 0.15);
+  --surface: #141432;
+  --surface-2: #1e1e5a;
+  --money: #22c55e;
 
-  --shadow-soft: 0 1px 2px rgba(11, 21, 48, 0.04);
+  --gradient-value: linear-gradient(135deg, #4f46e5 0%, #22c55e 100%);
+  --gradient-indigo: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --shadow-glow: 0 0 60px rgba(79, 70, 229, 0.35);
+  --shadow-money: 0 0 80px rgba(34, 197, 94, 0.35);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 @layer base {
@@ -114,36 +121,47 @@
 }
 
 @layer utilities {
-  /* Apple uses flat surfaces — no glass/blur. Cards just sit on Fog canvas. */
   .surface {
-    background: #ffffff;
+    background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 28px;
-    box-shadow: none;
+    border-radius: 24px;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
   }
   .surface-2 {
-    background: #f5f5f7;
+    background: var(--surface-2);
     border: 1px solid var(--border);
-    border-radius: 28px;
+    border-radius: 24px;
   }
   .glass {
-    background: #ffffff;
+    background: rgba(20, 20, 50, 0.6);
     border: 1px solid var(--border);
-    border-radius: 28px;
-    box-shadow: none;
+    border-radius: 24px;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
   }
-  /* Frosted pill — for nav/overlay only */
   .frosted {
-    background: rgba(210, 210, 215, 0.64);
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    color: rgba(0, 0, 0, 0.72);
+    background: rgba(10, 10, 26, 0.72);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    color: rgba(232, 234, 243, 0.92);
+    border: 1px solid var(--border);
   }
   .text-brand { color: var(--brand); }
   .bg-brand { background-color: var(--brand); }
   .border-brand { border-color: var(--brand); }
+  .text-money { color: var(--money); }
+  .bg-money { background-color: var(--money); }
+  .gradient-value-text {
+    background: var(--gradient-value);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   .grid-lines {
-    background-image: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
   .pill {
     display: inline-flex;
@@ -151,21 +169,26 @@
     gap: 0.5rem;
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    background: #ffffff;
-    color: #1d1d1f;
+    background: rgba(79,70,229,0.12);
+    color: #c7d2fe;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: -0.003em;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(79,70,229,0.3);
   }
-  /* Apple display headline — for hero */
   .display {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(48px, 7vw, 96px);
+    font-size: clamp(40px, 8vw, 80px);
     line-height: 1.04;
     letter-spacing: -0.022em;
-    color: #1d1d1f;
+    color: var(--foreground);
+  }
+  .glow-ring {
+    box-shadow: var(--shadow-glow);
+  }
+  .glow-money {
+    box-shadow: var(--shadow-money);
   }
 }
 
@@ -187,4 +210,9 @@
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 30px rgba(79,70,229,0.25); }
+  50% { box-shadow: 0 0 60px rgba(79,70,229,0.55); }
 }
