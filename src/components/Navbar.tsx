@@ -49,7 +49,7 @@ export function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="border-t border-border bg-[rgba(245,245,247,0.95)] backdrop-blur-xl md:hidden">
+        <div className="border-t border-border bg-[rgba(10,10,26,0.95)] backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-[1200px] flex-col px-5 py-3">
             {NAV.map((n) => (
               <Link
