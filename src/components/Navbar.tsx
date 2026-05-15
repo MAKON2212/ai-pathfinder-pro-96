@@ -15,7 +15,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(245,245,247,0.85)] backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(10,10,26,0.78)] backdrop-blur-xl">
       <div className="mx-auto flex h-12 max-w-[1200px] items-center justify-between px-5 md:h-11 md:px-6">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <img src={logo} alt="ScanAI" className="h-6 w-6 rounded-[6px]" />
@@ -36,9 +36,9 @@ export function Navbar() {
         </nav>
         <Link
           to="/audit"
-          className="hidden rounded-full bg-[#0071e3] px-4 py-1.5 text-[12px] font-normal text-white transition hover:bg-[#0077ed] md:inline-flex"
+          className="hidden rounded-full bg-brand px-4 py-1.5 text-[12px] font-medium text-white shadow-[0_4px_20px_rgba(79,70,229,0.4)] transition hover:brightness-110 md:inline-flex"
         >
-          Start AI Check
+          Bereken gratis
         </Link>
         <button
           aria-label="Menu"
@@ -49,7 +49,7 @@ export function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="border-t border-border bg-[rgba(245,245,247,0.95)] backdrop-blur-xl md:hidden">
+        <div className="border-t border-border bg-[rgba(10,10,26,0.95)] backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-[1200px] flex-col px-5 py-3">
             {NAV.map((n) => (
               <Link
