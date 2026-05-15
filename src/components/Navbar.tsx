@@ -15,7 +15,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(245,245,247,0.85)] backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(10,10,26,0.78)] backdrop-blur-xl">
       <div className="mx-auto flex h-12 max-w-[1200px] items-center justify-between px-5 md:h-11 md:px-6">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <img src={logo} alt="ScanAI" className="h-6 w-6 rounded-[6px]" />
