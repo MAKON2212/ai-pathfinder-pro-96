@@ -36,9 +36,9 @@ export function Navbar() {
         </nav>
         <Link
           to="/audit"
-          className="hidden rounded-full bg-[#0071e3] px-4 py-1.5 text-[12px] font-normal text-white transition hover:bg-[#0077ed] md:inline-flex"
+          className="hidden rounded-full bg-brand px-4 py-1.5 text-[12px] font-medium text-white shadow-[0_4px_20px_rgba(79,70,229,0.4)] transition hover:brightness-110 md:inline-flex"
         >
-          Start AI Check
+          Bereken gratis
         </Link>
         <button
           aria-label="Menu"
