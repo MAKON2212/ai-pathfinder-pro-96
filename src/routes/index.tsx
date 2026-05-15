@@ -24,19 +24,6 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="mx-auto w-full max-w-md px-5 pb-16 pt-4 sm:max-w-lg sm:pt-10">
-      {/* Pill */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="flex justify-center"
-      >
-        <span className="pill">
-          <Sparkles className="h-3 w-3" />
-          Gratis · 90 seconden · geen e-mail nodig
-        </span>
-      </motion.div>
-
       {/* Headline */}
       <motion.h1
         initial={{ opacity: 0, y: 14 }}
@@ -137,13 +124,25 @@ function Index() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="mt-12">
+      <div className="mt-12 pb-20 md:pb-0">
         <Link
           to="/audit"
           className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
         >
           <Sparkles className="h-5 w-5" />
           <span>Start de gratis berekening</span>
+        </Link>
+      </div>
+
+      {/* STICKY BOTTOM CTA — altijd zichtbaar, floating pill op desktop */}
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-center px-4 py-3 md:bottom-6 md:px-0 pointer-events-none">
+        <div className="absolute inset-0 border-t border-border bg-background/80 backdrop-blur-xl md:hidden" />
+        <Link
+          to="/audit"
+          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.5)] transition hover:brightness-110 md:w-auto md:px-10 md:py-4 md:text-base"
+        >
+          Bereken mijn bedrag
+          <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
     </div>

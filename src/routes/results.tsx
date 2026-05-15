@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Clock, Info, Globe, Zap, CalendarDays, ShieldAlert, Lock, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, TrendingUp, Check, Info, Globe, Zap, CalendarDays, ShieldAlert, Lock, Sparkles, Mail, Link2, Copy, Headphones } from "lucide-react";
 import {
   Radar,
   RadarChart,
@@ -12,6 +12,7 @@ import {
   Legend,
 } from "recharts";
 import type { GeneratedReport } from "@/lib/report.functions";
+import { setReportEmail } from "@/lib/report.functions";
 import { generatePDF } from "@/lib/pdf.functions";
 import { ReviewSlider } from "@/components/ReviewSlider";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
@@ -95,26 +96,164 @@ function Score({
   );
 }
 
-function CountdownPill({ expiresAt }: { expiresAt: number }) {
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-  const remaining = Math.max(0, expiresAt - now);
-  const m = Math.floor(remaining / 60_000);
-  const s = Math.floor((remaining % 60_000) / 1000);
-  const expired = remaining <= 0;
+function SaveLinkPill({ url }: { url: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
   return (
-    <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium ${expired ? "border-destructive/50 bg-destructive/10 text-destructive" : "border-brand/40 bg-brand/10 text-brand"}`}>
-      <Clock className="h-3.5 w-3.5" />
-      <span className="font-mono">
-        {expired ? "Verlopen" : `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`}
-      </span>
-      <span className="text-foreground/70">
-        {expired ? "— genereer opnieuw" : "We houden je winstplan beschikbaar"}
-      </span>
+    <div className="inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 text-xs font-medium text-brand">
+      <Link2 className="h-3.5 w-3.5" />
+      <span>Rapport permanent opgeslagen</span>
+      <button onClick={copy} className="flex items-center gap-1 rounded-full bg-brand/20 px-2 py-0.5 transition hover:bg-brand/30">
+        <Copy className="h-3 w-3" />
+        <span>{copied ? "Gekopieerd!" : "Kopieer link"}</span>
+      </button>
     </div>
+  );
+}
+
+function EmailGate({ reportId, onCaptured }: { reportId?: string; onCaptured: () => void }) {
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !reportId) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      await setReportEmail({ data: { reportId, email } });
+      onCaptured();
+    } catch {
+      setError("Probeer het opnieuw.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="surface mx-6 max-w-lg rounded-3xl border border-brand/30 bg-card/95 p-8 text-center shadow-2xl backdrop-blur md:p-10">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
+        <Mail className="h-6 w-6" />
+      </div>
+      <h3 className="mt-5 text-2xl font-medium tracking-tight">Ontvang je rapport per e-mail</h3>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        Voer je e-mailadres in om het volledige rapport te bewaren — en om het op elk moment terug te vinden.
+      </p>
+      <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="jouw@email.nl"
+          required
+          className="h-12 w-full rounded-full border border-border bg-input px-5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brand/50"
+        />
+        {error && <p className="text-xs text-destructive">{error}</p>}
+        <button
+          type="submit"
+          disabled={submitting || !email}
+          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-60"
+        >
+          {submitting ? "Even wachten…" : "Bewaar rapport & ga door"}
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </form>
+      <p className="mt-3 text-[11px] text-muted-foreground">Geen spam · enkel je rapport</p>
+    </div>
+  );
+}
+
+const PRICING_TIERS = [
+  {
+    key: "standard",
+    name: "Standaard",
+    price: 29,
+    priceLookupKey: "ai_check_report_one_time",
+    description: "Het volledige rapport als PDF",
+    features: [
+      "Volledige hoofdstukken op maat",
+      "Aanbevolen tool stack",
+      "90-dagen actieplan",
+      "Worst / base / best case scenario's",
+      "PDF-download",
+    ],
+    highlight: false,
+  },
+  {
+    key: "pro",
+    name: "Pro",
+    price: 97,
+    priceLookupKey: "ai_check_report_pro",
+    description: "Rapport + persoonlijke audio briefing",
+    features: [
+      "Alles van Standaard",
+      "Audio briefing (10 min) door AI-analist",
+      "Gepersonaliseerde implementatie tips",
+      "Prioriteitslijst per afdeling",
+      "E-mail support 30 dagen",
+    ],
+    highlight: true,
+  },
+  {
+    key: "dwy",
+    name: "Done-With-You",
+    price: 297,
+    priceLookupKey: "ai_check_report_dwy",
+    description: "Rapport + implementatiebegeleiding",
+    features: [
+      "Alles van Pro",
+      "Live kick-off sessie (60 min)",
+      "Wekelijkse check-ins (4×)",
+      "Tool setup & integratie",
+      "Garantie: 30-dagen of geld terug",
+    ],
+    highlight: false,
+  },
+];
+
+function TierCard({ tier, selected, onSelect }: { tier: typeof PRICING_TIERS[0]; selected: boolean; onSelect: () => void }) {
+  return (
+    <button
+      onClick={onSelect}
+      className={`relative flex w-full flex-col rounded-2xl border p-5 text-left transition ${
+        selected
+          ? "border-brand bg-brand/10 ring-2 ring-brand/40"
+          : "border-border bg-card/60 hover:border-brand/40"
+      } ${tier.highlight ? "md:scale-[1.03]" : ""}`}
+    >
+      {tier.highlight && (
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white">
+          Populairst
+        </span>
+      )}
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <p className="font-semibold">{tier.name}</p>
+          <p className="mt-0.5 text-xs text-muted-foreground">{tier.description}</p>
+        </div>
+        <p className="font-mono text-xl font-bold tabular-nums">€{tier.price}</p>
+      </div>
+      <ul className="mt-4 space-y-1.5">
+        {tier.features.map((f) => (
+          <li key={f} className="flex items-start gap-2 text-xs text-foreground/80">
+            <Check className="mt-0.5 h-3.5 w-3.5 flex-none text-brand" strokeWidth={3} />
+            <span>{f}</span>
+          </li>
+        ))}
+      </ul>
+      {selected && (
+        <div className="mt-4 flex items-center justify-center gap-1.5 rounded-full bg-brand/20 px-3 py-1.5 text-xs font-semibold text-brand">
+          <Check className="h-3.5 w-3.5" strokeWidth={3} />
+          Geselecteerd
+        </div>
+      )}
+    </button>
   );
 }
 
@@ -124,11 +263,12 @@ function ResultsPage() {
   const [report, setReport] = useState<GeneratedReport | null>(null);
   const [companyName, setCompanyName] = useState<string>("");
   const [downloading, setDownloading] = useState(false);
-  const [expiresAt, setExpiresAt] = useState<number | null>(null);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [selectedTierIdx, setSelectedTierIdx] = useState(0);
   const [paid, setPaid] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [verifying, setVerifying] = useState(false);
-
   useEffect(() => {
     const raw = sessionStorage.getItem("audit_report");
     const ans = sessionStorage.getItem("audit_answers");
@@ -136,15 +276,17 @@ function ResultsPage() {
       navigate({ to: "/audit" });
       return;
     }
-    setReport(JSON.parse(raw));
+    const parsed: GeneratedReport = JSON.parse(raw);
+    setReport(parsed);
     try { setCompanyName(JSON.parse(ans).companyName || ""); } catch { /* ignore */ }
-    const exp = sessionStorage.getItem("audit_report_expires_at");
-    if (exp) setExpiresAt(Number(exp));
-    else {
-      const fresh = Date.now() + 10 * 60 * 1000;
-      sessionStorage.setItem("audit_report_expires_at", String(fresh));
-      setExpiresAt(fresh);
-    }
+    // Build permanent share URL from localStorage
+    try {
+      const stored = localStorage.getItem("audit_share_link");
+      if (stored) {
+        const { id, token } = JSON.parse(stored);
+        if (id && token) setShareUrl(`${window.location.origin}/r/${id}?t=${token}`);
+      }
+    } catch { /* ignore */ }
     if (sessionStorage.getItem(PAID_KEY) === "true") setPaid(true);
   }, [navigate]);
 
@@ -238,7 +380,7 @@ function ResultsPage() {
           <div className="lg:col-span-8">
             <div className="flex flex-wrap items-center gap-3">
               <span className="pill">· Persoonlijke AI-analyse</span>
-              {expiresAt && <CountdownPill expiresAt={expiresAt} />}
+              {shareUrl && <SaveLinkPill url={shareUrl} />}
               {report.companyContext.scrapedFrom && report.companyContext.scrapedPages.length > 0 && (
                 <span
                   className="inline-flex items-center gap-1.5 rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 text-xs font-medium text-brand"
@@ -728,43 +870,48 @@ function ResultsPage() {
 
           </div>
           {!paid && (
-            <div className="absolute inset-0 flex items-start justify-center pt-32 md:pt-48">
-              <div className="surface mx-6 max-w-xl rounded-3xl border border-brand/40 bg-card/95 p-8 text-center shadow-2xl backdrop-blur md:p-10">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
-                  <Sparkles className="h-6 w-6" />
+            <div className="absolute inset-0 flex items-start justify-center pt-20 md:pt-36">
+              {!emailCaptured ? (
+                <EmailGate
+                  reportId={report.reportId}
+                  onCaptured={() => setEmailCaptured(true)}
+                />
+              ) : (
+                <div className="surface mx-6 w-full max-w-2xl rounded-3xl border border-brand/40 bg-card/95 p-8 shadow-2xl backdrop-blur md:p-10">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand/10 text-brand">
+                    <Sparkles className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-5 text-center text-2xl font-medium tracking-tight md:text-3xl">
+                    Kies jouw pakket
+                  </h3>
+                  <p className="mt-2 text-center text-sm text-muted-foreground">
+                    Eenmalige betaling — direct toegang tot het volledige rapport.
+                  </p>
+                  <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+                    {PRICING_TIERS.map((tier, i) => (
+                      <TierCard
+                        key={tier.key}
+                        tier={tier}
+                        selected={selectedTierIdx === i}
+                        onSelect={() => setSelectedTierIdx(i)}
+                      />
+                    ))}
+                  </div>
+                  <button
+                    onClick={openCheckout}
+                    className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-white transition hover:brightness-110"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Lock className="h-4 w-4" />
+                      Ontgrendel {PRICING_TIERS[selectedTierIdx].name} — € {PRICING_TIERS[selectedTierIdx].price}
+                    </span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                  <p className="mt-3 text-center text-[11px] text-muted-foreground">
+                    Veilig betalen via Stripe · Done-With-You pakket heeft 30-dagen geld-terug-garantie
+                  </p>
                 </div>
-                <h3 className="mt-5 text-2xl font-medium tracking-tight md:text-3xl">
-                  Ontgrendel het volledige rapport
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  De complete roadmap, hoofdstukken, aanbevolen tools, quick wins, 90-dagen actieplan en sensitivity-analyse — plus PDF-export.
-                </p>
-                <ul className="mx-auto mt-5 max-w-sm space-y-2 text-left text-sm">
-                  {[
-                    `${report.chapters.length} persoonlijke hoofdstukken`,
-                    `${report.tools.length} aanbevolen AI-tools met instapstappen`,
-                    "90-dagen actieplan, week voor week",
-                    "Worst / base / best case scenario's",
-                    "Volledige PDF-download",
-                  ].map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-foreground/85">
-                      <Check className="mt-0.5 h-4 w-4 flex-none text-brand" strokeWidth={3} />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  onClick={openCheckout}
-                  className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
-                >
-                  <span className="inline-flex items-center gap-2">
-                    <Lock className="h-4 w-4" />
-                    Ontgrendel voor € 29
-                  </span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-                <p className="mt-3 text-[11px] text-muted-foreground">Eenmalige betaling · directe toegang</p>
-              </div>
+              )}
             </div>
           )}
         </div>
@@ -772,7 +919,7 @@ function ResultsPage() {
         {/* Final CTA */}
         <section className="mt-24">
           <div className="surface relative overflow-hidden rounded-[2rem] p-10 md:p-14">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,113,227,0.05),transparent_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,70,229,0.05),transparent_60%)]" />
             <div className="relative grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
                 <span className="pill">· Volgende stap</span>
@@ -783,23 +930,34 @@ function ResultsPage() {
                 <p className="mt-4 max-w-xl text-sm text-muted-foreground">
                   {paid
                     ? `Print of bewaar de complete AI-roadmap voor ${companyName || "jouw bedrijf"}.`
-                    : `Ontgrendel het volledige rapport voor ${companyName || "jouw bedrijf"} — eenmalig € 29.`}
+                    : `Ontgrendel het volledige rapport voor ${companyName || "jouw bedrijf"}.`}
                 </p>
               </div>
               <div className="flex flex-col gap-3 md:col-span-4">
                 <button
                   onClick={handleUnlock}
                   disabled={downloading}
-                  className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90 disabled:opacity-60"
+                  className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-60"
                 >
                   <span className="inline-flex items-center gap-2">
                     {paid ? <Download className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
                     {paid
                       ? (downloading ? "PDF wordt gemaakt…" : "Download PDF rapport")
-                      : "Ontgrendel volledig rapport — € 29"}
+                      : "Ontgrendel volledig rapport"}
                   </span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
+                {paid && (
+                  <button
+                    className="inline-flex items-center justify-between gap-2 rounded-full border border-brand/40 bg-brand/10 px-5 py-3.5 text-sm font-semibold text-brand transition hover:bg-brand/20"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <Headphones className="h-4 w-4" />
+                      Beluister audio briefing
+                    </span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -810,15 +968,17 @@ function ResultsPage() {
     <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
       <DialogContent className="max-w-2xl p-0 sm:max-w-3xl">
         <DialogHeader className="border-b border-border px-6 py-4">
-          <DialogTitle>Volledig AI-rapport ontgrendelen</DialogTitle>
+          <DialogTitle>
+            {PRICING_TIERS[selectedTierIdx].name} pakket ontgrendelen
+          </DialogTitle>
           <DialogDescription>
-            Eenmalig € 29 — direct toegang tot de complete roadmap, tools, blueprints en PDF.
+            Eenmalig € {PRICING_TIERS[selectedTierIdx].price} — {PRICING_TIERS[selectedTierIdx].description}.
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[80vh] overflow-y-auto px-2 py-2">
           {checkoutOpen && (
             <StripeEmbeddedCheckout
-              priceId="ai_check_report_one_time"
+              priceId={PRICING_TIERS[selectedTierIdx].priceLookupKey}
               returnUrl={returnUrl}
               reportId={report.reportId}
             />

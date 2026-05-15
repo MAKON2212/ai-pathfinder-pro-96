@@ -1,8 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/scanai_logo.png";
-
 const NAV: { to: "/" | "/audit" | "/tools" | "/about" | "/contact"; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/audit", label: "AI Check" },
@@ -18,7 +16,6 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(10,10,26,0.78)] backdrop-blur-xl">
       <div className="mx-auto flex h-12 max-w-[1200px] items-center justify-between px-5 md:h-11 md:px-6">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <img src={logo} alt="ScanAI" className="h-6 w-6 rounded-[6px]" />
           <span className="text-[14px] font-semibold tracking-tight text-foreground">ScanAI</span>
         </Link>
         <nav className="hidden items-center gap-7 md:flex">

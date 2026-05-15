@@ -216,3 +216,20 @@
   0%, 100% { box-shadow: 0 0 30px rgba(79,70,229,0.25); }
   50% { box-shadow: 0 0 60px rgba(79,70,229,0.55); }
 }
+
+/* Vibrating dot grid — dark theme */
+@keyframes dot-vibrate {
+  0%,  100% { background-position: 0px 0px,   0px 0px;  opacity: 0.35; }
+  25%        { background-position: 3px 1px,   0px 0px;  opacity: 0.50; }
+  50%        { background-position: 5px 4px,   0px 0px;  opacity: 0.55; }
+  75%        { background-position: 2px 5px,   0px 0px;  opacity: 0.42; }
+}
+
+.dot-grid {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.14) 1px, transparent 1px),
+    radial-gradient(circle, rgba(79,70,229,0.22) 1.5px, transparent 1.5px);
+  background-size: 22px 22px, 66px 66px;
+  background-position: 0 0, 11px 11px;
+  animation: dot-vibrate 10s ease-in-out infinite;
+}

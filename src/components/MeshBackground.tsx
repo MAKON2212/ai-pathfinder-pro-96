@@ -34,6 +34,8 @@ export function MeshBackground() {
       />
       {/* Grid lines */}
       <div className="absolute inset-0 grid-lines opacity-40" />
+      {/* Vibrating dot grid — dark theme variant */}
+      <div className="dot-grid absolute inset-0" />
     </div>
   );
 }
