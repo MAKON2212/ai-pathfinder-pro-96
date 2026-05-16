@@ -120,23 +120,22 @@ export function calcMissedValue(a: ValueAnswers): {
   high: number;
   progress: number; // 0..1 — how complete is the answer set
 } {
-  const team = teamSize(a.size);
   const hourly = hourlyCost(a.avgHourlyCost);
   const repHrs = repetitiveHours(a.repetitiveHoursPerWeek);
-  // repHrs is total hours/week across team for that pain area.
-  // Scale lightly with team for plausibility.
-  const teamScale = team > 0 ? Math.min(1 + Math.log10(team) * 0.4, 2.5) : 1;
-
+  // repHrs is total team hours/week on repetitive work — team size is already
+  // implicit in this number (ranges go up to 200+ hrs/week which only makes
+  // sense as team-total), so we do NOT multiply by team again.
   const painCount = a.painPoints?.length ?? 0;
   const painMult = 1 + Math.min(painCount, 5) * 0.08;
 
-  const laborYearly = Math.round(repHrs * 52 * hourly * 0.6 * teamScale * painMult);
+  const laborYearly = Math.round(repHrs * 52 * hourly * 0.6 * painMult);
 
   const leads = missedLeads(a.missedLeadsPerMonth);
   const deal = avgDealValue(a.industry);
   const m = margin(a.grossMargin);
-  // Margin lifts the relevance of a deal — but we report missed *gross* value, then weight.
-  const leadsYearly = Math.round(leads * 12 * deal * (0.5 + m));
+  // Weight by margin but keep below gross deal value (max ~0.83×). Higher-margin
+  // companies feel a missed lead harder, low-margin less so.
+  const leadsYearly = Math.round(leads * 12 * deal * (0.4 + m * 0.5));
 
   const total = laborYearly + leadsYearly;
 
