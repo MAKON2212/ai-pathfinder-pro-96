@@ -134,17 +134,6 @@ function Index() {
         </Link>
       </div>
 
-      {/* STICKY BOTTOM CTA — altijd zichtbaar, floating pill op desktop */}
-      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-center px-4 py-3 md:bottom-6 md:px-0 pointer-events-none">
-        <div className="absolute inset-0 border-t border-border bg-background/80 backdrop-blur-xl md:hidden" />
-        <Link
-          to="/audit"
-          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.5)] transition hover:brightness-110 md:w-auto md:px-10 md:py-4 md:text-base"
-        >
-          Bereken mijn bedrag
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
     </div>
   );
 }
