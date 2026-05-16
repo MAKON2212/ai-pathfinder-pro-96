@@ -45,24 +45,7 @@ function Index() {
         Het rapport <em>hoe</em> je dit pakt, koop je daarna.
       </motion.p>
 
-      {/* CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.25 }}
-        className="mt-7"
-      >
-        <Link
-          to="/audit"
-          className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
-        >
-          <span>Bereken mijn bedrag</span>
-          <ArrowRight className="h-5 w-5 transition group-hover:translate-x-0.5" />
-        </Link>
-        <p className="mt-2 text-center text-xs text-muted-foreground">
-          Geen account · geen e-mail · uitkomst meteen zichtbaar
-        </p>
-      </motion.div>
+      {/* CTA verwijderd — sticky bottom CTA dekt dit af */}
 
       {/* Stat cards */}
       <motion.div
