@@ -407,6 +407,45 @@ function AuditPage() {
           </p>
         </motion.div>
 
+        {/* Blurred AI tools row — credibility signal */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mt-4"
+        >
+          <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+            Berekend o.b.v. 40+ AI-tools
+          </p>
+          <div className="relative">
+            <div
+              aria-hidden
+              className="flex items-center justify-center gap-2 select-none"
+              style={{ filter: "blur(4px)", userSelect: "none" }}
+            >
+              {[
+                { l: "GPT", c: "from-emerald-500 to-teal-600" },
+                { l: "Cl", c: "from-orange-500 to-amber-600" },
+                { l: "Gem", c: "from-blue-500 to-indigo-600" },
+                { l: "Mj", c: "from-slate-600 to-slate-800" },
+                { l: "Pp", c: "from-cyan-500 to-sky-600" },
+                { l: "n8n", c: "from-pink-500 to-rose-600" },
+                { l: "Zp", c: "from-orange-600 to-red-600" },
+                { l: "Mk", c: "from-violet-500 to-purple-700" },
+              ].map((t, i) => (
+                <div
+                  key={i}
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${t.c} text-[10px] font-bold text-white shadow-md`}
+                >
+                  {t.l}
+                </div>
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent" />
+          </div>
+        </motion.div>
+
         {/* Quick breakdown */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
@@ -436,6 +475,9 @@ function AuditPage() {
             </li>
           </ul>
         </motion.div>
+
+        {/* CTA with countdown timer */}
+        <UnlockCTA onClick={() => navigate({ to: "/results-loading" })} />
 
         {/* Blurred report teaser */}
         <motion.div
@@ -503,21 +545,44 @@ function AuditPage() {
           ))}
         </div>
 
-        {/* CTA */}
-        <button
-          type="button"
-          onClick={() => navigate({ to: "/results-loading" })}
-          className="mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
-        >
-          <Lock className="h-4 w-4" />
-          <span>Ontgrendel mijn rapport</span>
-        </button>
-        <p className="mt-2 text-center text-xs text-muted-foreground">
-          Eenmalige betaling · direct toegang · 7 dagen geld terug
-        </p>
         {/* hidden ref to avoid unused-var on `answers` */}
         <span className="hidden">{Object.keys(answers).length}</span>
       </div>
     );
   }
+}
+
+function UnlockCTA({ onClick }: { onClick: () => void }) {
+  const [seconds, setSeconds] = useState(15 * 60);
+  useEffect(() => {
+    if (seconds <= 0) return;
+    const t = setInterval(() => setSeconds((s) => (s > 0 ? s - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, [seconds]);
+  const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const ss = String(seconds % 60).padStart(2, "0");
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.45 }}
+      className="mt-5"
+    >
+      <button
+        type="button"
+        onClick={onClick}
+        className="group relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-brand font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
+      >
+        <Lock className="h-4 w-4" />
+        <span className="text-base">Ontgrendel mijn rapport</span>
+        <span className="flex items-center gap-1 rounded-full bg-black/25 px-2.5 py-1 text-xs font-mono tabular-nums">
+          <Clock className="h-3 w-3" />
+          {mm}:{ss}
+        </span>
+      </button>
+      <p className="mt-2 text-center text-xs text-muted-foreground">
+        Prijs gereserveerd voor <span className="font-medium text-foreground/80">{mm}:{ss}</span> · eenmalige betaling · 7 dagen geld terug
+      </p>
+    </motion.div>
+  );
 }
