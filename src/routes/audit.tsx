@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Lock, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Lock, Sparkles, Clock } from "lucide-react";
 import { ValueMeter } from "@/components/ValueMeter";
 import { calcMissedValue, formatEUR, type ValueAnswers } from "@/lib/value-calc";
 import {
