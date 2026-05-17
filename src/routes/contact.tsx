@@ -84,36 +84,36 @@ function ContactPage() {
             ) : (
               <div className="space-y-5">
                 <Field
-                  label="Naam"
+                  label="Name"
                   value={form.name}
                   onChange={(v) => setForm({ ...form, name: v })}
                   error={errors.name}
-                  placeholder="Jan Jansen"
+                  placeholder="John Doe"
                   maxLength={100}
                 />
                 <Field
-                  label="E-mailadres"
+                  label="Email address"
                   type="email"
                   value={form.email}
                   onChange={(v) => setForm({ ...form, email: v })}
                   error={errors.email}
-                  placeholder="jan@bedrijf.nl"
+                  placeholder="john@company.com"
                   maxLength={255}
                 />
                 <Field
-                  label="Bedrijf (optioneel)"
+                  label="Company (optional)"
                   value={form.company}
                   onChange={(v) => setForm({ ...form, company: v })}
                   error={errors.company}
-                  placeholder="Bedrijfsnaam B.V."
+                  placeholder="Company Inc."
                   maxLength={120}
                 />
                 <div>
-                  <label className="block text-sm font-medium">Bericht</label>
+                  <label className="block text-sm font-medium">Message</label>
                   <textarea
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Vertel kort over jullie situatie en wat je wilt bereiken…"
+                    placeholder="Briefly tell us about your situation and what you want to achieve…"
                     maxLength={1500}
                     className="mt-2 min-h-[140px] w-full rounded-2xl border border-border bg-card px-4 py-3 text-sm outline-none transition placeholder:text-muted-foreground/60 focus:border-brand"
                   />
@@ -125,7 +125,7 @@ function ContactPage() {
                   type="submit"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-accent-foreground shadow-lg shadow-brand/20 transition hover:opacity-90"
                 >
-                  Verstuur bericht
+                  Send message
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -134,13 +134,13 @@ function ContactPage() {
 
           {/* Sidebar */}
           <div className="space-y-4 lg:col-span-5">
-            <ContactCard icon={<Mail className="h-4 w-4" />} title="E-mail" value="hello@scanai.nl" />
-            <ContactCard icon={<Phone className="h-4 w-4" />} title="Telefoon" value="+31 (0)20 123 45 67" />
-            <ContactCard icon={<MapPin className="h-4 w-4" />} title="Locatie" value="Amsterdam · Remote NL" />
+            <ContactCard icon={<Mail className="h-4 w-4" />} title="Email" value="hello@scanai.nl" />
+            <ContactCard icon={<Phone className="h-4 w-4" />} title="Phone" value="+31 (0)20 123 45 67" />
+            <ContactCard icon={<MapPin className="h-4 w-4" />} title="Location" value="Amsterdam · Remote NL" />
             <div className="surface rounded-3xl p-6">
               <p className="text-sm text-muted-foreground">
-                Liever eerst zelf rekenen? Doe de AI Check en ontvang een persoonlijke
-                geldwaarde-analyse.
+                Prefer to crunch the numbers yourself first? Take the AI Check and get a personal
+                value analysis.
               </p>
             </div>
           </div>
