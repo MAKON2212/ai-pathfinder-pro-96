@@ -68,7 +68,7 @@ export function ValueMeter({ value, progress, label = "Estimated missed value / 
         >
           <motion.span>{display}</motion.span>
         </motion.span>
-        <span className="text-xs text-muted-foreground">/ jaar</span>
+        <span className="text-xs text-muted-foreground">/ year</span>
       </div>
 
       {/* Meter */}
