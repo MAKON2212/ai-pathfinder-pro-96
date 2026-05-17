@@ -30,20 +30,20 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { title: "ScanAI — Personal AI roadmap for your business" },
       {
         name: "description",
         content:
-          "ScanAI laat in 3 minuten zien hoeveel AI jouw bedrijf oplevert. Met persoonlijk rapport en concreet 90-dagen plan.",
+          "ScanAI shows you in 3 minutes how much AI can deliver to your business. With a personal report and a concrete 90-day plan.",
       },
-      { property: "og:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { property: "og:title", content: "ScanAI — Personal AI roadmap for your business" },
       {
         property: "og:description",
-        content: "Persoonlijke AI roadmap & geldwaarde-analyse voor jouw bedrijf.",
+        content: "Personal AI roadmap & value analysis for your business.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { name: "twitter:title", content: "ScanAI — Personal AI roadmap for your business" },
       { name: "description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
       { property: "og:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
       { name: "twitter:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
