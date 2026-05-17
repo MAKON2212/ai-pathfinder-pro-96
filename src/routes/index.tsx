@@ -31,8 +31,8 @@ function Index() {
         transition={{ duration: 0.5, delay: 0.05 }}
         className="mt-5 text-center text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl"
       >
-        Hoeveel geld loop jij mis{" "}
-        <span className="gradient-value-text">door geen AI</span> te gebruiken?
+        How much money are you missing{" "}
+        <span className="gradient-value-text">by not using AI</span>?
       </motion.h1>
 
       <motion.p
@@ -41,8 +41,8 @@ function Index() {
         transition={{ duration: 0.5, delay: 0.15 }}
         className="mt-4 text-center text-base text-muted-foreground"
       >
-        Beantwoord 7 korte vragen en zie direct het bedrag — gratis.
-        Het rapport <em>hoe</em> je dit pakt, koop je daarna.
+        Answer 7 short questions and see the number instantly — for free.
+        The report on <em>how</em> to capture it, you buy after.
       </motion.p>
 
       {/* CTA verwijderd — sticky bottom CTA dekt dit af */}
