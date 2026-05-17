@@ -10,15 +10,15 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="surface max-w-md rounded-3xl p-10 text-center">
         <h1 className="text-7xl font-medium tracking-tighter">404</h1>
-        <h2 className="mt-4 text-xl font-medium">Pagina niet gevonden</h2>
+        <h2 className="mt-4 text-xl font-medium">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          De pagina die je zoekt bestaat niet of is verplaatst.
+          The page you're looking for doesn't exist or has been moved.
         </p>
         <Link
           to="/"
           className="mt-6 inline-flex items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground"
         >
-          Terug naar home
+          Back to home
         </Link>
       </div>
     </div>
@@ -30,20 +30,20 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { title: "ScanAI — Personal AI roadmap for your business" },
       {
         name: "description",
         content:
-          "ScanAI laat in 3 minuten zien hoeveel AI jouw bedrijf oplevert. Met persoonlijk rapport en concreet 90-dagen plan.",
+          "ScanAI shows you in 3 minutes how much AI can deliver to your business. With a personal report and a concrete 90-day plan.",
       },
-      { property: "og:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { property: "og:title", content: "ScanAI — Personal AI roadmap for your business" },
       {
         property: "og:description",
-        content: "Persoonlijke AI roadmap & geldwaarde-analyse voor jouw bedrijf.",
+        content: "Personal AI roadmap & value analysis for your business.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "ScanAI — Persoonlijke AI roadmap voor jouw bedrijf" },
+      { name: "twitter:title", content: "ScanAI — Personal AI roadmap for your business" },
       { name: "description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
       { property: "og:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
       { name: "twitter:description", content: "ScanAI 2 offers businesses an AI strategy assessment and tool recommendations." },
@@ -67,7 +67,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nl">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>

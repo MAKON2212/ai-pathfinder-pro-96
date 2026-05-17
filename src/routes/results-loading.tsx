@@ -7,22 +7,22 @@ import type { AuditAnswers } from "@/lib/audit";
 export const Route = createFileRoute("/results-loading")({
   head: () => ({
     meta: [
-      { title: "Rapport wordt gegenereerd · ScanAI" },
-      { name: "description", content: "Even geduld — we stellen jouw persoonlijke AI rapport samen." },
+      { title: "Generating your report · ScanAI" },
+      { name: "description", content: "One moment — we're putting your personal AI report together." },
     ],
   }),
   component: LoadingPage,
 });
 
 const STEPS = [
-  { label: "Website lezen",         sub: "Meerdere pagina's worden gescand op context en tech-stack." },
-  { label: "Branche vergelijken",   sub: "Jouw sector wordt gespiegeld aan 200+ benchmark-bedrijven." },
-  { label: "Financiën berekenen",   sub: "Loonbesparing, omzet-uplift en retentie worden doorgerekend." },
-  { label: "Tools matchen",         sub: "Uit 200+ AI-tools worden de beste voor jouw situatie gefilterd." },
-  { label: "Rapport schrijven",     sub: "Hoofdstukken worden opgesteld in heldere consultant-taal." },
-  { label: "Review uitvoeren",      sub: "Aannames en cijfers worden gecheckt op consistentie." },
-  { label: "Roadmap plannen",       sub: "Quick wins en 90-dagen milestones worden op de tijdlijn gezet." },
-  { label: "Afronden",              sub: "Eindcontrole, opmaak en laatste polijstslag." },
+  { label: "Reading website",       sub: "Multiple pages are scanned for context and tech stack." },
+  { label: "Comparing industry",    sub: "Your sector is mirrored against 200+ benchmark companies." },
+  { label: "Calculating financials", sub: "Labor savings, revenue uplift and retention are computed." },
+  { label: "Matching tools",        sub: "The best AI tools for your situation are filtered from 200+." },
+  { label: "Writing report",        sub: "Chapters are drafted in clear consultant language." },
+  { label: "Running review",        sub: "Assumptions and numbers are checked for consistency." },
+  { label: "Planning roadmap",      sub: "Quick wins and 90-day milestones are placed on the timeline." },
+  { label: "Wrapping up",           sub: "Final check, formatting and the last polish." },
 ];
 
 const STEP_DURATION = 2400;
@@ -64,7 +64,7 @@ function LoadingPage() {
       })
       .catch((e) => {
         console.error(e);
-        setError(e instanceof Error ? e.message : "Er ging iets mis.");
+        setError(e instanceof Error ? e.message : "Something went wrong.");
       });
   }, [navigate]);
 
@@ -174,13 +174,13 @@ function LoadingPage() {
 
       {error && (
         <div className="mt-12 w-full max-w-lg rounded-2xl border border-destructive/40 bg-destructive/5 p-5 text-sm">
-          <p className="font-semibold text-destructive">Er ging iets mis</p>
+          <p className="font-semibold text-destructive">Something went wrong</p>
           <p className="mt-1 text-foreground/80">{error}</p>
           <button
             onClick={() => { startedRef.current = false; setError(null); setActiveStep(0); }}
             className="mt-3 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white"
           >
-            Opnieuw proberen
+            Try again
           </button>
         </div>
       )}

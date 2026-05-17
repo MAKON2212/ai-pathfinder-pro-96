@@ -12,7 +12,7 @@ export const Route = createFileRoute("/tools/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.tool.name} — gebruik in jouw bedrijf · ScanAI` },
+          { title: `${loaderData.tool.name} — use it in your business · ScanAI` },
           { name: "description", content: loaderData.tool.description },
           { property: "og:title", content: `${loaderData.tool.name} · ScanAI` },
           { property: "og:description", content: loaderData.tool.useCase },
@@ -21,19 +21,19 @@ export const Route = createFileRoute("/tools/$slug")({
   }),
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-      <h1 className="text-4xl font-medium tracking-tighter">Tool niet gevonden</h1>
-      <p className="mt-3 text-muted-foreground">Deze tool bestaat niet in onze database.</p>
+      <h1 className="text-4xl font-medium tracking-tighter">Tool not found</h1>
+      <p className="mt-3 text-muted-foreground">This tool doesn't exist in our database.</p>
       <Link
         to="/tools"
         className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground"
       >
-        <ArrowLeft className="h-4 w-4" /> Terug naar tools
+        <ArrowLeft className="h-4 w-4" /> Back to tools
       </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
     <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-      <h1 className="text-3xl font-medium tracking-tighter">Er ging iets mis</h1>
+      <h1 className="text-3xl font-medium tracking-tighter">Something went wrong</h1>
       <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
     </div>
   ),
@@ -52,7 +52,7 @@ function ToolDetailPage() {
           to="/tools"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4" /> Alle tools
+          <ArrowLeft className="h-4 w-4" /> All tools
         </Link>
 
         {/* Header */}
@@ -83,20 +83,20 @@ function ToolDetailPage() {
             rel="noopener noreferrer"
             className="inline-flex flex-none items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
           >
-            Bezoek site <ArrowUpRight className="h-4 w-4" />
+            Visit site <ArrowUpRight className="h-4 w-4" />
           </a>
         </motion.div>
 
         {/* Meta strip */}
         <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
           {tool.pricing && (
-            <MetaCell icon={<Tag className="h-4 w-4" />} label="Indicatieve prijs" value={tool.pricing} />
+            <MetaCell icon={<Tag className="h-4 w-4" />} label="Indicative price" value={tool.pricing} />
           )}
           {tool.setupTime && (
-            <MetaCell icon={<Clock className="h-4 w-4" />} label="Setup-tijd" value={tool.setupTime} />
+            <MetaCell icon={<Clock className="h-4 w-4" />} label="Setup time" value={tool.setupTime} />
           )}
           {detail?.bestFor && (
-            <MetaCell icon={<Sparkles className="h-4 w-4" />} label="Best voor" value={detail.bestFor} />
+            <MetaCell icon={<Sparkles className="h-4 w-4" />} label="Best for" value={detail.bestFor} />
           )}
         </div>
 
@@ -109,7 +109,7 @@ function ToolDetailPage() {
         {/* Use cases */}
         {detail?.useCases?.length ? (
           <section className="mt-16">
-            <h2 className="text-2xl font-medium tracking-tight">Use-cases voor jouw bedrijf</h2>
+            <h2 className="text-2xl font-medium tracking-tight">Use cases for your business</h2>
             <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
               {detail.useCases.map((u: string) => (
                 <li key={u} className="surface flex items-start gap-3 rounded-2xl p-4">
@@ -126,18 +126,18 @@ function ToolDetailPage() {
         {/* Before / After */}
         {detail?.beforeAfter?.length ? (
           <section className="mt-20">
-            <h2 className="text-2xl font-medium tracking-tight">Voor / na</h2>
+            <h2 className="text-2xl font-medium tracking-tight">Before / after</h2>
             <div className="mt-6 space-y-4">
               {detail.beforeAfter.map((ba: { before: string; after: string }, i: number) => (
                 <div key={i} className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div className="surface-2 rounded-2xl p-5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Voor</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Before</p>
                     <p className="mt-2 text-sm text-foreground/80 line-through decoration-muted-foreground/40">
                       {ba.before}
                     </p>
                   </div>
                   <div className="surface rounded-2xl p-5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">Na</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">After</p>
                     <p className="mt-2 text-sm font-medium text-foreground">{ba.after}</p>
                   </div>
                 </div>
@@ -149,8 +149,8 @@ function ToolDetailPage() {
         {/* Steps */}
         {detail?.steps?.length ? (
           <section className="mt-20">
-            <h2 className="text-2xl font-medium tracking-tight">Instapstappen</h2>
-            <p className="mt-2 text-sm text-muted-foreground">In deze volgorde — schat 1-3 weken voor de hele lijst.</p>
+            <h2 className="text-2xl font-medium tracking-tight">Getting started</h2>
+            <p className="mt-2 text-sm text-muted-foreground">In this order — estimate 1-3 weeks for the full list.</p>
             <ol className="mt-8 space-y-4">
               {detail.steps.map((s: { title: string; detail?: string }, i: number) => (
                 <li key={s.title} className="surface flex gap-4 rounded-2xl p-5">
@@ -167,7 +167,7 @@ function ToolDetailPage() {
           </section>
         ) : tool.firstStep ? (
           <section className="mt-20">
-            <h2 className="text-2xl font-medium tracking-tight">Eerste stap</h2>
+            <h2 className="text-2xl font-medium tracking-tight">First step</h2>
             <div className="surface mt-6 rounded-2xl p-5">
               <p className="text-sm text-foreground/90">{tool.firstStep}</p>
             </div>
@@ -180,7 +180,7 @@ function ToolDetailPage() {
             <div className="surface-2 flex gap-3 rounded-2xl p-5">
               <AlertTriangle className="h-5 w-5 flex-none text-destructive" />
               <div>
-                <p className="text-sm font-medium">Wanneer juist niet kiezen</p>
+                <p className="text-sm font-medium">When not to choose this</p>
                 <p className="mt-1 text-sm text-muted-foreground">{detail.notFor}</p>
               </div>
             </div>
@@ -190,10 +190,10 @@ function ToolDetailPage() {
         {/* CTA */}
         <section className="mt-24 rounded-3xl border border-border bg-card p-8 text-center">
           <h2 className="text-balance text-2xl font-medium tracking-tight">
-            Wil je weten of {tool.name} bij jouw bedrijf past?
+            Want to know if {tool.name} fits your business?
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Doe de AI Check en krijg een rapport op maat met deze en andere tools.
+            Take the AI Check and get a tailored report with this and other tools.
           </p>
           <Link
             to="/audit"
