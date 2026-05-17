@@ -54,12 +54,12 @@ function ContactPage() {
         <div className="border-b border-border pb-12 text-center">
           <span className="pill">· Contact</span>
           <h1 className="mt-6 text-balance text-5xl font-medium leading-[1] tracking-tighter md:text-7xl">
-            Plan een gesprek met een<br />
+            Schedule a call with an<br />
             <span className="text-brand">AI specialist</span>.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground">
-            Geen verkoper. Een specialist die kijkt waar AI in jouw situatie de meeste
-            geld oplevert.
+            No salesperson. A specialist who looks at where AI makes the most
+            money in your specific situation.
           </p>
         </div>
 
