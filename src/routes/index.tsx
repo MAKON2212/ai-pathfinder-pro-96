@@ -71,23 +71,23 @@ function Index() {
 
       {/* How it works */}
       <div className="mt-12">
-        <h2 className="text-center text-xl font-bold tracking-tight">Hoe werkt het?</h2>
+        <h2 className="text-center text-xl font-bold tracking-tight">How does it work?</h2>
         <div className="mt-5 space-y-3">
           {[
             {
               icon: Clock,
-              t: "1 · Beantwoord 7 vragen",
-              d: "Branche, team, marge, tijdvreters. Geen privé-data. Klaar in 90 seconden.",
+              t: "1 · Answer 7 questions",
+              d: "Industry, team, margin, time-wasters. No private data. Done in 90 seconds.",
             },
             {
               icon: TrendingUp,
-              t: "2 · Zie je misgelopen omzet",
-              d: "Een live tellende meter laat zien hoeveel je jaarlijks laat liggen.",
+              t: "2 · See your missed revenue",
+              d: "A live counting meter shows how much you leave on the table each year.",
             },
             {
               icon: Lock,
-              t: "3 · Ontgrendel het rapport",
-              d: "Wil je weten hóe je dit geld binnenhaalt? Koop het 90-dagen plan.",
+              t: "3 · Unlock the report",
+              d: "Want to know how to bring that money in? Buy the 90-day plan.",
             },
           ].map(({ icon: Icon, t, d }) => (
             <div
