@@ -10,15 +10,15 @@ function NotFoundComponent() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="surface max-w-md rounded-3xl p-10 text-center">
         <h1 className="text-7xl font-medium tracking-tighter">404</h1>
-        <h2 className="mt-4 text-xl font-medium">Pagina niet gevonden</h2>
+        <h2 className="mt-4 text-xl font-medium">Page not found</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          De pagina die je zoekt bestaat niet of is verplaatst.
+          The page you're looking for doesn't exist or has been moved.
         </p>
         <Link
           to="/"
           className="mt-6 inline-flex items-center justify-center rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground"
         >
-          Terug naar home
+          Back to home
         </Link>
       </div>
     </div>
