@@ -5,16 +5,16 @@ import { ArrowRight, Sparkles, Clock, TrendingUp, Lock } from "lucide-react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Hoeveel geld loop jij mis door geen AI? · ScanAI" },
+      { title: "How much money are you missing without AI? · ScanAI" },
       {
         name: "description",
         content:
-          "Bereken in 90 seconden hoeveel omzet jouw bedrijf jaarlijks misloopt door geen AI in te zetten. Gratis. Persoonlijk. Direct resultaat.",
+          "Calculate in 90 seconds how much revenue your business is missing each year by not using AI. Free. Personal. Instant result.",
       },
-      { property: "og:title", content: "Hoeveel geld loop jij mis? · ScanAI" },
+      { property: "og:title", content: "How much money are you missing? · ScanAI" },
       {
         property: "og:description",
-        content: "Gratis berekening in 90 seconden — zie je misgelopen omzet vóórdat je iets investeert.",
+        content: "Free calculation in 90 seconds — see your missed revenue before you invest anything.",
       },
     ],
   }),
