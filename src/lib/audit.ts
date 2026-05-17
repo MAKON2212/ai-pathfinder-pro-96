@@ -16,91 +16,91 @@ export type AuditAnswers = {
   customersPerYear: string;
   email?: string;
 
-  // ----- Diepere financiële vragen -----
-  grossMargin?: string;        // bruto marge band
-  avgHourlyCost?: string;      // gemiddeld uurloon (incl. werkgeverslasten)
-  churnRate?: string;          // jaarlijkse churn
+  // ----- Deeper financial questions -----
+  grossMargin?: string;        // gross margin band
+  avgHourlyCost?: string;      // average hourly cost (incl. employer charges)
+  churnRate?: string;          // annual churn
 
-  // ----- Vervolgvragen per pijnpunt -----
+  // ----- Follow-up questions per pain point -----
   customerServiceVolume?: string;  // calls/tickets per week
-  customerServiceChannels?: string[]; // telefoon, email, chat, whatsapp
-  repetitiveHoursPerWeek?: string; // FTE-uren per week aan repetitief handwerk
-  invoicesPerMonth?: string;       // aantal facturen / bonnetjes per maand
-  contentPiecesPerMonth?: string;  // aantal content-pieces per maand
-  leadsPerMonth?: string;          // huidige leads per maand
-  conversionRate?: string;         // huidige conversie %
+  customerServiceChannels?: string[]; // phone, email, chat, whatsapp
+  repetitiveHoursPerWeek?: string; // FTE hours per week on repetitive work
+  invoicesPerMonth?: string;       // number of invoices / receipts per month
+  contentPiecesPerMonth?: string;  // number of content pieces per month
+  leadsPerMonth?: string;          // current leads per month
+  conversionRate?: string;         // current conversion %
 
-  // ----- Vervolgvragen per doel -----
-  salesCycleLength?: string;       // gemiddelde sales cyclus
-  primaryChannel?: string;         // belangrijkste acquisitie kanaal
+  // ----- Follow-up questions per goal -----
+  salesCycleLength?: string;       // average sales cycle
+  primaryChannel?: string;         // primary acquisition channel
 
-  // ----- Branche-specifieke vragen -----
+  // ----- Industry-specific questions -----
   ecommercePlatform?: string;      // Shopify, WooCommerce, Magento ...
   serviceModel?: string;           // project-based, retainer, SaaS
   manufacturingType?: string;      // make-to-stock, make-to-order, custom
 
-  // ----- Quick-check 5 vragen (uit /check flow) -----
-  /** Q1 — welke systemen voor klantdata. */
+  // ----- Quick-check 5 questions (from /check flow) -----
+  /** Q1 — which systems for customer data. */
   dataSystems?: string[];
-  /** Q2 — process-documentatie volwassenheid 0-100. */
+  /** Q2 — process documentation maturity 0-100. */
   processMaturity?: number;
-  /** Q3 — open input grootste tijdvreter, max 200 chars. */
+  /** Q3 — open input biggest time waster, max 200 chars. */
   biggestTimeWaster?: string;
-  /** Q4 — terugkerende beslissing-pijn. */
+  /** Q4 — recurring decision pain. */
   decisionPain?: string;
-  /** Q5 — maximaal budget per maand voor AI tool. */
+  /** Q5 — maximum budget per month for AI tool. */
   maxToolBudget?: string;
 };
 
 export const DATA_SYSTEMS = [
   "CRM (HubSpot, Salesforce, Pipedrive…)",
   "Excel / Google Sheets",
-  "Eigen database / tool",
-  "Email inbox is onze CRM",
-  "Geen idee / geen systeem",
+  "Own database / tool",
+  "Email inbox is our CRM",
+  "No idea / no system",
 ];
 
 export const DECISION_PAINS = [
-  "Welke leads bellen we eerst",
-  "Welke prijs vragen we deze klant",
-  "Welke voorraad bestellen we",
-  "Welke content maken we",
-  "Welke medewerker zetten we waarop",
+  "Which leads do we call first",
+  "What price do we charge this customer",
+  "What inventory do we order",
+  "What content do we create",
+  "Which employee do we assign to what",
 ];
 
 export const MAX_TOOL_BUDGETS = [
   "< € 100",
   "€ 100 – € 500",
-  "€ 500 – € 2.000",
-  "€ 2.000+",
-  "Geen idee, hangt van ROI af",
+  "€ 500 – € 2,000",
+  "€ 2,000+",
+  "No idea, depends on ROI",
 ];
 
 export const INDUSTRIES = [
   "Retail & E-commerce",
-  "Finance & Verzekeringen",
-  "Gezondheidszorg",
-  "Productie & Industrie",
-  "Zakelijke dienstverlening",
-  "Onderwijs",
+  "Finance & Insurance",
+  "Healthcare",
+  "Manufacturing & Industry",
+  "Business Services",
+  "Education",
   "Marketing & Media",
-  "Logistiek & Transport",
-  "Bouw & Vastgoed",
-  "Horeca & Toerisme",
-  "Bakker / Slager / Versspecialist",
-  "Installatie (loodgieter, elektricien, cv)",
+  "Logistics & Transport",
+  "Construction & Real Estate",
+  "Hospitality & Tourism",
+  "Bakery / Butcher / Fresh Specialist",
+  "Installation (plumber, electrician, HVAC)",
   "Auto & Garage",
-  "Schoonmaak & Facility",
+  "Cleaning & Facility",
   "IT & Software",
   "Cybersecurity",
-  "Juridisch & Notariaat",
-  "Accountancy & Boekhouding",
-  "Architectuur & Design",
+  "Legal & Notary",
+  "Accounting & Bookkeeping",
+  "Architecture & Design",
   "Beauty & Wellness",
   "Sport & Fitness",
-  "Agrarisch / Tuinbouw",
-  "Non-profit / Stichting",
-  "Overheid / Publiek",
+  "Agriculture / Horticulture",
+  "Non-profit / Foundation",
+  "Government / Public",
 ];
 
 export const SIZES = ["1–10", "11–50", "51–200", "201–1000", "1000+"];
@@ -114,10 +114,10 @@ export const REVENUES = [
 ];
 
 export const TIMELINES = [
-  "Direct, binnen 30 dagen",
-  "Komend kwartaal",
-  "Komende 6 maanden",
-  "Verkenning, geen haast",
+  "Immediately, within 30 days",
+  "Coming quarter",
+  "Next 6 months",
+  "Exploring, no rush",
 ];
 
 export const TECH_STACK = [
@@ -128,73 +128,73 @@ export const TECH_STACK = [
   "Salesforce",
   "HubSpot",
   "SAP / ERP",
-  "Eigen software",
+  "Custom software",
   "Shopify",
   "WordPress",
 ];
 
 export const PAIN_POINTS = [
-  "Repetitief handwerk",
-  "Trage klantenservice",
-  "Data verspreid over systemen",
-  "Content creatie kost te veel tijd",
-  "Moeilijk talent te vinden",
+  "Repetitive work",
+  "Slow customer service",
+  "Data scattered across systems",
+  "Content creation takes too much time",
+  "Hard to find talent",
   "Forecasting & planning",
-  "Kwaliteitscontrole",
-  "Lead generatie",
-  "Administratie & facturatie",
+  "Quality control",
+  "Lead generation",
+  "Administration & invoicing",
 ];
 
 export const GOALS = [
-  "Operationele kosten verlagen",
-  "Omzet verhogen",
-  "Klantbeleving verbeteren",
-  "Sneller beslissingen nemen",
-  "Product innoveren",
-  "Productiviteit medewerkers",
+  "Reduce operational costs",
+  "Increase revenue",
+  "Improve customer experience",
+  "Make decisions faster",
+  "Innovate product",
+  "Employee productivity",
 ];
 
-export const BUDGETS = ["< € 1K / mnd", "€ 1K – € 5K", "€ 5K – € 20K", "€ 20K+", "Nog onbekend"];
+export const BUDGETS = ["< € 1K / mo", "€ 1K – € 5K", "€ 5K – € 20K", "€ 20K+", "Not yet known"];
 
 export const CUSTOMER_VALUES = [
   "< € 100",
   "€ 100 – € 500",
-  "€ 500 – € 2.500",
-  "€ 2.500 – € 10K",
+  "€ 500 – € 2,500",
+  "€ 2,500 – € 10K",
   "€ 10K+",
 ];
 
 export const CUSTOMERS_PER_YEAR = [
   "< 50",
   "50 – 250",
-  "250 – 1.000",
-  "1.000 – 10.000",
-  "10.000+",
+  "250 – 1,000",
+  "1,000 – 10,000",
+  "10,000+",
 ];
 
-// ----- Diepere financiële opties -----
+// ----- Deeper financial options -----
 export const GROSS_MARGINS = ["< 20%", "20 – 40%", "40 – 60%", "60 – 80%", "> 80%"];
 export const HOURLY_COSTS = ["< € 30", "€ 30 – € 50", "€ 50 – € 80", "€ 80 – € 120", "> € 120"];
-export const CHURN_RATES = ["< 5%", "5 – 10%", "10 – 20%", "20 – 40%", "> 40%", "Onbekend"];
+export const CHURN_RATES = ["< 5%", "5 – 10%", "10 – 20%", "20 – 40%", "> 40%", "Unknown"];
 
-// ----- Vervolgvraag opties -----
-export const CS_VOLUMES = ["< 25 / week", "25 – 100 / week", "100 – 500 / week", "500 – 2.000 / week", "> 2.000 / week"];
-export const CS_CHANNELS = ["Telefoon", "Email", "Live chat", "WhatsApp", "Social DM", "Contactformulier"];
-export const REPETITIVE_HOURS = ["< 5 uur", "5 – 20 uur", "20 – 60 uur", "60 – 200 uur", "> 200 uur"];
-export const INVOICE_VOLUMES = ["< 50 / mnd", "50 – 250 / mnd", "250 – 1.000 / mnd", "> 1.000 / mnd"];
-export const CONTENT_VOLUMES = ["< 5 / mnd", "5 – 20 / mnd", "20 – 100 / mnd", "> 100 / mnd"];
-export const LEAD_VOLUMES = ["< 25 / mnd", "25 – 100 / mnd", "100 – 500 / mnd", "500 – 2.000 / mnd", "> 2.000 / mnd"];
-export const CONVERSION_RATES = ["< 1%", "1 – 3%", "3 – 7%", "7 – 15%", "> 15%", "Onbekend"];
-export const SALES_CYCLES = ["< 1 week", "1 – 4 weken", "1 – 3 maanden", "3 – 6 maanden", "> 6 maanden"];
-export const PRIMARY_CHANNELS = ["Inbound / SEO", "Outbound / cold outreach", "Paid ads", "Referrals / partners", "Events / netwerk", "Marketplace"];
+// ----- Follow-up question options -----
+export const CS_VOLUMES = ["< 25 / week", "25 – 100 / week", "100 – 500 / week", "500 – 2,000 / week", "> 2,000 / week"];
+export const CS_CHANNELS = ["Phone", "Email", "Live chat", "WhatsApp", "Social DM", "Contact form"];
+export const REPETITIVE_HOURS = ["< 5 hrs", "5 – 20 hrs", "20 – 60 hrs", "60 – 200 hrs", "> 200 hrs"];
+export const INVOICE_VOLUMES = ["< 50 / mo", "50 – 250 / mo", "250 – 1,000 / mo", "> 1,000 / mo"];
+export const CONTENT_VOLUMES = ["< 5 / mo", "5 – 20 / mo", "20 – 100 / mo", "> 100 / mo"];
+export const LEAD_VOLUMES = ["< 25 / mo", "25 – 100 / mo", "100 – 500 / mo", "500 – 2,000 / mo", "> 2,000 / mo"];
+export const CONVERSION_RATES = ["< 1%", "1 – 3%", "3 – 7%", "7 – 15%", "> 15%", "Unknown"];
+export const SALES_CYCLES = ["< 1 week", "1 – 4 weeks", "1 – 3 months", "3 – 6 months", "> 6 months"];
+export const PRIMARY_CHANNELS = ["Inbound / SEO", "Outbound / cold outreach", "Paid ads", "Referrals / partners", "Events / network", "Marketplace"];
 
-// ----- Branche-specifiek -----
+// ----- Industry-specific -----
 export const ECOMMERCE_PLATFORMS = ["Shopify", "WooCommerce", "Magento", "Lightspeed", "BigCommerce", "Custom build"];
-export const SERVICE_MODELS = ["Project-based", "Retainer / abonnement", "Hourly billing", "SaaS / product", "Mix"];
-export const MANUFACTURING_TYPES = ["Make-to-stock", "Make-to-order", "Engineer-to-order", "Process / continu"];
+export const SERVICE_MODELS = ["Project-based", "Retainer / subscription", "Hourly billing", "SaaS / product", "Mix"];
+export const MANUFACTURING_TYPES = ["Make-to-stock", "Make-to-order", "Engineer-to-order", "Process / continuous"];
 
 export type ToolRec = {
-  /** URL-veilige slug, gelijk aan de TOOL_DB key. */
+  /** URL-safe slug, equal to the TOOL_DB key. */
   slug?: string;
   name: string;
   category: string;
@@ -203,265 +203,265 @@ export type ToolRec = {
   url: string;
   /** Domain used to render the tool's favicon/logo (Clearbit / Google s2). */
   domain: string;
-  /** Indicatieve prijs per maand in EUR ranges. */
+  /** Indicative price per month in EUR ranges. */
   pricing?: string;
-  /** Gemiddelde setup-tijd om productie-waarde te halen. */
+  /** Average setup time to reach production value. */
   setupTime?: string;
-  /** Concrete eerste stap voor implementatie. */
+  /** Concrete first step for implementation. */
   firstStep?: string;
 };
 
-/** Extra detail-content voor de tool-detailpagina (per slug). */
+/** Extra detail content for the tool detail page (per slug). */
 export type ToolDetail = {
-  /** Korte tagline boven de fold op de detailpagina. */
+  /** Short tagline above the fold on the detail page. */
   tagline: string;
-  /** 3-5 concrete use-cases (bullets). */
+  /** 3-5 concrete use cases (bullets). */
   useCases: string[];
-  /** Voor / na vergelijking. */
+  /** Before / after comparison. */
   beforeAfter: { before: string; after: string }[];
-  /** 4-6 concrete instapstappen, in volgorde. */
+  /** 4-6 concrete onboarding steps, in order. */
   steps: { title: string; detail: string }[];
-  /** Optioneel — best voor wie. */
+  /** Optional — best for whom. */
   bestFor?: string;
-  /** Optioneel — wanneer juist niet kiezen. */
+  /** Optional — when not to choose this. */
   notFor?: string;
 };
 
 export const TOOL_DETAILS: Record<string, ToolDetail> = {
   openai: {
-    tagline: "De snelste manier om je hele team productiever te maken met AI.",
+    tagline: "The fastest way to make your entire team more productive with AI.",
     useCases: [
-      "Voorstellen, offertes en e-mails opstellen in jullie tone-of-voice",
-      "Meeting-recordings automatisch laten samenvatten met action items",
-      "Interne copilots bouwen met GPTs op eigen documenten",
-      "Marketing-copy en ad-variaties in serie genereren",
-      "Spreadsheets en data ad-hoc analyseren in plain English",
+      "Draft proposals, quotes and emails in your tone of voice",
+      "Automatically summarize meeting recordings with action items",
+      "Build internal copilots with GPTs on your own documents",
+      "Generate marketing copy and ad variations at scale",
+      "Analyze spreadsheets and data ad-hoc in plain English",
     ],
     beforeAfter: [
-      { before: "2 uur per voorstel handmatig schrijven.", after: "15 minuten — AI levert eerste 80% op basis van eerdere wins." },
-      { before: "Meetings worden niet vastgelegd, actiepunten verdwijnen.", after: "Elke meeting eindigt met samenvatting + taken in Slack." },
-      { before: "Marketing-team produceert 4 posts per week.", after: "12+ posts per week, gevarieerd qua format en kanaal." },
+      { before: "2 hours per proposal written manually.", after: "15 minutes — AI delivers the first 80% based on previous wins." },
+      { before: "Meetings are not recorded, action points disappear.", after: "Every meeting ends with a summary + tasks in Slack." },
+      { before: "Marketing team produces 4 posts per week.", after: "12+ posts per week, varied by format and channel." },
     ],
     steps: [
-      { title: "ChatGPT Team activeren", detail: "€ 25 / gebruiker / mnd. Centrale workspace, data wordt niet voor training gebruikt." },
-      { title: "3 use-cases kiezen met team", detail: "Bv. voorstellen schrijven, meeting-summaries, klant-research. Begin smal." },
-      { title: "Custom GPTs bouwen", detail: "Per use-case 1 GPT met instructions + 5 voorbeelddocs uploaden." },
-      { title: "Tone-of-voice kalibreren", detail: "5 beste eerdere voorstellen uploaden zodat output direct on-brand is." },
-      { title: "Wekelijkse share-outs", detail: "10 min standup waarin team beste prompts deelt — versnelt adoptie." },
+      { title: "Activate ChatGPT Team", detail: "€ 25 / user / mo. Central workspace, data is not used for training." },
+      { title: "Choose 3 use cases with the team", detail: "E.g. writing proposals, meeting summaries, client research. Start narrow." },
+      { title: "Build custom GPTs", detail: "1 GPT per use case with instructions + upload 5 example docs." },
+      { title: "Calibrate tone of voice", detail: "Upload 5 best previous proposals so output is immediately on-brand." },
+      { title: "Weekly share-outs", detail: "10 min standup where the team shares best prompts — accelerates adoption." },
     ],
-    bestFor: "Teams die snel willen experimenteren zonder developer.",
+    bestFor: "Teams that want to experiment quickly without a developer.",
   },
   claude: {
-    tagline: "Het beste model voor lange documenten en gevoelige analyses.",
+    tagline: "The best model for long documents and sensitive analyses.",
     useCases: [
-      "Contracten doorlezen en risico's markeren",
-      "Beleidsstukken samenvatten voor management",
-      "Hele kennisbank doorzoeken met natuurlijke vragen",
-      "Tender-documenten analyseren tegen interne capabilities",
+      "Read contracts and flag risks",
+      "Summarize policy documents for management",
+      "Search entire knowledge bases with natural questions",
+      "Analyze tender documents against internal capabilities",
     ],
     beforeAfter: [
-      { before: "Jurist leest 40 pagina's contract in 3 uur.", after: "Risico's binnen 10 minuten in bullets — jurist valideert." },
-      { before: "RFP-respons kost een week.", after: "Eerste draft binnen een dag dankzij precieze document-Q&A." },
+      { before: "Lawyer reads 40-page contract in 3 hours.", after: "Risks in bullets within 10 minutes — lawyer validates." },
+      { before: "RFP response takes a week.", after: "First draft within a day thanks to precise document Q&A." },
     ],
     steps: [
-      { title: "Claude Pro of Team account openen", detail: "200K-context support — past complete contracten erin." },
-      { title: "Project per documentstroom maken", detail: "Bv. 'Inkoopcontracten', 'Beleid', 'RFPs'." },
-      { title: "Reference docs uploaden", detail: "Voorbeeldcontracten + interne checklist als context." },
-      { title: "Eerste analyses dubbelchecken", detail: "Eerste 10 outputs door expert valideren — kalibreer prompts." },
+      { title: "Open Claude Pro or Team account", detail: "200K context support — fits complete contracts." },
+      { title: "Create a project per document stream", detail: "E.g. 'Purchase contracts', 'Policy', 'RFPs'." },
+      { title: "Upload reference docs", detail: "Sample contracts + internal checklist as context." },
+      { title: "Double-check first analyses", detail: "Validate first 10 outputs by an expert — calibrate prompts." },
     ],
-    bestFor: "Juridisch, finance, compliance — alles met dichte documenten.",
+    bestFor: "Legal, finance, compliance — anything with dense documents.",
   },
   n8n: {
-    tagline: "Repetitieve taken tussen je tools volledig wegautomatiseren.",
+    tagline: "Fully automate repetitive tasks between your tools.",
     useCases: [
-      "Inkomende e-mail/factuur → boekhouding zonder typen",
-      "Webform → CRM → welkomstmail in één flow",
-      "Wekelijkse rapportages automatisch samenstellen",
-      "Tickets verrijken met klantcontext vóór ze bij support landen",
-      "AI-stappen inzetten voor categorisatie of samenvatting",
+      "Incoming email/invoice → bookkeeping without typing",
+      "Web form → CRM → welcome email in one flow",
+      "Automatically compile weekly reports",
+      "Enrich tickets with customer context before they reach support",
+      "Use AI steps for categorization or summarization",
     ],
     beforeAfter: [
-      { before: "8 uur per week handmatig facturen overtypen.", after: "30 min controleren — workflow doet de rest." },
-      { before: "Lead vult formulier in, blijft 1 dag liggen.", after: "Lead krijgt binnen 60 sec gepersonaliseerde welkomstmail." },
+      { before: "8 hours per week manually retyping invoices.", after: "30 min reviewing — workflow does the rest." },
+      { before: "Lead fills out form, sits for 1 day.", after: "Lead gets personalized welcome email within 60 sec." },
     ],
     steps: [
-      { title: "Top-3 repetitieve handelingen lijsten", detail: "Vraag het team: wat doen jullie elke week dat saai is?" },
-      { title: "n8n cloud of self-hosted starten", detail: "Cloud is sneller; self-hosted bespaart kosten bij volume." },
-      { title: "Eerste workflow bouwen voor #1 taak", detail: "Begin smal: 1 trigger, 3-4 stappen. Test met echte data." },
-      { title: "Foutafhandeling toevoegen", detail: "Zorg voor Slack-notificatie bij failures voordat je live gaat." },
-      { title: "Workflow #2 en #3 bouwen", detail: "Pas wat je leerde toe op de andere 2 use-cases." },
+      { title: "List top-3 repetitive actions", detail: "Ask the team: what do you do every week that's tedious?" },
+      { title: "Start n8n cloud or self-hosted", detail: "Cloud is faster; self-hosted saves costs at volume." },
+      { title: "Build first workflow for #1 task", detail: "Start narrow: 1 trigger, 3-4 steps. Test with real data." },
+      { title: "Add error handling", detail: "Set up Slack notification on failures before going live." },
+      { title: "Build workflows #2 and #3", detail: "Apply what you learned to the other 2 use cases." },
     ],
-    bestFor: "MKB met 5+ tools die niet goed met elkaar praten.",
+    bestFor: "SMBs with 5+ tools that don't communicate well.",
   },
   vapi: {
-    tagline: "24/7 telefoonopname zodat geen klant ooit nog onbeantwoord blijft.",
+    tagline: "24/7 phone answering so no customer ever goes unanswered.",
     useCases: [
-      "Inkomende calls buiten kantooruren afvangen + terugbel-notitie",
-      "Standaard FAQ-vragen direct beantwoorden",
-      "Afsprakenplanner via telefoon",
-      "Outbound bevestigingen of herinneringen bellen",
+      "Catch incoming calls outside business hours + callback note",
+      "Answer standard FAQ questions directly",
+      "Appointment scheduler via phone",
+      "Make outbound confirmations or reminders",
     ],
     beforeAfter: [
-      { before: "20% van de calls gaat naar voicemail, helft belt nooit terug.", after: "100% beantwoord, gestructureerde lead-data in CRM." },
-      { before: "Receptioniste verloren 2 uur/dag aan FAQ-calls.", after: "AI agent vangt 70% af — receptioniste werkt aan complexere zaken." },
+      { before: "20% of calls go to voicemail, half never call back.", after: "100% answered, structured lead data in CRM." },
+      { before: "Receptionist lost 2 hrs/day to FAQ calls.", after: "AI agent handles 70% — receptionist works on complex matters." },
     ],
     steps: [
-      { title: "FAQ-script maken (10 vragen)", detail: "Schrijf de 10 vragen + ideale antwoorden uit." },
-      { title: "Vapi-account + telefoonnummer", detail: "Twilio-koppeling of port bestaand nummer." },
-      { title: "Agent bouwen + stem kiezen", detail: "ElevenLabs-stem voor natuurlijke ervaring." },
-      { title: "Doorzet-regels instellen", detail: "Wanneer naar mens? Bv. boze klant-detectie of complex verzoek." },
-      { title: "1 week parallel draaien", detail: "Naast bestaande lijn — analyseer transcripten dagelijks." },
+      { title: "Create FAQ script (10 questions)", detail: "Write out the 10 questions + ideal answers." },
+      { title: "Vapi account + phone number", detail: "Twilio integration or port existing number." },
+      { title: "Build agent + choose voice", detail: "ElevenLabs voice for a natural experience." },
+      { title: "Set transfer rules", detail: "When to hand off to a human? E.g. angry customer detection or complex request." },
+      { title: "Run parallel for 1 week", detail: "Alongside existing line — analyze transcripts daily." },
     ],
-    bestFor: "Bedrijven met >50 inkomende calls/week.",
-    notFor: "Hoog-emotionele gesprekken (bv. uitvaart, zorg-crises).",
+    bestFor: "Companies with >50 incoming calls/week.",
+    notFor: "High-emotion conversations (e.g. funeral, care crises).",
   },
   intercom: {
-    tagline: "70% van support-tickets autonoom oplossen, 24/7.",
+    tagline: "Autonomously resolve 70% of support tickets, 24/7.",
     useCases: [
-      "Eerstelijns FAQ direct beantwoorden in chat & email",
-      "Klant-data ophalen en personaliseren",
-      "Tickets escaleren met volledige context naar agent",
-      "Multi-language support zonder extra team",
+      "Answer first-line FAQ directly in chat & email",
+      "Retrieve and personalize customer data",
+      "Escalate tickets with full context to agent",
+      "Multi-language support without extra team",
     ],
     beforeAfter: [
-      { before: "Gemiddeld 8 uur eerste response op email.", after: "8 sec — Fin antwoordt en lost direct op." },
-      { before: "Support team van 5 voor 1.000 tickets/week.", after: "Team van 2 die alleen complexe cases doen." },
+      { before: "Average 8 hours first response on email.", after: "8 sec — Fin answers and resolves immediately." },
+      { before: "Support team of 5 for 1,000 tickets/week.", after: "Team of 2 handling only complex cases." },
     ],
     steps: [
-      { title: "Help center artikelen op orde brengen", detail: "Fin is zo goed als je content. Top 30 vragen up-to-date." },
-      { title: "Fin trainen op 100 oude tickets", detail: "Laat zien hoe jullie eerder reageerden." },
-      { title: "Resolution-confidence drempel zetten", detail: "Begin op 80% — escaleer alles eronder." },
-      { title: "Wekelijkse content-review", detail: "Failed conversaties → nieuwe help-artikelen." },
+      { title: "Get help center articles in order", detail: "Fin is only as good as your content. Top 30 questions up to date." },
+      { title: "Train Fin on 100 old tickets", detail: "Show how you previously responded." },
+      { title: "Set resolution-confidence threshold", detail: "Start at 80% — escalate everything below." },
+      { title: "Weekly content review", detail: "Failed conversations → new help articles." },
     ],
-    bestFor: "B2B SaaS met 500+ tickets/maand.",
+    bestFor: "B2B SaaS with 500+ tickets/month.",
   },
   klippa: {
-    tagline: "Factuurverwerking en bonnetjes volledig automatisch boeken.",
+    tagline: "Fully automatic invoice processing and receipt booking.",
     useCases: [
-      "Inkomende facturen via mailbox → OCR → boekhouding",
-      "Onkostendeclaraties via app door medewerker",
-      "Automatische BTW-validatie en grootboek-koppeling",
-      "Goedkeuringsworkflow per kostenplaats",
+      "Incoming invoices via mailbox → OCR → bookkeeping",
+      "Expense declarations via app by employee",
+      "Automatic VAT validation and ledger integration",
+      "Approval workflow per cost center",
     ],
     beforeAfter: [
-      { before: "Boekhouder typt 200 facturen/mnd handmatig (10 uur).", after: "200 facturen automatisch — 1 uur valideren." },
-      { before: "Bonnetjes raken kwijt, BTW niet teruggevorderd.", after: "Foto in app → direct geboekt + BTW geclaimd." },
+      { before: "Accountant manually types 200 invoices/mo (10 hrs).", after: "200 invoices automatically — 1 hour to validate." },
+      { before: "Receipts get lost, VAT not reclaimed.", after: "Photo in app → immediately booked + VAT claimed." },
     ],
     steps: [
-      { title: "Boekhoudpakket koppelen", detail: "Exact, AFAS, Twinfield, Snelstart, Yuki — allemaal supported." },
-      { title: "Mailbox voor facturen activeren", detail: "Leveranciers mailen naar facturen@jouwbedrijf.nl." },
-      { title: "Eerste 100 facturen door OCR", detail: "Train kostenplaats-mapping op echte voorbeelden." },
-      { title: "Goedkeuringsregels instellen", detail: "Bv. > € 1.000 naar manager, anders direct boeken." },
-      { title: "Medewerkers app uitrollen", detail: "Bonnetjes-app installatie meeting van 15 min." },
+      { title: "Connect accounting package", detail: "Exact, AFAS, Twinfield, Snelstart, Yuki — all supported." },
+      { title: "Activate mailbox for invoices", detail: "Suppliers email to invoices@yourcompany.com." },
+      { title: "Run first 100 invoices through OCR", detail: "Train cost center mapping on real examples." },
+      { title: "Set approval rules", detail: "E.g. > € 1,000 to manager, otherwise book directly." },
+      { title: "Roll out employee app", detail: "Receipt app installation meeting of 15 min." },
     ],
-    bestFor: "MKB met 50+ facturen of 30+ declaraties per maand.",
+    bestFor: "SMBs with 50+ invoices or 30+ expense claims per month.",
   },
   instantly: {
-    tagline: "Hyper-gepersonaliseerde cold outreach op autopilot voor meer leads.",
+    tagline: "Hyper-personalized cold outreach on autopilot for more leads.",
     useCases: [
-      "Onbeperkte mailboxen voor schaalbare outbound",
-      "Auto warm-up voor 100% deliverability",
-      "AI-personalisatie per prospect op basis van LinkedIn/website",
-      "Multi-step sequences met smart reply-detection",
+      "Unlimited mailboxes for scalable outbound",
+      "Auto warm-up for 100% deliverability",
+      "AI personalization per prospect based on LinkedIn/website",
+      "Multi-step sequences with smart reply detection",
     ],
     beforeAfter: [
-      { before: "SDR doet 30 cold mails/dag handmatig, 1% reply.", after: "1.000 mails/dag, 4-6% reply door personalisatie + warm-up." },
-      { before: "Inbox flagged als spam na 200 mails/dag.", after: "100% inbox-placement door domein- en mailbox-strategie." },
+      { before: "SDR sends 30 cold emails/day manually, 1% reply.", after: "1,000 emails/day, 4-6% reply through personalization + warm-up." },
+      { before: "Inbox flagged as spam after 200 emails/day.", after: "100% inbox placement through domain and mailbox strategy." },
     ],
     steps: [
-      { title: "5 secundaire domeinen kopen", detail: "Bescherm hoofddomein. Bv. tryjouwbedrijf.com, getjouwbedrijf.com." },
-      { title: "15-25 mailboxen aanmaken + warm-up", detail: "2-3 weken auto warm-up voordat je eerste campagne start." },
-      { title: "ICP definiëren + 500 prospects", detail: "Job titles, industries, company size — heel scherp." },
-      { title: "Campagne van 4 stappen schrijven", detail: "Open, value, case-study, break-up. Houd kort." },
-      { title: "A/B testen op subject lines", detail: "Eerste week: 3 varianten draaien, beste opschalen." },
+      { title: "Buy 5 secondary domains", detail: "Protect main domain. E.g. tryyourcompany.com, getyourcompany.com." },
+      { title: "Create 15-25 mailboxes + warm-up", detail: "2-3 weeks auto warm-up before starting your first campaign." },
+      { title: "Define ICP + 500 prospects", detail: "Job titles, industries, company size — very precise." },
+      { title: "Write 4-step campaign", detail: "Open, value, case-study, break-up. Keep it short." },
+      { title: "A/B test subject lines", detail: "First week: run 3 variants, scale the best." },
     ],
-    bestFor: "B2B sales-teams die outbound willen schalen voorbij 100 mails/dag.",
-    notFor: "Sterk gereguleerde sectoren of consumenten-markten.",
+    bestFor: "B2B sales teams that want to scale outbound beyond 100 emails/day.",
+    notFor: "Heavily regulated sectors or consumer markets.",
   },
   hubspot: {
-    tagline: "AI agents in CRM, marketing en sales — alles in één systeem.",
+    tagline: "AI agents in CRM, marketing and sales — all in one system.",
     useCases: [
-      "Automatische lead scoring op gedrag + bedrijfsdata",
-      "AI-gepersonaliseerde mail-flows per segment",
-      "Content assistant voor blogs, landing pages, social",
-      "Forecasting op basis van pipeline-historie",
+      "Automatic lead scoring on behavior + company data",
+      "AI-personalized email flows per segment",
+      "Content assistant for blogs, landing pages, social",
+      "Forecasting based on pipeline history",
     ],
     beforeAfter: [
-      { before: "Sales benaderde leads zonder priority — 8% conversie.", after: "Top-scoring leads eerst — 18% conversie." },
-      { before: "Marketing schrijft 1 blog/week.", after: "3 blogs/week + per blog 5 social-variaties." },
+      { before: "Sales approached leads without priority — 8% conversion.", after: "Top-scoring leads first — 18% conversion." },
+      { before: "Marketing writes 1 blog/week.", after: "3 blogs/week + 5 social variations per blog." },
     ],
     steps: [
-      { title: "Bestaande CRM-data importeren", detail: "Schoon eerst dubbele records op — start clean." },
-      { title: "Lead-scoring activeren", detail: "Begin met simpele regels: site-bezoek, mail-open, demo-aanvraag." },
-      { title: "1 mail-flow per segment", detail: "Welcome + nurture + win-back. Test 4 weken." },
-      { title: "Content assistant koppelen aan brand voice", detail: "Upload 5 beste blogs als reference." },
+      { title: "Import existing CRM data", detail: "Clean up duplicate records first — start clean." },
+      { title: "Activate lead scoring", detail: "Start with simple rules: site visit, email open, demo request." },
+      { title: "1 email flow per segment", detail: "Welcome + nurture + win-back. Test 4 weeks." },
+      { title: "Connect content assistant to brand voice", detail: "Upload 5 best blogs as reference." },
     ],
-    bestFor: "Bedrijven met 1.000+ contacts en gestructureerd sales-proces.",
+    bestFor: "Companies with 1,000+ contacts and a structured sales process.",
   },
   github: {
-    tagline: "AI-assistent voor je hele engineering-team.",
+    tagline: "AI assistant for your entire engineering team.",
     useCases: [
-      "Boilerplate code wegnemen — focus op logica",
-      "Code review automatisch laten suggereren",
-      "Tests genereren voor bestaande code",
-      "Refactoren naar moderne patterns",
+      "Remove boilerplate code — focus on logic",
+      "Automatically suggest code reviews",
+      "Generate tests for existing code",
+      "Refactor to modern patterns",
     ],
     beforeAfter: [
-      { before: "Story-throughput van 8 punten/sprint per dev.", after: "12-14 punten/sprint na 4 weken adoptie." },
-      { before: "Test-coverage 40%, niemand schrijft tests.", after: "Coverage 70% — Copilot suggereert tests bij elk PR." },
+      { before: "Story throughput of 8 points/sprint per dev.", after: "12-14 points/sprint after 4 weeks of adoption." },
+      { before: "Test coverage 40%, nobody writes tests.", after: "Coverage 70% — Copilot suggests tests on every PR." },
     ],
     steps: [
-      { title: "GitHub Copilot Business activeren", detail: "Org-policy: blokkeer code uit publieke repos in suggesties." },
-      { title: "1 squad als pilot kiezen", detail: "Meet baseline story-throughput 2 weken vooraf." },
-      { title: "Best practices delen", detail: "Wekelijkse 'prompt-tips' deelmoment in standup." },
-      { title: "Uitrollen naar hele engineering", detail: "Na 4 weken pilot — verzamel ROI-cijfers." },
+      { title: "Activate GitHub Copilot Business", detail: "Org policy: block code from public repos in suggestions." },
+      { title: "Choose 1 squad as pilot", detail: "Measure baseline story throughput 2 weeks ahead." },
+      { title: "Share best practices", detail: "Weekly 'prompt tips' share moment in standup." },
+      { title: "Roll out to entire engineering", detail: "After 4-week pilot — collect ROI figures." },
     ],
-    bestFor: "Engineering teams van 5+ developers.",
+    bestFor: "Engineering teams of 5+ developers.",
   },
-  // Default-template voor tools zonder eigen detail
+  // Default template for tools without their own detail
 };
 
 export const TOOL_DB: Record<string, ToolRec> = {
   // Generative & research
-  openai: { name: "ChatGPT (OpenAI)", category: "Generatieve AI", description: "Gespreks-AI voor schrijven, analyse en redenering.", useCase: "Voorstellen schrijven, meetings samenvatten, interne copilots bouwen.", url: "https://openai.com", domain: "openai.com", pricing: "€ 20 / gebruiker / mnd", setupTime: "1 dag", firstStep: "ChatGPT Team workspace activeren en 3 use-cases met team kiezen." },
-  claude: { name: "Anthropic Claude", category: "Generatieve AI", description: "Model met lange context en sterke documentanalyse.", useCase: "Contracten, beleid en grote kennisbanken analyseren.", url: "https://anthropic.com", domain: "anthropic.com", pricing: "€ 20 / gebruiker / mnd", setupTime: "1 dag", firstStep: "Claude Projects aanmaken voor de 3 grootste documentstromen." },
-  perplexity: { name: "Perplexity", category: "Onderzoek", description: "AI-research engine met bronvermelding.", useCase: "Marktonderzoek, concurrentie-analyse, due diligence.", url: "https://perplexity.ai", domain: "perplexity.ai", pricing: "€ 20 / gebruiker / mnd", setupTime: "< 1 uur", firstStep: "Spaces opzetten per accountmanager voor klant-research." },
-  notionai: { name: "Notion AI", category: "Productiviteit", description: "AI in je kennisbank.", useCase: "Auto-samenvattingen, taken genereren, interne docs.", url: "https://notion.so/product/ai", domain: "notion.so", pricing: "€ 10 / gebruiker / mnd", setupTime: "1 week", firstStep: "Bestaande Notion bijwerken naar AI plan en meeting-template aanmaken." },
+  openai: { name: "ChatGPT (OpenAI)", category: "Generative AI", description: "Conversational AI for writing, analysis and reasoning.", useCase: "Write proposals, summarize meetings, build internal copilots.", url: "https://openai.com", domain: "openai.com", pricing: "€ 20 / user / mo", setupTime: "1 day", firstStep: "Activate ChatGPT Team workspace and choose 3 use cases with the team." },
+  claude: { name: "Anthropic Claude", category: "Generative AI", description: "Model with long context and strong document analysis.", useCase: "Analyze contracts, policies and large knowledge bases.", url: "https://anthropic.com", domain: "anthropic.com", pricing: "€ 20 / user / mo", setupTime: "1 day", firstStep: "Create Claude Projects for the 3 largest document streams." },
+  perplexity: { name: "Perplexity", category: "Research", description: "AI research engine with source citations.", useCase: "Market research, competitive analysis, due diligence.", url: "https://perplexity.ai", domain: "perplexity.ai", pricing: "€ 20 / user / mo", setupTime: "< 1 hr", firstStep: "Set up Spaces per account manager for client research." },
+  notionai: { name: "Notion AI", category: "Productivity", description: "AI in your knowledge base.", useCase: "Auto-summaries, generate tasks, internal docs.", url: "https://notion.so/product/ai", domain: "notion.so", pricing: "€ 10 / user / mo", setupTime: "1 week", firstStep: "Upgrade existing Notion to AI plan and create a meeting template." },
 
-  // No-code automation (repetitieve taken)
-  n8n: { name: "n8n", category: "No-code Automation", description: "Open-source workflow automatisering met 400+ integraties en native AI nodes.", useCase: "Repetitieve taken tussen je tools wegautomatiseren — facturen, leads, rapportages.", url: "https://n8n.io", domain: "n8n.io", pricing: "€ 0 self-hosted / vanaf € 20 cloud", setupTime: "2 weken", firstStep: "Top-3 repetitieve handelingen in kaart brengen en eerste workflow bouwen." },
-  make: { name: "Make.com", category: "No-code Automation", description: "Visuele workflow-builder met drag-and-drop scenarios.", useCase: "Multi-step processen automatiseren zonder developer.", url: "https://make.com", domain: "make.com", pricing: "vanaf € 9 / mnd", setupTime: "1-2 weken", firstStep: "Free tier proberen op 1 echte hand-off (bv. lead → CRM)." },
-  zapier: { name: "Zapier", category: "No-code Automation", description: "Marktleider in app-koppelingen, met AI-stappen ingebouwd.", useCase: "Snel point-to-point automatiseringen tussen 6.000+ apps.", url: "https://zapier.com", domain: "zapier.com", pricing: "vanaf € 20 / mnd", setupTime: "< 1 week", firstStep: "Zaps maken voor inbox → CRM en formulier → Slack." },
+  // No-code automation (repetitive tasks)
+  n8n: { name: "n8n", category: "No-code Automation", description: "Open-source workflow automation with 400+ integrations and native AI nodes.", useCase: "Automate repetitive tasks between your tools — invoices, leads, reports.", url: "https://n8n.io", domain: "n8n.io", pricing: "€ 0 self-hosted / from € 20 cloud", setupTime: "2 weeks", firstStep: "Map top-3 repetitive actions and build the first workflow." },
+  make: { name: "Make.com", category: "No-code Automation", description: "Visual workflow builder with drag-and-drop scenarios.", useCase: "Automate multi-step processes without a developer.", url: "https://make.com", domain: "make.com", pricing: "from € 9 / mo", setupTime: "1-2 weeks", firstStep: "Try free tier on 1 real hand-off (e.g. lead → CRM)." },
+  zapier: { name: "Zapier", category: "No-code Automation", description: "Market leader in app integrations, with built-in AI steps.", useCase: "Quickly connect 6,000+ apps point-to-point.", url: "https://zapier.com", domain: "zapier.com", pricing: "from € 20 / mo", setupTime: "< 1 week", firstStep: "Create Zaps for inbox → CRM and form → Slack." },
 
   // Email marketing & outbound
-  instantly: { name: "Instantly.ai", category: "AI Email Marketing", description: "AI cold outreach platform met onbeperkte mailboxen en deliverability-tools.", useCase: "Hyper-gepersonaliseerde outbound campagnes draaien op autopilot voor meer leads en omzet.", url: "https://instantly.ai", domain: "instantly.ai", pricing: "vanaf € 37 / mnd", setupTime: "2-3 weken (warm-up)", firstStep: "5 mailboxen warm-up starten en 1 ICP-campagne van 500 prospects opzetten." },
-  smartlead: { name: "Smartlead", category: "AI Email Marketing", description: "AI-gedreven cold email met automatische warm-up en personalisatie.", useCase: "Schaalbare lead generatie voor B2B sales teams.", url: "https://smartlead.ai", domain: "smartlead.ai", pricing: "vanaf € 39 / mnd", setupTime: "2-3 weken", firstStep: "Domein-warm-up + spintax-templates maken voor eerste segment." },
-  clay: { name: "Clay", category: "Lead Enrichment", description: "AI prospect-onderzoek en data enrichment in één workflow.", useCase: "Lead lijsten verrijken met persoonlijke insights vóór outreach.", url: "https://clay.com", domain: "clay.com", pricing: "vanaf € 134 / mnd", setupTime: "1 week", firstStep: "ICP definiëren en eerste enrichment-tabel met 500 leads bouwen." },
-  hubspot: { name: "HubSpot Breeze", category: "Sales & Marketing", description: "AI agents in CRM, marketing en content.", useCase: "Lead scoring, e-mail personalisatie, content creatie.", url: "https://hubspot.com", domain: "hubspot.com", pricing: "vanaf € 90 / mnd", setupTime: "2-4 weken", firstStep: "Bestaande CRM-data importeren en lead-scoring activeren." },
+  instantly: { name: "Instantly.ai", category: "AI Email Marketing", description: "AI cold outreach platform with unlimited mailboxes and deliverability tools.", useCase: "Run hyper-personalized outbound campaigns on autopilot for more leads and revenue.", url: "https://instantly.ai", domain: "instantly.ai", pricing: "from € 37 / mo", setupTime: "2-3 weeks (warm-up)", firstStep: "Start 5 mailbox warm-ups and set up 1 ICP campaign of 500 prospects." },
+  smartlead: { name: "Smartlead", category: "AI Email Marketing", description: "AI-driven cold email with automatic warm-up and personalization.", useCase: "Scalable lead generation for B2B sales teams.", url: "https://smartlead.ai", domain: "smartlead.ai", pricing: "from € 39 / mo", setupTime: "2-3 weeks", firstStep: "Domain warm-up + create spintax templates for first segment." },
+  clay: { name: "Clay", category: "Lead Enrichment", description: "AI prospect research and data enrichment in one workflow.", useCase: "Enrich lead lists with personal insights before outreach.", url: "https://clay.com", domain: "clay.com", pricing: "from € 134 / mo", setupTime: "1 week", firstStep: "Define ICP and build first enrichment table with 500 leads." },
+  hubspot: { name: "HubSpot Breeze", category: "Sales & Marketing", description: "AI agents in CRM, marketing and content.", useCase: "Lead scoring, email personalization, content creation.", url: "https://hubspot.com", domain: "hubspot.com", pricing: "from € 90 / mo", setupTime: "2-4 weeks", firstStep: "Import existing CRM data and activate lead scoring." },
 
-  // Klantenservice & voice
-  vapi: { name: "Vapi", category: "AI Voice Agent", description: "Realtime AI voice agents die telefoon opnemen, beantwoorden en doorzetten.", useCase: "24/7 telefoonopname zodat geen klant ooit nog onbeantwoord blijft.", url: "https://vapi.ai", domain: "vapi.ai", pricing: "± € 0,08 / minuut + setup", setupTime: "1-2 weken", firstStep: "FAQ-script bouwen en Vapi-agent koppelen aan bestaand telefoonnummer." },
-  retell: { name: "Retell AI", category: "AI Voice Agent", description: "Lage-latency AI bel-agent met natuurlijke stem.", useCase: "Inbound & outbound calls automatiseren — kwalificatie, support, afspraken.", url: "https://retellai.com", domain: "retellai.com", pricing: "± € 0,07 / minuut", setupTime: "1-2 weken", firstStep: "Demo-bot bouwen voor afsprakenplanner en testen met 10 collega's." },
-  intercom: { name: "Intercom Fin", category: "Klantenservice", description: "AI agent die klantvragen direct oplost in chat & email.", useCase: "Tot 70% van support tickets autonoom afhandelen, 24/7.", url: "https://intercom.com/fin", domain: "intercom.com", pricing: "± € 0,90 per opgelost gesprek", setupTime: "1-2 weken", firstStep: "Help center artikelen import + Fin trainen op laatste 100 tickets." },
-  chatbase: { name: "Chatbase", category: "Custom AI Chatbot", description: "Train een GPT-chatbot op je eigen website & docs in minuten.", useCase: "Leads kwalificeren en FAQ's afvangen direct op je site of contactformulier.", url: "https://chatbase.co", domain: "chatbase.co", pricing: "vanaf € 19 / mnd", setupTime: "< 1 dag", firstStep: "Website + 5 PDF's uploaden en widget op contactpagina plaatsen." },
+  // Customer service & voice
+  vapi: { name: "Vapi", category: "AI Voice Agent", description: "Real-time AI voice agents that answer, respond and transfer calls.", useCase: "24/7 phone answering so no customer ever goes unanswered.", url: "https://vapi.ai", domain: "vapi.ai", pricing: "± € 0.08 / min + setup", setupTime: "1-2 weeks", firstStep: "Build FAQ script and connect Vapi agent to existing phone number." },
+  retell: { name: "Retell AI", category: "AI Voice Agent", description: "Low-latency AI call agent with natural voice.", useCase: "Automate inbound & outbound calls — qualification, support, appointments.", url: "https://retellai.com", domain: "retellai.com", pricing: "± € 0.07 / min", setupTime: "1-2 weeks", firstStep: "Build demo bot for appointment scheduler and test with 10 colleagues." },
+  intercom: { name: "Intercom Fin", category: "Customer Service", description: "AI agent that resolves customer questions directly in chat & email.", useCase: "Autonomously handle up to 70% of support tickets, 24/7.", url: "https://intercom.com/fin", domain: "intercom.com", pricing: "± € 0.90 per resolved conversation", setupTime: "1-2 weeks", firstStep: "Import help center articles + train Fin on last 100 tickets." },
+  chatbase: { name: "Chatbase", category: "Custom AI Chatbot", description: "Train a GPT chatbot on your own website & docs in minutes.", useCase: "Qualify leads and handle FAQs directly on your site or contact form.", url: "https://chatbase.co", domain: "chatbase.co", pricing: "from € 19 / mo", setupTime: "< 1 day", firstStep: "Upload website + 5 PDFs and place widget on contact page." },
 
-  // Facturatie & finance
-  klippa: { name: "Klippa SpendControl", category: "AI Finance", description: "AI bonnetjes-, factuur- en spend-herkenning met automatische boeking.", useCase: "Factuurverwerking en onkostendeclaraties volledig automatiseren.", url: "https://klippa.com", domain: "klippa.com", pricing: "vanaf € 5 / gebruiker / mnd", setupTime: "1-2 weken", firstStep: "Boekhoudpakket koppelen en eerste 100 facturen door OCR halen." },
-  ramp: { name: "Ramp", category: "AI Finance", description: "Spend management platform met AI insights & auto-categorisatie.", useCase: "Bedrijfsuitgaven automatisch coderen en goedkeuren.", url: "https://ramp.com", domain: "ramp.com", pricing: "Gratis core / paid tiers", setupTime: "2 weken", firstStep: "Bedrijfskaarten uitrollen en accounting-rules instellen." },
+  // Invoicing & finance
+  klippa: { name: "Klippa SpendControl", category: "AI Finance", description: "AI receipt, invoice and spend recognition with automatic booking.", useCase: "Fully automate invoice processing and expense declarations.", url: "https://klippa.com", domain: "klippa.com", pricing: "from € 5 / user / mo", setupTime: "1-2 weeks", firstStep: "Connect accounting package and run first 100 invoices through OCR." },
+  ramp: { name: "Ramp", category: "AI Finance", description: "Spend management platform with AI insights & auto-categorization.", useCase: "Automatically code and approve company expenses.", url: "https://ramp.com", domain: "ramp.com", pricing: "Free core / paid tiers", setupTime: "2 weeks", firstStep: "Roll out company cards and set accounting rules." },
 
   // Content & creative
-  midjourney: { name: "Midjourney", category: "Beeldgeneratie", description: "State-of-the-art AI beeldgeneratie.", useCase: "Marketing visuals, mockups en brand assets maken.", url: "https://midjourney.com", domain: "midjourney.com", pricing: "vanaf € 10 / mnd", setupTime: "< 1 dag", firstStep: "Brand style-guide vertalen naar 3 prompt-templates." },
-  runway: { name: "Runway", category: "AI Video", description: "AI video generatie en editing.", useCase: "Marketing video's en product demo's produceren.", url: "https://runwayml.com", domain: "runwayml.com", pricing: "vanaf € 15 / mnd", setupTime: "1 week", firstStep: "Eerste 30s product-explainer maken en testen op LinkedIn." },
-  elevenlabs: { name: "ElevenLabs", category: "AI Voice", description: "Realistische AI voice synthesis & dubbing.", useCase: "Voice-overs, IVR systemen, meertalige content.", url: "https://elevenlabs.io", domain: "elevenlabs.io", pricing: "vanaf € 5 / mnd", setupTime: "< 1 dag", firstStep: "Eigen stem klonen voor onboarding-video's of IVR." },
-  descript: { name: "Descript", category: "Contentcreatie", description: "Video & podcast editing op tekst-basis met AI.", useCase: "Webinars en podcasts 5× sneller produceren.", url: "https://descript.com", domain: "descript.com", pricing: "vanaf € 15 / mnd", setupTime: "1 week", firstStep: "Bestaande webinar herbewerken en in 8 social clips knippen." },
+  midjourney: { name: "Midjourney", category: "Image Generation", description: "State-of-the-art AI image generation.", useCase: "Create marketing visuals, mockups and brand assets.", url: "https://midjourney.com", domain: "midjourney.com", pricing: "from € 10 / mo", setupTime: "< 1 day", firstStep: "Translate brand style guide into 3 prompt templates." },
+  runway: { name: "Runway", category: "AI Video", description: "AI video generation and editing.", useCase: "Produce marketing videos and product demos.", url: "https://runwayml.com", domain: "runwayml.com", pricing: "from € 15 / mo", setupTime: "1 week", firstStep: "Create first 30s product explainer and test on LinkedIn." },
+  elevenlabs: { name: "ElevenLabs", category: "AI Voice", description: "Realistic AI voice synthesis & dubbing.", useCase: "Voice-overs, IVR systems, multilingual content.", url: "https://elevenlabs.io", domain: "elevenlabs.io", pricing: "from € 5 / mo", setupTime: "< 1 day", firstStep: "Clone your own voice for onboarding videos or IVR." },
+  descript: { name: "Descript", category: "Content Creation", description: "Video & podcast editing on a text basis with AI.", useCase: "Produce webinars and podcasts 5× faster.", url: "https://descript.com", domain: "descript.com", pricing: "from € 15 / mo", setupTime: "1 week", firstStep: "Repurpose existing webinar and cut into 8 social clips." },
 
   // Development & data
-  github: { name: "GitHub Copilot", category: "Ontwikkeling", description: "AI-assistent voor programmeurs en engineering-teams.", useCase: "Softwareontwikkeling en code reviews versnellen.", url: "https://github.com/features/copilot", domain: "github.com", pricing: "€ 19 / dev / mnd (Business)", setupTime: "< 1 dag", firstStep: "Org-policy instellen en uitrollen naar 1 squad als pilot." },
-  cursor: { name: "Cursor", category: "Ontwikkeling", description: "AI-first code editor met agent-modus.", useCase: "Hele features bouwen door AI op je codebase.", url: "https://cursor.com", domain: "cursor.com", pricing: "€ 20 / dev / mnd", setupTime: "< 1 dag", firstStep: "Senior dev pilot, baseline meten op story-throughput." },
-  pinecone: { name: "Pinecone", category: "Infrastructuur", description: "Vector-database voor AI-kennisopslag en -opvraging.", useCase: "Interne copilots over je eigen data bouwen.", url: "https://pinecone.io", domain: "pinecone.io", pricing: "vanaf € 0 / serverless usage", setupTime: "2 weken", firstStep: "Kennisbank-bron kiezen en eerste 10K documenten indexeren." },
+  github: { name: "GitHub Copilot", category: "Development", description: "AI assistant for developers and engineering teams.", useCase: "Accelerate software development and code reviews.", url: "https://github.com/features/copilot", domain: "github.com", pricing: "€ 19 / dev / mo (Business)", setupTime: "< 1 day", firstStep: "Set org policy and roll out to 1 squad as pilot." },
+  cursor: { name: "Cursor", category: "Development", description: "AI-first code editor with agent mode.", useCase: "Build entire features by letting AI work on your codebase.", url: "https://cursor.com", domain: "cursor.com", pricing: "€ 20 / dev / mo", setupTime: "< 1 day", firstStep: "Senior dev pilot, measure baseline story throughput." },
+  pinecone: { name: "Pinecone", category: "Infrastructure", description: "Vector database for AI knowledge storage and retrieval.", useCase: "Build internal copilots over your own data.", url: "https://pinecone.io", domain: "pinecone.io", pricing: "from € 0 / serverless usage", setupTime: "2 weeks", firstStep: "Choose knowledge base source and index first 10K documents." },
 
   // Forecasting / planning
-  pecan: { name: "Pecan AI", category: "Predictive AI", description: "Predictive analytics zonder data-scientist.", useCase: "Demand forecasting, churn-voorspelling, lead scoring.", url: "https://pecan.ai", domain: "pecan.ai", pricing: "Op aanvraag (enterprise)", setupTime: "4-6 weken", firstStep: "1 use-case prioriteren (bv. churn) en historische data extracten." },
+  pecan: { name: "Pecan AI", category: "Predictive AI", description: "Predictive analytics without a data scientist.", useCase: "Demand forecasting, churn prediction, lead scoring.", url: "https://pecan.ai", domain: "pecan.ai", pricing: "On request (enterprise)", setupTime: "4-6 weeks", firstStep: "Prioritize 1 use case (e.g. churn) and extract historical data." },
 };
 
 export type RadarPoint = { axis: string; value: number; benchmark: number };
@@ -481,15 +481,15 @@ export type ScoreDetail = {
 
 export type QuickWin = {
   title: string;
-  effort: string;        // "30 minuten", "1 dag"
-  impact: string;        // "€ 5K / jaar", "Direct meer leads"
-  howTo: string;         // 1-2 zinnen concrete how
+  effort: string;        // "30 minutes", "1 day"
+  impact: string;        // "€ 5K / year", "More leads right away"
+  howTo: string;         // 1-2 concrete sentences
 };
 
 export type WeeklyPlanItem = {
   week: string;          // "Week 1"
   focus: string;         // "Foundation & quick wins"
-  actions: string[];     // 2-4 concrete acties
+  actions: string[];     // 2-4 concrete actions
 };
 
 export type SensitivityScenario = {
@@ -502,11 +502,11 @@ export type SensitivityScenario = {
 /** A single editable numeric input that drives the value calculation. */
 export type Assumption = {
   id: AssumptionId;
-  label: string;          // human label, e.g. "FTE in bedrijf"
+  label: string;          // human label, e.g. "FTE in company"
   value: number;          // current numeric value
   unit: "fte" | "eur" | "pct" | "count";
   confidence: "high" | "low";  // 'high' = derived from public data / explicit input, 'low' = estimated band
-  source: string;         // e.g. "Geschat uit team-grootte band 11–50"
+  source: string;         // e.g. "Estimated from team size band 11–50"
   min: number;
   max: number;
   step?: number;
@@ -548,18 +548,18 @@ export type AuditResult = {
   roadmap: { phase: string; title: string; description: string }[];
   tools: ToolRec[];
   radar: RadarPoint[];
-  /** Direct uitvoerbare quick wins voor deze week. */
+  /** Directly actionable quick wins for this week. */
   quickWins: QuickWin[];
-  /** 90-dagen weekplan met concrete acties. */
+  /** 90-day weekly plan with concrete actions. */
   weeklyPlan: WeeklyPlanItem[];
-  /** Worst / base / best case ROI scenario's. */
+  /** Worst / base / best case ROI scenarios. */
   sensitivity: SensitivityScenario[];
-  /** QA-notes from deterministic overrides (e.g. teamgrootte aangepast door site-detectie). */
+  /** QA notes from deterministic overrides (e.g. team size adjusted by site detection). */
   qaNotes?: string[];
 };
 
 /** Re-export — concrete shape lives in site-signals.server.ts but the type
- *  is duplicated here so audit.ts blijft pure (geen server-only imports). */
+ *  is duplicated here so audit.ts stays pure (no server-only imports). */
 export type SiteSignalsLite = {
   detectedTech: string[];
   techMaturityScore: number;
@@ -616,28 +616,28 @@ export function recomputeValueModel(values: Record<AssumptionId, number>): Value
 
   const valueLineItems: ValueLineItem[] = [
     {
-      label: "Loonbesparing",
+      label: "Labor savings",
       amount: laborSavings,
-      formula: `${Math.round(fte)} FTE × ${_fmt(fteCost)} × ${(automatableShare * 100).toFixed(0)}% automatiseerbaar`,
-      rationale: `Loaded jaarkost per FTE × deel dat AI/automatisering kan wegnemen.`,
+      formula: `${Math.round(fte)} FTE × ${_fmt(fteCost)} × ${(automatableShare * 100).toFixed(0)}% automatable`,
+      rationale: `Loaded annual cost per FTE × share that AI/automation can remove.`,
     },
     {
-      label: "Omzet-uplift",
+      label: "Revenue uplift",
       amount: revenueUplift,
-      formula: `${_fmt(revenue)} jaaromzet × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
-      rationale: `Extra omzet via betere conversie, AI-outbound en upsell.`,
+      formula: `${_fmt(revenue)} annual revenue × ${(revenueUpliftPct * 100).toFixed(1)}% uplift`,
+      rationale: `Extra revenue via better conversion, AI outbound and upsell.`,
     },
     {
-      label: "Retentie-winst",
+      label: "Retention gain",
       amount: retentionGain,
-      formula: `${Math.round(customers).toLocaleString("nl-NL")} klanten × ${_fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% van ${(churn * 100).toFixed(1)}% churn)`,
-      rationale: `Deel van de jaarlijkse churn dat herstelbaar is via 24/7 AI support en proactieve outreach.`,
+      formula: `${Math.round(customers).toLocaleString("nl-NL")} customers × ${_fmt(customerValue)} × ${(retentionPct * 100).toFixed(2)}% (${(churnRecoveryPct * 100).toFixed(0)}% of ${(churn * 100).toFixed(1)}% churn)`,
+      rationale: `Share of annual churn recoverable via 24/7 AI support and proactive outreach.`,
     },
     {
-      label: "Tooling-efficiëntie",
+      label: "Tooling efficiency",
       amount: efficiencyGain,
-      formula: `${Math.round(stackCount)} bestaande tools × € 2.500 koppel-winst`,
-      rationale: `Bestaande stack koppelen via n8n / Make levert kleine maar zekere winst per tool.`,
+      formula: `${Math.round(stackCount)} existing tools × € 2,500 integration gain`,
+      rationale: `Connecting the existing stack via n8n / Make delivers small but certain gains per tool.`,
     },
   ];
 
@@ -671,25 +671,25 @@ const REV_MID: Record<string, number> = {
 const CUSTOMER_VALUE_MID: Record<string, number> = {
   "< € 100": 60,
   "€ 100 – € 500": 300,
-  "€ 500 – € 2.500": 1_500,
-  "€ 2.500 – € 10K": 6_000,
+  "€ 500 – € 2,500": 1_500,
+  "€ 2,500 – € 10K": 6_000,
   "€ 10K+": 20_000,
 };
 
 const CUSTOMERS_MID: Record<string, number> = {
   "< 50": 25,
   "50 – 250": 150,
-  "250 – 1.000": 600,
-  "1.000 – 10.000": 5_000,
-  "10.000+": 25_000,
+  "250 – 1,000": 600,
+  "1,000 – 10,000": 5_000,
+  "10,000+": 25_000,
 };
 
-/** Verrijk tool met zijn slug (DB-key) zodat de UI kan linken naar /tools/$slug. */
+/** Enrich tool with its slug (DB key) so the UI can link to /tools/$slug. */
 function withSlug(slug: string, t: ToolRec): ToolRec {
   return { ...t, slug };
 }
 
-/** Lookup helper voor de detailpagina. */
+/** Lookup helper for the detail page. */
 export function getToolBySlug(slug: string): (ToolRec & { detail?: ToolDetail }) | null {
   const t = TOOL_DB[slug];
   if (!t) return null;
@@ -702,21 +702,21 @@ function matchTools(a: AuditAnswers): ToolRec[] {
   const goals = new Set(a.goals);
   const stack = new Set(a.techStack);
 
-  if (pains.has("Repetitief handwerk")) picks.push("n8n", "make");
-  if (pains.has("Trage klantenservice") || goals.has("Klantbeleving verbeteren")) {
+  if (pains.has("Repetitive work")) picks.push("n8n", "make");
+  if (pains.has("Slow customer service") || goals.has("Improve customer experience")) {
     picks.push("vapi", "intercom", "chatbase");
   }
-  if (pains.has("Lead generatie") || goals.has("Omzet verhogen")) {
+  if (pains.has("Lead generation") || goals.has("Increase revenue")) {
     picks.push("instantly", "clay", "hubspot");
   }
-  if (pains.has("Administratie & facturatie")) picks.push("klippa", "ramp");
-  if (pains.has("Content creatie kost te veel tijd")) picks.push("midjourney", "runway", "descript");
-  if (pains.has("Data verspreid over systemen")) picks.push("pinecone", "n8n");
+  if (pains.has("Administration & invoicing")) picks.push("klippa", "ramp");
+  if (pains.has("Content creation takes too much time")) picks.push("midjourney", "runway", "descript");
+  if (pains.has("Data scattered across systems")) picks.push("pinecone", "n8n");
   if (pains.has("Forecasting & planning")) picks.push("pecan", "perplexity");
   if (stack.has("Notion")) picks.push("notionai");
-  if (stack.has("Eigen software")) picks.push("github", "cursor");
-  if (goals.has("Productiviteit medewerkers")) picks.push("notionai", "zapier");
-  if (goals.has("Sneller beslissingen nemen")) picks.push("perplexity");
+  if (stack.has("Custom software")) picks.push("github", "cursor");
+  if (goals.has("Employee productivity")) picks.push("notionai", "zapier");
+  if (goals.has("Make decisions faster")) picks.push("perplexity");
 
   picks.push("openai", "claude");
 
@@ -750,16 +750,16 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
     const deviation = Math.abs(siteSignals.estimatedTeamSize - fteFromBand) / Math.max(fteFromBand, 1);
     if (deviation > 0.5) {
       fte = siteSignals.estimatedTeamSize;
-      qaNotes.push(`Team-grootte afgeleid van team-pagina (gedetecteerd: ${siteSignals.estimatedTeamSize}).`);
+      qaNotes.push(`Team size derived from team page (detected: ${siteSignals.estimatedTeamSize}).`);
     }
   }
   const revenue = REV_MID[a.revenue] ?? 200_000;
   let customerValue = CUSTOMER_VALUE_MID[a.customerValue] ?? 500;
-  if ((!a.customerValue || a.customerValue === "Onbekend") && siteSignals?.pricePoints?.length) {
+  if ((!a.customerValue || a.customerValue === "Unknown") && siteSignals?.pricePoints?.length) {
     const sorted = [...siteSignals.pricePoints].sort((x, y) => x - y);
     const median = sorted[Math.floor(sorted.length / 2)];
     customerValue = Math.round(median * 12);
-    qaNotes.push(`Klantwaarde geschat op basis van prijspagina (mediaan € ${median}/mnd × 12 = € ${customerValue}/jr).`);
+    qaNotes.push(`Customer value estimated from pricing page (median € ${median}/mo × 12 = € ${customerValue}/yr).`);
   }
   const customers = CUSTOMERS_MID[a.customersPerYear] ?? 100;
   const painCount = a.painPoints.length;
@@ -768,12 +768,12 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
   const pains = new Set(a.painPoints);
   const goals = new Set(a.goals);
 
-  // ----- FOLLOW-UP FINANCIALS (override defaults waar opgegeven) -----
+  // ----- FOLLOW-UP FINANCIALS (override defaults where provided) -----
   const HOURLY_MID: Record<string, number> = {
     "< € 30": 25, "€ 30 – € 50": 40, "€ 50 – € 80": 65, "€ 80 – € 120": 100, "> € 120": 140,
   };
   const hourlyCost = a.avgHourlyCost ? HOURLY_MID[a.avgHourlyCost] : null;
-  // Loaded yearly cost ~ 1600 productieve uren × uurloon (NL benchmark) — pak hourly als beschikbaar.
+  // Loaded yearly cost ~ 1600 productive hours × hourly rate (NL benchmark) — use hourly if available.
   const FTE_COST = hourlyCost ? Math.round(hourlyCost * 1600) : 55_000;
 
   const MARGIN_MID: Record<string, number> = {
@@ -788,8 +788,8 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
 
   // ----- LABOR SAVINGS share (goal-weighted) -----
   let automatableShare = Math.min(0.06 * painCount, 0.30);
-  const wantsCostCut = goals.has("Operationele kosten verlagen");
-  const wantsProductivity = goals.has("Productiviteit medewerkers");
+  const wantsCostCut = goals.has("Reduce operational costs");
+  const wantsProductivity = goals.has("Employee productivity");
   if (wantsCostCut) automatableShare += 0.08;
   if (wantsProductivity) automatableShare += 0.05;
   if (!wantsCostCut && !wantsProductivity) automatableShare *= 0.55;
@@ -797,23 +797,23 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
 
   // ----- REVENUE UPLIFT pct (goal-weighted) -----
   let revenueUpliftPct = Math.min(0.01 * goalCount, 0.04);
-  const wantsRevenue = goals.has("Omzet verhogen");
-  const wantsLeads = pains.has("Lead generatie");
+  const wantsRevenue = goals.has("Increase revenue");
+  const wantsLeads = pains.has("Lead generation");
   if (wantsRevenue) revenueUpliftPct += 0.05;
   if (wantsLeads) revenueUpliftPct += 0.025;
   if (!wantsRevenue && !wantsLeads) revenueUpliftPct *= 0.4;
   // OVERRIDE: site-detected sales hiring → bump uplift starting point.
   if (siteSignals?.hasOpenRoles && siteSignals.openRoleCategories.includes("sales")) {
     revenueUpliftPct += 0.015;
-    qaNotes.push("Vacature(s) sales gevonden op website → +1.5pp omzet-uplift starthypothese.");
+    qaNotes.push("Sales vacancy/vacancies found on website → +1.5pp revenue uplift starting hypothesis.");
   }
   revenueUpliftPct = Math.min(Math.max(revenueUpliftPct, 0.005), 0.10);
 
   // ----- RETENTION recovery pct -----
   let churnRecoveryPct = 0.15;
-  if (goals.has("Klantbeleving verbeteren")) churnRecoveryPct += 0.10;
-  if (pains.has("Trage klantenservice")) churnRecoveryPct += 0.08;
-  if (!goals.has("Klantbeleving verbeteren") && !pains.has("Trage klantenservice")) churnRecoveryPct = 0.10;
+  if (goals.has("Improve customer experience")) churnRecoveryPct += 0.10;
+  if (pains.has("Slow customer service")) churnRecoveryPct += 0.08;
+  if (!goals.has("Improve customer experience") && !pains.has("Slow customer service")) churnRecoveryPct = 0.10;
 
   // ----- Compute via shared pure function so client-side overrides use the same math -----
   const valueModel = recomputeValueModel({
@@ -842,35 +842,35 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
     const ds = a.dataSystems || [];
     let r = 30;
     if (ds.includes("CRM (HubSpot, Salesforce, Pipedrive…)")) r += 25;
-    if (ds.includes("Eigen database / tool")) r += 18;
+    if (ds.includes("Own database / tool")) r += 18;
     if (ds.includes("Excel / Google Sheets")) r += 8;
-    if (ds.includes("Email inbox is onze CRM")) r -= 5;
-    if (ds.includes("Geen idee / geen systeem")) r -= 10;
+    if (ds.includes("Email inbox is our CRM")) r -= 5;
+    if (ds.includes("No idea / no system")) r -= 10;
     if (typeof a.processMaturity === "number") r += Math.round((a.processMaturity / 100) * 30);
     if (a.website) r += 5;
     readinessScore = Math.min(Math.max(r, 15), 95);
     readinessDrivers = [
-      ds.length ? `Klantdata-systemen: ${ds.slice(0, 2).join(", ")}${ds.length > 2 ? "…" : ""}` : "Geen klantdata-systemen opgegeven",
+      ds.length ? `Customer data systems: ${ds.slice(0, 2).join(", ")}${ds.length > 2 ? "…" : ""}` : "No customer data systems specified",
       typeof a.processMaturity === "number"
-        ? `Proces-documentatie: ${a.processMaturity}/100 (${a.processMaturity < 30 ? "zwak" : a.processMaturity < 70 ? "gemiddeld" : "sterk"})`
-        : "Proces-volwassenheid niet opgegeven",
-      a.website ? `+5 pt voor publieke website` : `Geen website opgegeven`,
+        ? `Process documentation: ${a.processMaturity}/100 (${a.processMaturity < 30 ? "weak" : a.processMaturity < 70 ? "average" : "strong"})`
+        : "Process maturity not specified",
+      a.website ? `+5 pts for public website` : `No website specified`,
     ];
   } else {
-    const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Nog onbekend" ? 8 : 0);
+    const readinessRaw = 30 + stackCount * 6 + (a.size ? 8 : 0) + (a.website ? 6 : 0) + (a.budget && a.budget !== "Not yet known" ? 8 : 0);
     readinessScore = Math.min(Math.max(readinessRaw, 20), 95);
     readinessDrivers = [
-      `+${stackCount * 6} pt voor ${stackCount} bestaande tools in de stack`,
-      a.website ? `+6 pt voor publieke website (geanalyseerd)` : `+0 pt — geen website opgegeven`,
-      a.budget && a.budget !== "Nog onbekend" ? `+8 pt voor concreet budget (${a.budget})` : `+0 pt — budget nog onbekend`,
+      `+${stackCount * 6} pts for ${stackCount} existing tools in the stack`,
+      a.website ? `+6 pts for public website (analyzed)` : `+0 pts — no website specified`,
+      a.budget && a.budget !== "Not yet known" ? `+8 pts for concrete budget (${a.budget})` : `+0 pts — budget not yet known`,
     ];
   }
 
-  // OVERRIDE: mature data-tooling detected on website → +10 readiness.
+  // OVERRIDE: mature data tooling detected on website → +10 readiness.
   if (siteSignals?.detectedTech?.some((t) => ["Shopify", "HubSpot", "Salesforce"].includes(t))) {
     const before = readinessScore;
     readinessScore = Math.min(readinessScore + 10, 98);
-    qaNotes.push(`Volwassen data-stack gedetecteerd (${siteSignals.detectedTech.filter((t) => ["Shopify","HubSpot","Salesforce"].includes(t)).join(", ")}) → readiness +10 (${before} → ${readinessScore}).`);
+    qaNotes.push(`Mature data stack detected (${siteSignals.detectedTech.filter((t) => ["Shopify","HubSpot","Salesforce"].includes(t)).join(", ")}) → readiness +10 (${before} → ${readinessScore}).`);
   }
   let automationScore: number;
   let automationDrivers: string[];
@@ -881,17 +881,17 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
     auto += painCount * 4;
     automationScore = Math.min(auto, 95);
     automationDrivers = [
-      a.biggestTimeWaster ? `Concrete tijdvreter benoemd → directe automatiseringskans` : `Geen specifieke tijdvreter opgegeven`,
-      a.decisionPain ? `Beslissing-pijn: "${a.decisionPain}"` : `Geen terugkerende beslissingspijn opgegeven`,
-      `+${painCount * 4} pt voor ${painCount} pijnpunten`,
+      a.biggestTimeWaster ? `Concrete time waster identified → direct automation opportunity` : `No specific time waster specified`,
+      a.decisionPain ? `Decision pain: "${a.decisionPain}"` : `No recurring decision pain specified`,
+      `+${painCount * 4} pts for ${painCount} pain points`,
     ];
   } else {
-    const automationRaw = 35 + painCount * 7 + (pains.has("Repetitief handwerk") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
+    const automationRaw = 35 + painCount * 7 + (pains.has("Repetitive work") ? 10 : 0) + (stackCount >= 3 ? 5 : 0);
     automationScore = Math.min(automationRaw, 95);
     automationDrivers = [
-      `+${painCount * 7} pt voor ${painCount} aangegeven pijnpunten`,
-      pains.has("Repetitief handwerk") ? `+10 pt — repetitief handwerk staat top-of-mind` : `Geen expliciete repetitieve last opgegeven`,
-      stackCount >= 3 ? `+5 pt — voldoende systemen om tussen te koppelen` : `Beperkte stack om aan te koppelen`,
+      `+${painCount * 7} pts for ${painCount} identified pain points`,
+      pains.has("Repetitive work") ? `+10 pts — repetitive work is top of mind` : `No explicit repetitive burden specified`,
+      stackCount >= 3 ? `+5 pts — enough systems to connect between` : `Limited stack to connect to`,
     ];
   }
 
@@ -900,54 +900,54 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
   let impactScore = Math.min(Math.round(impactRaw), 98);
   let impactBudgetNote = "";
   if (a.maxToolBudget) {
-    if (a.maxToolBudget === "€ 2.000+") { impactScore = Math.min(impactScore + 6, 98); impactBudgetNote = ` Budget-bereidheid > € 2.000/mnd verhoogt haalbare impact.`; }
-    else if (a.maxToolBudget === "< € 100") { impactScore = Math.max(impactScore - 8, 25); impactBudgetNote = ` Budget < € 100/mnd beperkt tool-keuze tot lichte stack.`; }
+    if (a.maxToolBudget === "€ 2,000+") { impactScore = Math.min(impactScore + 6, 98); impactBudgetNote = ` Budget willingness > € 2,000/mo increases achievable impact.`; }
+    else if (a.maxToolBudget === "< € 100") { impactScore = Math.max(impactScore - 8, 25); impactBudgetNote = ` Budget < € 100/mo limits tool choice to a lightweight stack.`; }
   }
 
   const scoreDetails = {
     readiness: {
       value: readinessScore,
       rationale: hasQuiz
-        ? `Op basis van jullie klantdata-systemen en hoe goed processen op papier staan.`
-        : `Gebaseerd op huidige stack (${stackCount} tools), team-grootte (${a.size || "?"}), website-aanwezigheid en duidelijkheid van budget.`,
+        ? `Based on your customer data systems and how well processes are documented.`
+        : `Based on current stack (${stackCount} tools), team size (${a.size || "?"}), website presence and budget clarity.`,
       drivers: readinessDrivers,
     },
     automation: {
       value: automationScore,
       rationale: hasQuiz
-        ? `Berekend uit jullie eigen benoemde tijdvreter en beslissingspijn — sterkste signaal voor automatiseerbaarheid.`
-        : `Berekend uit het aantal pijnpunten (${painCount}) en of repetitief handwerk expliciet genoemd is.`,
+        ? `Calculated from your own identified time waster and decision pain — strongest signal for automation potential.`
+        : `Calculated from the number of pain points (${painCount}) and whether repetitive work was explicitly mentioned.`,
       drivers: automationDrivers,
     },
     impact: {
       value: impactScore,
-      rationale: `Gewogen uit aantal doelen (${goalCount}) en bedrijfsomvang in omzet (${a.revenue || "?"}).${impactBudgetNote}`,
+      rationale: `Weighted from number of goals (${goalCount}) and company scale by revenue (${a.revenue || "?"}).${impactBudgetNote}`,
       drivers: [
-        `+${goalCount * 7} pt voor ${goalCount} concrete doelen`,
-        `+${Math.round(Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20))} pt op basis van omzetschaal`,
-        wantsRevenue ? `Doel "Omzet verhogen" — hoge ROI hefboom op revenue-side` : `Focus ligt op interne efficiëntie`,
+        `+${goalCount * 7} pts for ${goalCount} concrete goals`,
+        `+${Math.round(Math.min(Math.log10(Math.max(revenue, 10_000)) * 4, 20))} pts based on revenue scale`,
+        wantsRevenue ? `Goal "Increase revenue" — high ROI lever on revenue side` : `Focus is on internal efficiency`,
       ],
     },
   };
 
   // ----- VALUE LINE ITEMS — start from pure model, then enrich rationale with audit context -----
   const valueLineItems: ValueLineItem[] = valueModel.valueLineItems.map((it) => {
-    if (it.label === "Loonbesparing") {
+    if (it.label === "Labor savings") {
       return { ...it, rationale: wantsCostCut || wantsProductivity
-        ? `Doel "${wantsCostCut ? "kosten verlagen" : "productiviteit"}" verhoogt het automatiseerbare aandeel.`
-        : `Doelen liggen niet primair op cost-cutting — aandeel bewust gedempt.` };
+        ? `Goal "${wantsCostCut ? "reduce costs" : "productivity"}" increases the automatable share.`
+        : `Goals are not primarily focused on cost-cutting — share deliberately moderated.` };
     }
-    if (it.label === "Omzet-uplift") {
+    if (it.label === "Revenue uplift") {
       return { ...it, rationale: wantsRevenue
-        ? `Doel "Omzet verhogen" geeft +5 pp uplift via betere lead-conversie en outbound (Instantly.ai / Clay).`
+        ? `Goal "Increase revenue" adds +5 pp uplift via better lead conversion and outbound (Instantly.ai / Clay).`
         : wantsLeads
-          ? `Pijnpunt "Lead generatie" geeft +2.5 pp uplift via AI-outbound.`
-          : `Geen revenue-doel opgegeven — voorzichtige schatting.` };
+          ? `Pain point "Lead generation" adds +2.5 pp uplift via AI outbound.`
+          : `No revenue goal specified — conservative estimate.` };
     }
-    if (it.label === "Retentie-winst") {
+    if (it.label === "Retention gain") {
       return { ...it, rationale: a.churnRate
-        ? `Churn-input "${a.churnRate}" + ${(churnRecoveryPct * 100).toFixed(0)}% recoverable via AI voice/chat (Vapi, Intercom Fin).`
-        : `Geen churn-input opgegeven — branche-default van 10% jaarlijkse churn gebruikt.` };
+        ? `Churn input "${a.churnRate}" + ${(churnRecoveryPct * 100).toFixed(0)}% recoverable via AI voice/chat (Vapi, Intercom Fin).`
+        : `No churn input provided — industry default of 10% annual churn used.` };
     }
     return it;
   });
@@ -962,103 +962,103 @@ export function analyze(a: AuditAnswers, siteSignals?: SiteSignalsLite): AuditRe
   const stackKnown = a.techStack.length > 0;
 
   const assumptions: Assumption[] = [
-    { id: "fte", label: "FTE in bedrijf", value: fte, unit: "fte", confidence: sizeKnown ? "high" : "low",
-      source: sizeKnown ? `Afgeleid uit team-grootte band ${a.size}` : "Geschat — vul je eigen aantal in voor een preciezere uitkomst",
+    { id: "fte", label: "FTE in company", value: fte, unit: "fte", confidence: sizeKnown ? "high" : "low",
+      source: sizeKnown ? `Derived from team size band ${a.size}` : "Estimated — enter your own number for a more precise result",
       min: 1, max: 5000, step: 1 },
-    { id: "fteCost", label: "Loaded jaarkost / FTE", value: FTE_COST, unit: "eur", confidence: hourlyKnown ? "high" : "low",
-      source: hourlyKnown ? `Uurloon "${a.avgHourlyCost}" × 1.600 productieve uren` : "NL-benchmark € 55K — pas aan voor je eigen uurtarief",
+    { id: "fteCost", label: "Loaded annual cost / FTE", value: FTE_COST, unit: "eur", confidence: hourlyKnown ? "high" : "low",
+      source: hourlyKnown ? `Hourly rate "${a.avgHourlyCost}" × 1,600 productive hours` : "NL benchmark € 55K — adjust for your own hourly rate",
       min: 20_000, max: 200_000, step: 1_000 },
-    { id: "automatableShare", label: "Automatiseerbaar deel van werk", value: automatableShare, unit: "pct", confidence: "low",
-      source: `Afgeleid uit ${painCount} pijnpunten + doelen — typische bandbreedte 5–35%`,
+    { id: "automatableShare", label: "Automatable share of work", value: automatableShare, unit: "pct", confidence: "low",
+      source: `Derived from ${painCount} pain points + goals — typical range 5–35%`,
       min: 0.02, max: 0.50, step: 0.01 },
-    { id: "revenue", label: "Jaaromzet", value: revenue, unit: "eur", confidence: revenueKnown ? "high" : "low",
-      source: revenueKnown ? `Mediaan van band ${a.revenue}` : "Branche-default — vul je eigen omzet in",
+    { id: "revenue", label: "Annual revenue", value: revenue, unit: "eur", confidence: revenueKnown ? "high" : "low",
+      source: revenueKnown ? `Median of band ${a.revenue}` : "Industry default — enter your own revenue",
       min: 50_000, max: 100_000_000, step: 10_000 },
-    { id: "revenueUpliftPct", label: "Verwachte omzet-uplift", value: revenueUpliftPct, unit: "pct", confidence: "low",
-      source: `Op basis van ${goalCount} doelen + lead-pijnpunten — typisch 1–8%`,
+    { id: "revenueUpliftPct", label: "Expected revenue uplift", value: revenueUpliftPct, unit: "pct", confidence: "low",
+      source: `Based on ${goalCount} goals + lead pain points — typically 1–8%`,
       min: 0.005, max: 0.15, step: 0.005 },
-    { id: "customers", label: "Klanten per jaar", value: customers, unit: "count", confidence: customersKnown ? "high" : "low",
-      source: customersKnown ? `Mediaan van band ${a.customersPerYear}` : "Geschat — pas aan voor preciezere retentie-rekensom",
+    { id: "customers", label: "Customers per year", value: customers, unit: "count", confidence: customersKnown ? "high" : "low",
+      source: customersKnown ? `Median of band ${a.customersPerYear}` : "Estimated — adjust for more precise retention calculation",
       min: 1, max: 1_000_000, step: 1 },
-    { id: "customerValue", label: "Gemiddelde klantwaarde / jaar", value: customerValue, unit: "eur", confidence: cvKnown ? "high" : "low",
-      source: cvKnown ? `Mediaan van band ${a.customerValue}` : "Geschat — vaak makkelijk te bepalen uit boekhouding",
+    { id: "customerValue", label: "Average customer value / year", value: customerValue, unit: "eur", confidence: cvKnown ? "high" : "low",
+      source: cvKnown ? `Median of band ${a.customerValue}` : "Estimated — often easy to determine from bookkeeping",
       min: 10, max: 1_000_000, step: 10 },
-    { id: "churn", label: "Jaarlijkse churn", value: churn, unit: "pct", confidence: churnKnown ? "high" : "low",
-      source: churnKnown ? `Mediaan van band ${a.churnRate}` : "Branche-default 10% — past in 30 sec aan",
+    { id: "churn", label: "Annual churn", value: churn, unit: "pct", confidence: churnKnown ? "high" : "low",
+      source: churnKnown ? `Median of band ${a.churnRate}` : "Industry default 10% — adjust in 30 seconds",
       min: 0.005, max: 0.80, step: 0.005 },
-    { id: "churnRecoveryPct", label: "Deel churn herstelbaar door AI", value: churnRecoveryPct, unit: "pct", confidence: "low",
-      source: "Schatting op basis van CX-focus in doelen — typisch 10–35%",
+    { id: "churnRecoveryPct", label: "Share of churn recoverable by AI", value: churnRecoveryPct, unit: "pct", confidence: "low",
+      source: "Estimate based on CX focus in goals — typically 10–35%",
       min: 0.05, max: 0.50, step: 0.01 },
-    { id: "stackCount", label: "Bestaande tools in stack", value: stackCount, unit: "count", confidence: stackKnown ? "high" : "low",
-      source: stackKnown ? `${stackCount} tools genoemd in audit` : "Geen tools opgegeven — elke koppel-winst telt mee",
+    { id: "stackCount", label: "Existing tools in stack", value: stackCount, unit: "count", confidence: stackKnown ? "high" : "low",
+      source: stackKnown ? `${stackCount} tools listed in audit` : "No tools specified — every integration gain counts",
       min: 0, max: 50, step: 1 },
   ];
 
-  const company = a.companyName || "jouw organisatie";
+  const company = a.companyName || "your organization";
   const roadmap = [
-    { phase: "Fase 1 · 0–30 dagen", title: "Foundation & Quick Wins", description: `Veilige ChatGPT/Claude workspace voor ${company} uitrollen en het team trainen op prompt fundamentals. Identificeer 3 repetitieve taken om eerst te automatiseren.` },
-    { phase: "Fase 2 · 1–3 maanden", title: "Workflow Automatisering", description: `Bestaande tools (${a.techStack.slice(0, 3).join(", ") || "core stack"}) koppelen met no-code AI-automatiseringen via n8n of Make. Pilot een AI-assistent gericht op de grootste pijn: ${a.painPoints[0] || "operationele frictie"}.` },
-    { phase: "Fase 3 · 3–6 maanden", title: "Custom AI Capability", description: `Bouw een knowledge-grounded copilot over de eigen data van ${company} met vector search. Definieer KPI's en schaal op naar andere afdelingen.` },
-    { phase: "Fase 4 · 6–12 maanden", title: "AI als Concurrentievoordeel", description: `Embed AI in het product van ${company}, meet ROI en richt een klein AI Center of Excellence in voor continue innovatie.` },
+    { phase: "Phase 1 · 0–30 days", title: "Foundation & Quick Wins", description: `Roll out a secure ChatGPT/Claude workspace for ${company} and train the team on prompt fundamentals. Identify 3 repetitive tasks to automate first.` },
+    { phase: "Phase 2 · 1–3 months", title: "Workflow Automation", description: `Connect existing tools (${a.techStack.slice(0, 3).join(", ") || "core stack"}) with no-code AI automations via n8n or Make. Pilot an AI assistant targeting the biggest pain: ${a.painPoints[0] || "operational friction"}.` },
+    { phase: "Phase 3 · 3–6 months", title: "Custom AI Capability", description: `Build a knowledge-grounded copilot over ${company}'s own data with vector search. Define KPIs and scale to other departments.` },
+    { phase: "Phase 4 · 6–12 months", title: "AI as Competitive Advantage", description: `Embed AI in ${company}'s product, measure ROI and establish a small AI Center of Excellence for continuous innovation.` },
   ];
 
   const radar: RadarPoint[] = [
     { axis: "Data maturity", value: Math.min(40 + stackCount * 6, 95), benchmark: 55 },
     { axis: "Automation", value: automationScore, benchmark: 50 },
-    { axis: "Customer experience", value: Math.min(45 + (pains.has("Trage klantenservice") ? 25 : 10) + goalCount * 4, 95), benchmark: 60 },
-    { axis: "Revenue ops", value: Math.min(35 + (pains.has("Lead generatie") ? 30 : 10) + goalCount * 5, 95), benchmark: 50 },
+    { axis: "Customer experience", value: Math.min(45 + (pains.has("Slow customer service") ? 25 : 10) + goalCount * 4, 95), benchmark: 60 },
+    { axis: "Revenue ops", value: Math.min(35 + (pains.has("Lead generation") ? 30 : 10) + goalCount * 5, 95), benchmark: 50 },
     { axis: "Talent & skills", value: Math.min(30 + stackCount * 5, 90), benchmark: 55 },
     { axis: "AI readiness", value: readinessScore, benchmark: 60 },
   ];
 
-  const summary = `${company} kan op basis van het ingevulde profiel realistisch € ${estimatedAnnualValue.toLocaleString("nl-NL")} aan jaarlijkse waarde unlocken — gespreid over loonbesparing, omzet-uplift en hogere retentie. Onderstaand rapport laat exact zien hoe.`;
+  const summary = `Based on the completed profile, ${company} can realistically unlock € ${estimatedAnnualValue.toLocaleString("nl-NL")} in annual value — spread across labor savings, revenue uplift and higher retention. The report below shows exactly how.`;
 
-  const topPain = a.painPoints[0] || "operationele frictie";
-  const topGoal = a.goals[0] || "groei";
+  const topPain = a.painPoints[0] || "operational friction";
+  const topGoal = a.goals[0] || "growth";
 
   const timeWasterQuote = a.biggestTimeWaster?.trim();
   const quickWins: QuickWin[] = [
     timeWasterQuote
       ? {
-          title: `Pak jullie #1 tijdvreter aan`,
-          effort: "1-2 dagen",
-          impact: `± ${fmt(fte * 400)} / jaar tijdwinst`,
-          howTo: `Jullie noemden zelf: "${timeWasterQuote}". Bouw hier in week 1 een Make.com- of n8n-flow voor — vaak in 2 dagen werkend, en vanaf dag 3 levert het al tijd op.`,
+          title: `Address your #1 time waster`,
+          effort: "1-2 days",
+          impact: `± ${fmt(fte * 400)} / year time savings`,
+          howTo: `You mentioned: "${timeWasterQuote}". Build a Make.com or n8n flow for this in week 1 — often working in 2 days, and delivering time savings from day 3 onwards.`,
         }
-      : { title: `ChatGPT Team uitrollen voor ${company}`, effort: "1 dag", impact: `± ${fmt(fte * 200)} / jaar tijdwinst`, howTo: "Activeer ChatGPT Team, nodig kernteam uit en maak 3 prompt-templates voor de meest voorkomende taken." },
-    { title: `1 repetitieve workflow automatiseren in Make.com`, effort: "halve dag", impact: `${fmt(8000)} / jaar`, howTo: `Pak "${topPain}" en bouw 1 scenario dat de hand-off tussen 2 tools wegneemt.` },
+      : { title: `Roll out ChatGPT Team for ${company}`, effort: "1 day", impact: `± ${fmt(fte * 200)} / year time savings`, howTo: "Activate ChatGPT Team, invite the core team and create 3 prompt templates for the most common tasks." },
+    { title: `Automate 1 repetitive workflow in Make.com`, effort: "half a day", impact: `${fmt(8000)} / year`, howTo: `Take "${topPain}" and build 1 scenario that removes the hand-off between 2 tools.` },
     a.decisionPain
-      ? { title: `Beslissings-copilot voor "${a.decisionPain}"`, effort: "1 week", impact: "Snellere & consistentere beslissingen", howTo: `Bouw een GPT met jullie historische data zodat het team in seconden een gemotiveerd voorstel krijgt voor "${a.decisionPain.toLowerCase()}".` }
-      : { title: `AI chatbot op contactpagina (Chatbase)`, effort: "2 uur", impact: "10–30% meer gekwalificeerde leads", howTo: "Upload je website + FAQ en plaats het widget. Direct meer conversie zonder devs." },
+      ? { title: `Decision copilot for "${a.decisionPain}"`, effort: "1 week", impact: "Faster & more consistent decisions", howTo: `Build a GPT with your historical data so the team gets a reasoned proposal for "${a.decisionPain.toLowerCase()}" in seconds.` }
+      : { title: `AI chatbot on contact page (Chatbase)`, effort: "2 hours", impact: "10–30% more qualified leads", howTo: "Upload your website + FAQ and place the widget. Immediately more conversion without devs." },
   ];
 
   // OVERRIDE: low/no content velocity + revenue goal → content-engine quick win.
   if (
     siteSignals &&
     (siteSignals.contentVelocity === "none" || siteSignals.contentVelocity === "low") &&
-    goals.has("Omzet verhogen")
+    goals.has("Increase revenue")
   ) {
     quickWins.push({
-      title: `Content-engine met AI voor ${company}`,
+      title: `Content engine with AI for ${company}`,
       effort: "1 week",
-      impact: "3-5× publicatie-frequentie zonder extra hires",
-      howTo: `We zagen weinig recente content op jullie site. Zet een ChatGPT/Claude-flow op die per week 3 blog-drafts + 5 social variaties produceert in jullie tone-of-voice.`,
+      impact: "3-5× publication frequency without extra hires",
+      howTo: `We noticed little recent content on your site. Set up a ChatGPT/Claude flow that produces 3 blog drafts + 5 social variations per week in your tone of voice.`,
     });
-    qaNotes.push(`Content-velocity gedetecteerd: ${siteSignals.contentVelocity} → quick win 'Content-engine' toegevoegd.`);
+    qaNotes.push(`Content velocity detected: ${siteSignals.contentVelocity} → quick win 'Content engine' added.`);
   }
 
   const weeklyPlan: WeeklyPlanItem[] = [
-    { week: "Week 1", focus: "Foundation", actions: [`AI-policy + Team workspace voor ${company}`, "Audit van top-5 repetitieve taken", "Kies 1 quick win uit lijst hierboven"] },
-    { week: "Week 2-3", focus: "Eerste automatisering", actions: [`Bouw n8n/Make workflow voor "${topPain}"`, "Meet baseline tijdwinst", "Train team op gebruik"] },
-    { week: "Week 4-6", focus: "Klantgerichte AI", actions: [pains.has("Trage klantenservice") ? "Vapi pilot voor inbound calls" : "Chatbase op website", "Meet response-tijd & conversie", "Iterate op prompts"] },
-    { week: "Week 7-9", focus: `Schalen op "${topGoal}"`, actions: [wantsRevenue ? "Instantly.ai outbound campagne live" : "Tweede workflow uitrollen", "KPI dashboard opzetten", "Adoptie-check team"] },
-    { week: "Week 10-13", focus: "Verankeren & uitbreiden", actions: ["Resultaten meten vs baseline", "Roadmap voor Q2 vaststellen", "Budget aanvraag voor schaal"] },
+    { week: "Week 1", focus: "Foundation", actions: [`AI policy + Team workspace for ${company}`, "Audit of top-5 repetitive tasks", "Choose 1 quick win from the list above"] },
+    { week: "Week 2-3", focus: "First automation", actions: [`Build n8n/Make workflow for "${topPain}"`, "Measure baseline time savings", "Train team on usage"] },
+    { week: "Week 4-6", focus: "Customer-facing AI", actions: [pains.has("Slow customer service") ? "Vapi pilot for inbound calls" : "Chatbase on website", "Measure response time & conversion", "Iterate on prompts"] },
+    { week: "Week 7-9", focus: `Scale on "${topGoal}"`, actions: [wantsRevenue ? "Instantly.ai outbound campaign live" : "Roll out second workflow", "Set up KPI dashboard", "Team adoption check"] },
+    { week: "Week 10-13", focus: "Anchor & expand", actions: ["Measure results vs baseline", "Finalize roadmap for Q2", "Budget request for scale"] },
   ];
 
   const sensitivity: SensitivityScenario[] = [
-    { label: "Worst case", multiplier: 0.5, estimatedValue: Math.round(estimatedAnnualValue * 0.5 / 1000) * 1000, rationale: "Trage adoptie, slechts 50% van potentieel gerealiseerd in jaar 1." },
-    { label: "Base case", multiplier: 1.0, estimatedValue: estimatedAnnualValue, rationale: "Verwachte uitkomst bij gemiddelde adoptie en uitvoering volgens roadmap." },
-    { label: "Best case", multiplier: 1.6, estimatedValue: Math.round(estimatedAnnualValue * 1.6 / 1000) * 1000, rationale: "Snelle adoptie + uitbreiding naar aangrenzende processen, marge-effect via gross margin van " + (grossMargin * 100).toFixed(0) + "%." },
+    { label: "Worst case", multiplier: 0.5, estimatedValue: Math.round(estimatedAnnualValue * 0.5 / 1000) * 1000, rationale: "Slow adoption, only 50% of potential realized in year 1." },
+    { label: "Base case", multiplier: 1.0, estimatedValue: estimatedAnnualValue, rationale: "Expected outcome with average adoption and execution per roadmap." },
+    { label: "Best case", multiplier: 1.6, estimatedValue: Math.round(estimatedAnnualValue * 1.6 / 1000) * 1000, rationale: "Fast adoption + expansion to adjacent processes, margin effect via gross margin of " + (grossMargin * 100).toFixed(0) + "%." },
   ];
 
   return {
