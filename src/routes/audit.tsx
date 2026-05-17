@@ -487,9 +487,9 @@ function AuditPage() {
           className="relative mt-6 overflow-hidden rounded-3xl border border-border bg-card p-5"
         >
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="text-base font-semibold">Hoe pak je dit geld?</h3>
+            <h3 className="text-base font-semibold">How do you capture this money?</h3>
             <span className="pill">
-              <Lock className="h-3 w-3" /> Vergrendeld
+              <Lock className="h-3 w-3" /> Locked
             </span>
           </div>
 
@@ -499,11 +499,11 @@ function AuditPage() {
             style={{ filter: "blur(7px)", userSelect: "none" }}
           >
             {[
-              "1. Automatiseer klantvragen met AI-agent → € 18k besparing",
-              "2. Lead-scoring laag bovenop CRM → 27% conversie-uplift",
-              "3. AI-content engine voor SEO → +€ 9k/maand pipeline",
-              "4. Document-extractie voor facturen → 12 uur/week vrij",
-              "5. 90-dagen roadmap met tools, kosten en eigenaars",
+              "1. Automate customer questions with AI agent → € 18k saved",
+              "2. Lead-scoring layer on top of CRM → 27% conversion uplift",
+              "3. AI content engine for SEO → +€ 9k/month pipeline",
+              "4. Document extraction for invoices → 12 hrs/week freed",
+              "5. 90-day roadmap with tools, costs and owners",
             ].map((line, i) => (
               <div
                 key={i}
