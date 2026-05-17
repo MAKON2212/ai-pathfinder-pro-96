@@ -15,14 +15,14 @@ export const Route = createFileRoute("/results-loading")({
 });
 
 const STEPS = [
-  { label: "Website lezen",         sub: "Meerdere pagina's worden gescand op context en tech-stack." },
-  { label: "Branche vergelijken",   sub: "Jouw sector wordt gespiegeld aan 200+ benchmark-bedrijven." },
-  { label: "Financiën berekenen",   sub: "Loonbesparing, omzet-uplift en retentie worden doorgerekend." },
-  { label: "Tools matchen",         sub: "Uit 200+ AI-tools worden de beste voor jouw situatie gefilterd." },
-  { label: "Rapport schrijven",     sub: "Hoofdstukken worden opgesteld in heldere consultant-taal." },
-  { label: "Review uitvoeren",      sub: "Aannames en cijfers worden gecheckt op consistentie." },
-  { label: "Roadmap plannen",       sub: "Quick wins en 90-dagen milestones worden op de tijdlijn gezet." },
-  { label: "Afronden",              sub: "Eindcontrole, opmaak en laatste polijstslag." },
+  { label: "Reading website",       sub: "Multiple pages are scanned for context and tech stack." },
+  { label: "Comparing industry",    sub: "Your sector is mirrored against 200+ benchmark companies." },
+  { label: "Calculating financials", sub: "Labor savings, revenue uplift and retention are computed." },
+  { label: "Matching tools",        sub: "The best AI tools for your situation are filtered from 200+." },
+  { label: "Writing report",        sub: "Chapters are drafted in clear consultant language." },
+  { label: "Running review",        sub: "Assumptions and numbers are checked for consistency." },
+  { label: "Planning roadmap",      sub: "Quick wins and 90-day milestones are placed on the timeline." },
+  { label: "Wrapping up",           sub: "Final check, formatting and the last polish." },
 ];
 
 const STEP_DURATION = 2400;
