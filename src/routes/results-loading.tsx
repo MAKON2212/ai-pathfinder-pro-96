@@ -174,13 +174,13 @@ function LoadingPage() {
 
       {error && (
         <div className="mt-12 w-full max-w-lg rounded-2xl border border-destructive/40 bg-destructive/5 p-5 text-sm">
-          <p className="font-semibold text-destructive">Er ging iets mis</p>
+          <p className="font-semibold text-destructive">Something went wrong</p>
           <p className="mt-1 text-foreground/80">{error}</p>
           <button
             onClick={() => { startedRef.current = false; setError(null); setActiveStep(0); }}
             className="mt-3 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white"
           >
-            Opnieuw proberen
+            Try again
           </button>
         </div>
       )}
