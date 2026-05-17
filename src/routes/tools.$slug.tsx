@@ -167,7 +167,7 @@ function ToolDetailPage() {
           </section>
         ) : tool.firstStep ? (
           <section className="mt-20">
-            <h2 className="text-2xl font-medium tracking-tight">Eerste stap</h2>
+            <h2 className="text-2xl font-medium tracking-tight">First step</h2>
             <div className="surface mt-6 rounded-2xl p-5">
               <p className="text-sm text-foreground/90">{tool.firstStep}</p>
             </div>
