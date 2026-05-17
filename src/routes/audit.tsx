@@ -415,7 +415,7 @@ function AuditPage() {
           className="mt-4"
         >
           <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-            Berekend o.b.v. 40+ AI-tools
+            Calculated based on 40+ AI tools
           </p>
           <div className="relative">
             <div
