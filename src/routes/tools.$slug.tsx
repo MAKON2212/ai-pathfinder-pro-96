@@ -90,13 +90,13 @@ function ToolDetailPage() {
         {/* Meta strip */}
         <div className="mt-10 grid grid-cols-1 gap-3 sm:grid-cols-3">
           {tool.pricing && (
-            <MetaCell icon={<Tag className="h-4 w-4" />} label="Indicatieve prijs" value={tool.pricing} />
+            <MetaCell icon={<Tag className="h-4 w-4" />} label="Indicative price" value={tool.pricing} />
           )}
           {tool.setupTime && (
-            <MetaCell icon={<Clock className="h-4 w-4" />} label="Setup-tijd" value={tool.setupTime} />
+            <MetaCell icon={<Clock className="h-4 w-4" />} label="Setup time" value={tool.setupTime} />
           )}
           {detail?.bestFor && (
-            <MetaCell icon={<Sparkles className="h-4 w-4" />} label="Best voor" value={detail.bestFor} />
+            <MetaCell icon={<Sparkles className="h-4 w-4" />} label="Best for" value={detail.bestFor} />
           )}
         </div>
 
