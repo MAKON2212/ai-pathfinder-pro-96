@@ -8,9 +8,9 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact · ScanAI" },
-      { name: "description", content: "Neem contact op met een AI specialist voor een persoonlijk gesprek." },
+      { name: "description", content: "Get in touch with an AI specialist for a personal conversation." },
       { property: "og:title", content: "Contact · ScanAI" },
-      { property: "og:description", content: "Plan een gesprek met een AI specialist van ScanAI." },
+      { property: "og:description", content: "Schedule a call with an AI specialist at ScanAI." },
     ],
   }),
   component: ContactPage,
