@@ -574,14 +574,14 @@ function UnlockCTA({ onClick }: { onClick: () => void }) {
         className="group relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-brand font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
       >
         <Lock className="h-4 w-4" />
-        <span className="text-base">Ontgrendel mijn rapport</span>
+        <span className="text-base">Unlock my report</span>
         <span className="flex items-center gap-1 rounded-full bg-black/25 px-2.5 py-1 text-xs font-mono tabular-nums">
           <Clock className="h-3 w-3" />
           {mm}:{ss}
         </span>
       </button>
       <p className="mt-2 text-center text-xs text-muted-foreground">
-        Prijs gereserveerd voor <span className="font-medium text-foreground/80">{mm}:{ss}</span> · eenmalige betaling · 7 dagen geld terug
+        Price reserved for <span className="font-medium text-foreground/80">{mm}:{ss}</span> · one-time payment · 7-day money back
       </p>
     </motion.div>
   );
