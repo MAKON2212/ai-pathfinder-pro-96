@@ -521,7 +521,7 @@ function AuditPage() {
                 <Lock className="h-5 w-5" />
               </div>
               <p className="text-sm text-foreground/85">
-                Het volledige rapport laat je <strong className="text-foreground">stap voor stap</strong> zien hoe je dit bedrag binnenhaalt.
+                The full report shows you <strong className="text-foreground">step by step</strong> how to bring this number in.
               </p>
             </div>
           </div>
