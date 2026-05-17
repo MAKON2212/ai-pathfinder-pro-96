@@ -190,10 +190,10 @@ function ToolDetailPage() {
         {/* CTA */}
         <section className="mt-24 rounded-3xl border border-border bg-card p-8 text-center">
           <h2 className="text-balance text-2xl font-medium tracking-tight">
-            Wil je weten of {tool.name} bij jouw bedrijf past?
+            Want to know if {tool.name} fits your business?
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Doe de AI Check en krijg een rapport op maat met deze en andere tools.
+            Take the AI Check and get a tailored report with this and other tools.
           </p>
           <Link
             to="/audit"
