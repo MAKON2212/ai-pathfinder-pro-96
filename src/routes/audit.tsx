@@ -338,7 +338,7 @@ function AuditPage() {
             onClick={goBack}
             disabled={stepIdx === 0}
             className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition disabled:opacity-40"
-            aria-label="Terug"
+            aria-label="Back"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
@@ -356,11 +356,11 @@ function AuditPage() {
             {stepIdx === total - 1 ? (
               <>
                 <Sparkles className="h-4 w-4" />
-                <span>Toon mijn bedrag</span>
+                <span>Show my number</span>
               </>
             ) : (
               <>
-                <span>Volgende</span>
+                <span>Next</span>
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </>
             )}
