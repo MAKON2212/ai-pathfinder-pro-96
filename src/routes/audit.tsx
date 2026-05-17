@@ -276,7 +276,7 @@ function AuditPage() {
           className="mt-5"
         >
           <div className="mb-1 text-[11px] font-medium uppercase tracking-wider text-brand">
-            Vraag {stepIdx + 1} van {total}
+            Question {stepIdx + 1} of {total}
           </div>
           <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
             {step.title}
