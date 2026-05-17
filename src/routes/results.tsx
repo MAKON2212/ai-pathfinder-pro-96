@@ -107,10 +107,10 @@ function SaveLinkPill({ url }: { url: string }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand/10 px-3 py-1.5 text-xs font-medium text-brand">
       <Link2 className="h-3.5 w-3.5" />
-      <span>Rapport permanent opgeslagen</span>
+      <span>Report permanently saved</span>
       <button onClick={copy} className="flex items-center gap-1 rounded-full bg-brand/20 px-2 py-0.5 transition hover:bg-brand/30">
         <Copy className="h-3 w-3" />
-        <span>{copied ? "Gekopieerd!" : "Kopieer link"}</span>
+        <span>{copied ? "Copied!" : "Copy link"}</span>
       </button>
     </div>
   );
