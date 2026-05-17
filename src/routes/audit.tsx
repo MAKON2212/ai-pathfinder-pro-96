@@ -19,10 +19,10 @@ import { trackAuditSession } from "@/lib/audit-tracking.functions";
 export const Route = createFileRoute("/audit")({
   head: () => ({
     meta: [
-      { title: "Bereken hoeveel geld je misloopt door geen AI · ScanAI" },
-      { name: "description", content: "Vul 7 korte vragen in en zie direct hoeveel omzet jouw bedrijf jaarlijks misloopt door geen AI in te zetten." },
-      { property: "og:title", content: "Hoeveel geld loop jij mis? · ScanAI" },
-      { property: "og:description", content: "Gratis berekening in 90 seconden. Bedrag krijg je direct, het hoe-rapport los je daarna in." },
+      { title: "Calculate how much money you're missing without AI · ScanAI" },
+      { name: "description", content: "Answer 7 short questions and instantly see how much revenue your business is losing each year by not using AI." },
+      { property: "og:title", content: "How much money are you missing out on? · ScanAI" },
+      { property: "og:description", content: "Free calculation in 90 seconds. You get the number right away — the how-to report you unlock after." },
     ],
   }),
   component: AuditPage,
