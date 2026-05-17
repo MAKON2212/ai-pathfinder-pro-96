@@ -83,7 +83,7 @@ function ToolDetailPage() {
             rel="noopener noreferrer"
             className="inline-flex flex-none items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground transition hover:opacity-90"
           >
-            Bezoek site <ArrowUpRight className="h-4 w-4" />
+            Visit site <ArrowUpRight className="h-4 w-4" />
           </a>
         </motion.div>
 
