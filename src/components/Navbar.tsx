@@ -35,7 +35,7 @@ export function Navbar() {
           to="/audit"
           className="hidden rounded-full bg-brand px-4 py-1.5 text-[12px] font-medium text-white shadow-[0_4px_20px_rgba(79,70,229,0.4)] transition hover:brightness-110 md:inline-flex"
         >
-          Bereken gratis
+          Calculate free
         </Link>
         <button
           aria-label="Menu"
