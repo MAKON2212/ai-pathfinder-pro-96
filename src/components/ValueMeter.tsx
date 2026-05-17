@@ -13,7 +13,7 @@ type Props = {
   emphatic?: boolean;
 };
 
-export function ValueMeter({ value, progress, label = "Geschatte misgelopen waarde / jaar", emphatic = false }: Props) {
+export function ValueMeter({ value, progress, label = "Estimated missed value / year", emphatic = false }: Props) {
   const mv = useMotionValue(0);
   const display = useTransform(mv, (v) => formatEUR(Math.round(v)));
   const prevValueRef = useRef(0);
