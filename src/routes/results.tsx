@@ -30,10 +30,10 @@ export const Route = createFileRoute("/results")({
   }),
   head: () => ({
     meta: [
-      { title: "Jouw AI Roadmap · ScanAI" },
-      { name: "description", content: "Persoonlijk AI-rapport: scores, roadmap en geldwaarde." },
-      { property: "og:title", content: "Jouw AI Roadmap · ScanAI" },
-      { property: "og:description", content: "Persoonlijke AI roadmap & geldwaarde-analyse voor jouw bedrijf." },
+      { title: "Your AI Roadmap · ScanAI" },
+      { name: "description", content: "Personal AI report: scores, roadmap and value." },
+      { property: "og:title", content: "Your AI Roadmap · ScanAI" },
+      { property: "og:description", content: "Personal AI roadmap & value analysis for your business." },
     ],
   }),
   component: ResultsPage,
