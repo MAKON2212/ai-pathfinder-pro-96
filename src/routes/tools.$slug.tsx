@@ -126,18 +126,18 @@ function ToolDetailPage() {
         {/* Before / After */}
         {detail?.beforeAfter?.length ? (
           <section className="mt-20">
-            <h2 className="text-2xl font-medium tracking-tight">Voor / na</h2>
+            <h2 className="text-2xl font-medium tracking-tight">Before / after</h2>
             <div className="mt-6 space-y-4">
               {detail.beforeAfter.map((ba: { before: string; after: string }, i: number) => (
                 <div key={i} className="grid grid-cols-1 gap-3 md:grid-cols-2">
                   <div className="surface-2 rounded-2xl p-5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Voor</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Before</p>
                     <p className="mt-2 text-sm text-foreground/80 line-through decoration-muted-foreground/40">
                       {ba.before}
                     </p>
                   </div>
                   <div className="surface rounded-2xl p-5">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">Na</p>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-brand">After</p>
                     <p className="mt-2 text-sm font-medium text-foreground">{ba.after}</p>
                   </div>
                 </div>
