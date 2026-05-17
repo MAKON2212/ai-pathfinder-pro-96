@@ -530,10 +530,10 @@ function AuditPage() {
         {/* What's inside (free) */}
         <div className="mt-6 grid grid-cols-1 gap-2 text-sm">
           {[
-            "Concrete AI-tools die passen bij jouw branche",
-            "ROI-berekening per kwartaal",
-            "90-dagen implementatie-plan",
-            "Lijst met quick wins (week 1)",
+            "Concrete AI tools that fit your industry",
+            "ROI calculation per quarter",
+            "90-day implementation plan",
+            "List of quick wins (week 1)",
           ].map((b, i) => (
             <div
               key={i}
