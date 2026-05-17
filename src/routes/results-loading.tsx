@@ -64,7 +64,7 @@ function LoadingPage() {
       })
       .catch((e) => {
         console.error(e);
-        setError(e instanceof Error ? e.message : "Er ging iets mis.");
+        setError(e instanceof Error ? e.message : "Something went wrong.");
       });
   }, [navigate]);
 
