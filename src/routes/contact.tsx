@@ -41,9 +41,9 @@ function ContactPage() {
     }
     setErrors({});
     // Open mail client as fallback "send"
-    const body = `Naam: ${form.name}%0D%0ABedrijf: ${form.company}%0D%0A%0D%0A${encodeURIComponent(form.message)}`;
+    const body = `Name: ${form.name}%0D%0ACompany: ${form.company}%0D%0A%0D%0A${encodeURIComponent(form.message)}`;
     window.location.href = `mailto:hello@scanai.nl?subject=${encodeURIComponent(
-      "Contact via website",
+      "Contact from website",
     )}&body=${body}`;
     setSent(true);
   };
