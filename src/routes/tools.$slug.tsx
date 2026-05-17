@@ -21,19 +21,19 @@ export const Route = createFileRoute("/tools/$slug")({
   }),
   notFoundComponent: () => (
     <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-      <h1 className="text-4xl font-medium tracking-tighter">Tool niet gevonden</h1>
-      <p className="mt-3 text-muted-foreground">Deze tool bestaat niet in onze database.</p>
+      <h1 className="text-4xl font-medium tracking-tighter">Tool not found</h1>
+      <p className="mt-3 text-muted-foreground">This tool doesn't exist in our database.</p>
       <Link
         to="/tools"
         className="mt-8 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-accent-foreground"
       >
-        <ArrowLeft className="h-4 w-4" /> Terug naar tools
+        <ArrowLeft className="h-4 w-4" /> Back to tools
       </Link>
     </div>
   ),
   errorComponent: ({ error }) => (
     <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-      <h1 className="text-3xl font-medium tracking-tighter">Er ging iets mis</h1>
+      <h1 className="text-3xl font-medium tracking-tighter">Something went wrong</h1>
       <p className="mt-3 text-sm text-muted-foreground">{error.message}</p>
     </div>
   ),
