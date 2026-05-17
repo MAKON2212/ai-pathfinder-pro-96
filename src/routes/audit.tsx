@@ -453,25 +453,25 @@ function AuditPage() {
           transition={{ delay: 0.35 }}
           className="surface mt-6 px-5 py-4"
         >
-          <h3 className="text-sm font-semibold">Waar komt dit vandaan?</h3>
+          <h3 className="text-sm font-semibold">Where does this come from?</h3>
           <ul className="mt-3 space-y-2.5 text-sm text-foreground/85">
             <li className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
               <span>
-                Repetitieve uren die AI kan overnemen — circa{" "}
-                <strong className="text-foreground">{formatEUR(calc.laborYearly)}</strong> aan loonkosten/jaar.
+                Repetitive hours AI can take over — roughly{" "}
+                <strong className="text-foreground">{formatEUR(calc.laborYearly)}</strong> in labor cost per year.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-money" />
               <span>
-                Klanten/leads die je liet liggen — circa{" "}
-                <strong className="text-foreground">{formatEUR(calc.leadsYearly)}</strong> aan misgelopen omzet/jaar.
+                Customers/leads you didn't get to — roughly{" "}
+                <strong className="text-foreground">{formatEUR(calc.leadsYearly)}</strong> in missed revenue per year.
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white/40" />
-              <span>Marge en branche-deal-waarde wegen mee in de schatting.</span>
+              <span>Margin and industry deal value are factored into the estimate.</span>
             </li>
           </ul>
         </motion.div>
