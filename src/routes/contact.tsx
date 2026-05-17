@@ -17,10 +17,10 @@ export const Route = createFileRoute("/contact")({
 });
 
 const contactSchema = z.object({
-  name: z.string().trim().min(2, "Vul je naam in").max(100),
-  email: z.string().trim().email("Ongeldig e-mailadres").max(255),
+  name: z.string().trim().min(2, "Enter your name").max(100),
+  email: z.string().trim().email("Invalid email address").max(255),
   company: z.string().trim().max(120).optional(),
-  message: z.string().trim().min(10, "Minimaal 10 tekens").max(1500),
+  message: z.string().trim().min(10, "At least 10 characters").max(1500),
 });
 
 function ContactPage() {
