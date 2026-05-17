@@ -180,7 +180,7 @@ function ToolDetailPage() {
             <div className="surface-2 flex gap-3 rounded-2xl p-5">
               <AlertTriangle className="h-5 w-5 flex-none text-destructive" />
               <div>
-                <p className="text-sm font-medium">Wanneer juist niet kiezen</p>
+                <p className="text-sm font-medium">When not to choose this</p>
                 <p className="mt-1 text-sm text-muted-foreground">{detail.notFor}</p>
               </div>
             </div>
