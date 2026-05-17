@@ -7,8 +7,8 @@ import type { AuditAnswers } from "@/lib/audit";
 export const Route = createFileRoute("/results-loading")({
   head: () => ({
     meta: [
-      { title: "Rapport wordt gegenereerd · ScanAI" },
-      { name: "description", content: "Even geduld — we stellen jouw persoonlijke AI rapport samen." },
+      { title: "Generating your report · ScanAI" },
+      { name: "description", content: "One moment — we're putting your personal AI report together." },
     ],
   }),
   component: LoadingPage,
