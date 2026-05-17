@@ -113,7 +113,7 @@ function Index() {
           className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
         >
           <Sparkles className="h-5 w-5" />
-          <span>Start de gratis berekening</span>
+          <span>Start the free calculation</span>
         </Link>
       </div>
 
