@@ -5,7 +5,7 @@ const NAV: { to: "/" | "/audit" | "/tools" | "/about" | "/contact"; label: strin
   { to: "/", label: "Home", exact: true },
   { to: "/audit", label: "AI Check" },
   { to: "/tools", label: "Tools" },
-  { to: "/about", label: "Over ons" },
+  { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
 
