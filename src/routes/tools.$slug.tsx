@@ -12,7 +12,7 @@ export const Route = createFileRoute("/tools/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.tool.name} — gebruik in jouw bedrijf · ScanAI` },
+          { title: `${loaderData.tool.name} — use it in your business · ScanAI` },
           { name: "description", content: loaderData.tool.description },
           { property: "og:title", content: `${loaderData.tool.name} · ScanAI` },
           { property: "og:description", content: loaderData.tool.useCase },
