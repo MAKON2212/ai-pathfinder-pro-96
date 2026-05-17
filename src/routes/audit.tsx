@@ -388,7 +388,7 @@ function AuditPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <ValueMeter value={value} progress={1} emphatic label="Dit loop je nu mis · per jaar" />
+          <ValueMeter value={value} progress={1} emphatic label="What you're missing right now · per year" />
         </motion.div>
 
         <motion.div
@@ -398,7 +398,7 @@ function AuditPage() {
           className="mt-4 text-center"
         >
           <p className="text-sm text-muted-foreground">
-            Realistische bandbreedte
+            Realistic range
           </p>
           <p className="mt-0.5 text-base font-medium">
             <span className="text-foreground">{formatEUR(low)}</span>
