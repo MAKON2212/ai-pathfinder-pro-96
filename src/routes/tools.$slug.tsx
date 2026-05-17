@@ -52,7 +52,7 @@ function ToolDetailPage() {
           to="/tools"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground transition hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4" /> Alle tools
+          <ArrowLeft className="h-4 w-4" /> All tools
         </Link>
 
         {/* Header */}
