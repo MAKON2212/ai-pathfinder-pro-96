@@ -10,13 +10,13 @@ export function Footer() {
             <span className="text-sm font-semibold">ScanAI</span>
           </div>
           <p className="mt-2 text-xs text-muted-foreground">
-            Persoonlijke AI roadmap voor jouw bedrijf. Gebouwd in Nederland.
+            Personal AI roadmap for your business. Built in the Netherlands.
           </p>
         </div>
         <nav className="flex flex-wrap gap-6 text-xs text-muted-foreground">
           <Link to="/audit" className="hover:text-foreground">AI Check</Link>
           <Link to="/tools" className="hover:text-foreground">Tools</Link>
-          <Link to="/about" className="hover:text-foreground">Over ons</Link>
+          <Link to="/about" className="hover:text-foreground">About</Link>
           <Link to="/contact" className="hover:text-foreground">Contact</Link>
         </nav>
         <p className="text-xs text-muted-foreground">
