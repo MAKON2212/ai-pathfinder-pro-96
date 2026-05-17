@@ -45,7 +45,7 @@ function Index() {
         The report on <em>how</em> to capture it, you buy after.
       </motion.p>
 
-      {/* CTA verwijderd — sticky bottom CTA dekt dit af */}
+      {/* CTA removed — sticky bottom CTA covers this */}
 
       {/* Stat cards */}
       <motion.div
