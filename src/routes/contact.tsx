@@ -76,9 +76,9 @@ function ContactPage() {
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand/15 text-brand">
                   <Check className="h-5 w-5" />
                 </span>
-                <h2 className="mt-4 text-2xl font-medium tracking-tight">Bedankt!</h2>
+                <h2 className="mt-4 text-2xl font-medium tracking-tight">Thanks!</h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  We nemen binnen één werkdag contact op.
+                  We'll be in touch within one business day.
                 </p>
               </div>
             ) : (
