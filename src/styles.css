@@ -38,11 +38,11 @@
   --color-money: var(--money);
 
   --font-sans:
-    "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", Arial, sans-serif;
+    "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --font-display:
-    "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", Arial, sans-serif;
+    "DM Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --font-mono:
-    "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   --animate-float: float 7s ease-in-out infinite;
   --animate-shimmer: shimmer 2.5s linear infinite;
@@ -53,38 +53,38 @@
 :root {
   --radius: 1.5rem;
 
-  /* Midnight Indigo — dark, money-themed */
-  --background: #0a0a1a;
-  --foreground: #e8eaf3;
-  --card: #141432;
-  --card-foreground: #e8eaf3;
-  --popover: #141432;
-  --popover-foreground: #e8eaf3;
-  --primary: #4f46e5;
+  /* Nubien — deep violet, pure black */
+  --background: #080808;
+  --foreground: #ffffff;
+  --card: #131313;
+  --card-foreground: #ffffff;
+  --popover: #131313;
+  --popover-foreground: #ffffff;
+  --primary: #4F1AD6;
   --primary-foreground: #ffffff;
-  --secondary: #1e1e5a;
-  --secondary-foreground: #e8eaf3;
-  --muted: #1a1a3a;
-  --muted-foreground: #8a90b8;
-  --accent: #4f46e5;
+  --secondary: rgba(255,255,255,0.05);
+  --secondary-foreground: #ffffff;
+  --muted: rgba(255,255,255,0.04);
+  --muted-foreground: rgba(255,255,255,0.5);
+  --accent: #4F1AD6;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #4f46e5;
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #4F1AD6;
 
-  --brand: #4f46e5;
-  --brand-soft: rgba(79, 70, 229, 0.15);
-  --surface: #141432;
-  --surface-2: #1e1e5a;
+  --brand: #4F1AD6;
+  --brand-soft: rgba(79, 26, 214, 0.12);
+  --surface: rgba(255,255,255,0.04);
+  --surface-2: rgba(255,255,255,0.07);
   --money: #22c55e;
 
-  --gradient-value: linear-gradient(135deg, #4f46e5 0%, #22c55e 100%);
-  --gradient-indigo: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  --shadow-glow: 0 0 60px rgba(79, 70, 229, 0.35);
+  --gradient-value: linear-gradient(135deg, #4F1AD6 0%, #22c55e 100%);
+  --gradient-indigo: linear-gradient(135deg, #4F1AD6 0%, #7c3aed 100%);
+  --shadow-glow: 0 0 60px rgba(79, 26, 214, 0.35);
   --shadow-money: 0 0 80px rgba(34, 197, 94, 0.35);
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
 
 @layer base {
@@ -122,10 +122,10 @@
 
 @layer utilities {
   .surface {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
+    box-shadow: inset 0px 10px 10px -1px rgba(79, 26, 214, 0.06);
   }
   .surface-2 {
     background: var(--surface-2);
@@ -133,18 +133,18 @@
     border-radius: 24px;
   }
   .glass {
-    background: rgba(20, 20, 50, 0.6);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-  }
-  .frosted {
-    background: rgba(10, 10, 26, 0.72);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 20px;
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    color: rgba(232, 234, 243, 0.92);
-    border: 1px solid var(--border);
+  }
+  .frosted {
+    background: rgba(8, 8, 8, 0.80);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
   .text-brand { color: var(--brand); }
   .bg-brand { background-color: var(--brand); }
@@ -169,12 +169,12 @@
     gap: 0.5rem;
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    background: rgba(79,70,229,0.12);
+    background: rgba(79,26,214,0.12);
     color: #c7d2fe;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: -0.003em;
-    border: 1px solid rgba(79,70,229,0.3);
+    border: 1px solid rgba(79,26,214,0.3);
   }
   .display {
     font-family: var(--font-display);
@@ -213,8 +213,8 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 30px rgba(79,70,229,0.25); }
-  50% { box-shadow: 0 0 60px rgba(79,70,229,0.55); }
+  0%, 100% { box-shadow: 0 0 30px rgba(79,26,214,0.25); }
+  50% { box-shadow: 0 0 60px rgba(79,26,214,0.55); }
 }
 
 /* Vibrating dot grid — dark theme */
@@ -227,10 +227,18 @@
 
 .dot-grid {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.40) 1.5px, transparent 1.5px),
-    radial-gradient(circle, rgba(99,102,241,0.65) 2.5px, transparent 2.5px);
+    radial-gradient(circle, rgba(255,255,255,0.30) 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(79,26,214,0.55) 2.5px, transparent 2.5px);
   background-size: 24px 24px, 72px 72px;
   background-position: 0 0, 11px 11px;
-  opacity: 0.8;
+  opacity: 0.7;
   animation: dot-vibrate 8s ease-in-out infinite;
+}
+
+.card-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-glow:hover {
+  border-color: rgba(79, 26, 214, 0.35);
+  box-shadow: 0px 0px 20px 2px rgba(79, 26, 214, 0.15);
 }

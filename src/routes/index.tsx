@@ -61,7 +61,7 @@ function Index() {
         ].map((s) => (
           <div
             key={s.l}
-            className="surface flex flex-col items-center px-2 py-3 text-center"
+            className="surface card-glow flex flex-col items-center px-2 py-3 text-center"
           >
             <div className="gradient-value-text text-lg font-bold sm:text-xl">{s.v}</div>
             <div className="mt-1 text-[10px] leading-tight text-muted-foreground">{s.l}</div>
@@ -92,7 +92,7 @@ function Index() {
           ].map(({ icon: Icon, t, d }) => (
             <div
               key={t}
-              className="surface flex items-start gap-3 px-4 py-4"
+              className="surface card-glow flex items-start gap-3 px-4 py-4"
             >
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
                 <Icon className="h-4 w-4" />
@@ -110,7 +110,7 @@ function Index() {
       <div className="mt-12 pb-20 md:pb-0">
         <Link
           to="/audit"
-          className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
+          className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,26,214,0.45)] transition hover:brightness-110"
         >
           <Sparkles className="h-5 w-5" />
           <span>Start the free calculation</span>
@@ -122,7 +122,7 @@ function Index() {
         <div className="absolute inset-0 border-t border-border bg-background/80 backdrop-blur-xl md:hidden" />
         <Link
           to="/audit"
-          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.5)] transition hover:brightness-110 md:w-auto md:px-10 md:py-4 md:text-base"
+          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_40px_rgba(79,26,214,0.5)] transition hover:brightness-110 md:w-auto md:px-10 md:py-4 md:text-base"
         >
           Calculate my number
           <ArrowRight className="h-4 w-4" />

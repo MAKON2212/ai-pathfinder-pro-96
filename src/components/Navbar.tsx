@@ -13,7 +13,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(10,10,26,0.78)] backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(8,8,8,0.85)] backdrop-blur-xl">
       <div className="mx-auto flex h-12 max-w-[1200px] items-center justify-between px-5 md:h-11 md:px-6">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <span className="text-[14px] font-semibold tracking-tight text-foreground">ScanAI</span>
@@ -46,7 +46,7 @@ export function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="border-t border-border bg-[rgba(10,10,26,0.95)] backdrop-blur-xl md:hidden">
+        <div className="border-t border-border bg-[rgba(8,8,8,0.97)] backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-[1200px] flex-col px-5 py-3">
             {NAV.map((n) => (
               <Link
