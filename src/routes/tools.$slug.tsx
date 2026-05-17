@@ -109,7 +109,7 @@ function ToolDetailPage() {
         {/* Use cases */}
         {detail?.useCases?.length ? (
           <section className="mt-16">
-            <h2 className="text-2xl font-medium tracking-tight">Use-cases voor jouw bedrijf</h2>
+            <h2 className="text-2xl font-medium tracking-tight">Use cases for your business</h2>
             <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
               {detail.useCases.map((u: string) => (
                 <li key={u} className="surface flex items-start gap-3 rounded-2xl p-4">
