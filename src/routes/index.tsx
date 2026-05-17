@@ -55,9 +55,9 @@ function Index() {
         className="mt-10 grid grid-cols-3 gap-2"
       >
         {[
-          { v: "€ 47k", l: "gemiddeld misgelopen / jaar" },
-          { v: "12 u", l: "tijdwinst per medewerker / week" },
-          { v: "89%", l: "vindt direct quick wins" },
+          { v: "€ 47k", l: "average missed / year" },
+          { v: "12 h", l: "time saved per employee / week" },
+          { v: "89%", l: "find immediate quick wins" },
         ].map((s) => (
           <div
             key={s.l}
