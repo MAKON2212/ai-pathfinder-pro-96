@@ -13,7 +13,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(8,8,8,0.85)] backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[rgba(5,5,7,0.88)] backdrop-blur-xl">
       <div className="mx-auto flex h-12 max-w-[1200px] items-center justify-between px-5 md:h-11 md:px-6">
         <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
           <span className="text-[14px] font-semibold tracking-tight text-foreground">ScanAI</span>
@@ -33,20 +33,20 @@ export function Navbar() {
         </nav>
         <Link
           to="/audit"
-          className="hidden rounded-full bg-brand px-4 py-1.5 text-[12px] font-medium text-white shadow-[0_4px_20px_rgba(79,70,229,0.4)] transition hover:brightness-110 md:inline-flex"
+          className="hidden rounded-xl bg-brand px-4 py-1.5 text-[12px] font-medium text-white shadow-[0_4px_20px_rgba(90,40,240,0.45),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:brightness-110 hover:shadow-[0_6px_28px_rgba(90,40,240,0.65)] md:inline-flex"
         >
           Calculate free
         </Link>
         <button
           aria-label="Menu"
           onClick={() => setOpen((v) => !v)}
-          className="flex h-8 w-8 items-center justify-center rounded-full text-foreground md:hidden"
+          className="flex h-8 w-8 items-center justify-center rounded-xl text-foreground md:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
       {open && (
-        <div className="border-t border-border bg-[rgba(8,8,8,0.97)] backdrop-blur-xl md:hidden">
+        <div className="border-t border-border bg-[rgba(5,5,7,0.97)] backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-[1200px] flex-col px-5 py-3">
             {NAV.map((n) => (
               <Link

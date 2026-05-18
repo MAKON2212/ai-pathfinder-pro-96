@@ -337,7 +337,7 @@ function AuditPage() {
             type="button"
             onClick={goBack}
             disabled={stepIdx === 0}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition disabled:opacity-40"
+            className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-card text-muted-foreground transition disabled:opacity-40"
             aria-label="Back"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -347,9 +347,9 @@ function AuditPage() {
             onClick={goNext}
             disabled={!isAnswered}
             className={cn(
-              "group relative flex h-12 flex-1 items-center justify-center gap-2 rounded-full font-semibold transition-all",
+              "group relative flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl font-semibold transition-all",
               isAnswered
-                ? "bg-brand text-white shadow-[0_8px_30px_rgba(79,70,229,0.4)] hover:brightness-110"
+                ? "bg-brand text-white shadow-[0_8px_32px_rgba(90,40,240,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] hover:brightness-110 hover:shadow-[0_12px_48px_rgba(90,40,240,0.70)]"
                 : "bg-white/5 text-muted-foreground",
             )}
           >

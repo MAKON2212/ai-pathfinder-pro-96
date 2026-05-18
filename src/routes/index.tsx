@@ -110,7 +110,7 @@ function Index() {
       <div className="mt-12 pb-20 md:pb-0">
         <Link
           to="/audit"
-          className="group flex h-14 w-full items-center justify-center gap-2 rounded-full bg-brand text-base font-semibold text-white shadow-[0_10px_40px_rgba(79,26,214,0.45)] transition hover:brightness-110"
+          className="group flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-brand text-base font-semibold text-white shadow-[0_8px_32px_rgba(90,40,240,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:brightness-110 hover:shadow-[0_12px_48px_rgba(90,40,240,0.70)]"
         >
           <Sparkles className="h-5 w-5" />
           <span>Start the free calculation</span>
@@ -122,7 +122,7 @@ function Index() {
         <div className="absolute inset-0 border-t border-border bg-background/80 backdrop-blur-xl md:hidden" />
         <Link
           to="/audit"
-          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_40px_rgba(79,26,214,0.5)] transition hover:brightness-110 md:w-auto md:px-10 md:py-4 md:text-base"
+          className="pointer-events-auto relative flex w-full items-center justify-center gap-2 rounded-2xl bg-brand px-6 py-3.5 text-sm font-semibold text-white shadow-[0_8px_32px_rgba(90,40,240,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] transition hover:brightness-110 hover:shadow-[0_12px_48px_rgba(90,40,240,0.70)] md:w-auto md:px-10 md:py-4 md:text-base"
         >
           Calculate my number
           <ArrowRight className="h-4 w-4" />

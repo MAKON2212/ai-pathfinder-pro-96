@@ -54,15 +54,15 @@
   --radius: 1.5rem;
 
   /* Nubien — deep violet, pure black */
-  --background: #080808;
+  --background: #050507;
   --foreground: #ffffff;
-  --card: #131313;
+  --card: #0e0e12;
   --card-foreground: #ffffff;
-  --popover: #131313;
+  --popover: #0e0e12;
   --popover-foreground: #ffffff;
   --primary: #4F1AD6;
   --primary-foreground: #ffffff;
-  --secondary: rgba(255,255,255,0.05);
+  --secondary: rgba(255,255,255,0.07);
   --secondary-foreground: #ffffff;
   --muted: rgba(255,255,255,0.04);
   --muted-foreground: rgba(255,255,255,0.5);
@@ -76,13 +76,13 @@
 
   --brand: #4F1AD6;
   --brand-soft: rgba(79, 26, 214, 0.12);
-  --surface: rgba(255,255,255,0.04);
-  --surface-2: rgba(255,255,255,0.07);
+  --surface: rgba(255,255,255,0.055);
+  --surface-2: rgba(255,255,255,0.09);
   --money: #22c55e;
 
   --gradient-value: linear-gradient(135deg, #4F1AD6 0%, #22c55e 100%);
   --gradient-indigo: linear-gradient(135deg, #4F1AD6 0%, #7c3aed 100%);
-  --shadow-glow: 0 0 60px rgba(79, 26, 214, 0.35);
+  --shadow-glow: 0 0 60px rgba(90, 40, 240, 0.45);
   --shadow-money: 0 0 80px rgba(34, 197, 94, 0.35);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.6);
 }
@@ -90,11 +90,19 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    /* Hide default OS cursor — CustomCursor component renders ours */
+    cursor: none !important;
+  }
+
+  /* Restore pointer on touch devices where we don't render custom cursor */
+  @media (pointer: coarse) {
+    * { cursor: auto !important; }
+    a, button, [role="button"] { cursor: pointer !important; }
   }
 
   html,
   body {
-    background-color: var(--color-background);
+    background-color: transparent;
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -122,18 +130,18 @@
 
 @layer utilities {
   .surface {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.055);
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 20px;
-    box-shadow: inset 0px 10px 10px -1px rgba(79, 26, 214, 0.06);
+    box-shadow: inset 0px 10px 10px -1px rgba(90, 40, 240, 0.08);
   }
   .surface-2 {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 24px;
   }
   .glass {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.055);
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 20px;
     backdrop-filter: blur(20px) saturate(160%);
@@ -227,12 +235,12 @@
 
 .dot-grid {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.30) 1.5px, transparent 1.5px),
-    radial-gradient(circle, rgba(79,26,214,0.55) 2.5px, transparent 2.5px);
-  background-size: 24px 24px, 72px 72px;
-  background-position: 0 0, 11px 11px;
-  opacity: 0.7;
-  animation: dot-vibrate 8s ease-in-out infinite;
+    radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px),
+    radial-gradient(circle, rgba(110,60,255,0.50) 2px, transparent 2px);
+  background-size: 28px 28px, 84px 84px;
+  background-position: 0 0, 14px 14px;
+  opacity: 0.65;
+  animation: dot-vibrate 10s ease-in-out infinite;
 }
 
 .card-glow {
