@@ -86,7 +86,7 @@ function RootComponent() {
       <CustomCursor />
       <MeshBackground />
       <Navbar />
-      <main className="pt-12 md:pt-24">
+      <main className="pt-20 md:pt-28">
         <Outlet />
       </main>
       <Footer />
