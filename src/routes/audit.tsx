@@ -242,14 +242,14 @@ function AuditPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md px-4 pb-32 pt-4 sm:pt-8">
+    <div className="mx-auto w-full max-w-2xl px-4 pb-32 pt-6 sm:pt-10">
       {/* Sticky meter */}
       <div className="sticky top-2 z-30">
         <ValueMeter value={calc.total} progress={(stepIdx + (isAnswered ? 1 : 0)) / total} />
       </div>
 
       {/* Progress dots */}
-      <div className="mt-4 flex items-center justify-center gap-1.5">
+      <div className="mt-5 flex items-center justify-center gap-1.5">
         {STEPS.map((s, i) => (
           <div
             key={s.key}
@@ -273,24 +273,42 @@ function AuditPage() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="mt-5"
+          className="mt-8 text-center"
         >
-          <div className="mb-1 text-[11px] font-medium uppercase tracking-wider text-brand">
-            Question {stepIdx + 1} of {total}
+          <div className="mb-6 flex justify-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1.5 pl-1.5 pr-4 backdrop-blur-xl">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white">
+                <Sparkles className="h-3.5 w-3.5" />
+              </span>
+              <span className="text-[12px] font-medium tracking-tight text-foreground/90">
+                Question {stepIdx + 1} of {total}
+              </span>
+            </div>
           </div>
-          <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+          <h1
+            className="mx-auto max-w-[20ch] text-balance font-display text-[32px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[44px] md:text-[56px]"
+            style={{
+              background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.55) 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
             {step.title}
           </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">{step.subtitle}</p>
+          <p className="mx-auto mt-4 max-w-[48ch] text-[14px] leading-relaxed text-foreground/65 md:text-[15px]">
+            {step.subtitle}
+          </p>
 
           <div
             className={cn(
-              "mt-5 grid gap-2",
+              "mx-auto mt-8 grid max-w-xl gap-2 text-left",
               step.compact || step.options.length > 6
                 ? "grid-cols-2"
                 : "grid-cols-1",
             )}
           >
+
             {step.options.map((opt) => {
               const selected =
                 step.type === "multi"
