@@ -37,13 +37,6 @@ function Index() {
     <div className="px-4">
       {/* ── HERO ── */}
       <section className="relative mx-auto flex max-w-[1240px] flex-col items-center pb-24 pt-12 text-center md:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Pill icon={Sparkles}>2025 · Next-Gen AI Studio</Pill>
-        </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 14 }}
