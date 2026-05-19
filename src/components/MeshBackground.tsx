@@ -11,9 +11,6 @@ export function MeshBackground() {
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
       style={{ background: "#000000" }}
     >
-      {/* Dot grid */}
-      <div className="dot-grid absolute inset-0 opacity-50" />
-
       {/* Bottom arc — outer halo */}
       <div
         style={{
