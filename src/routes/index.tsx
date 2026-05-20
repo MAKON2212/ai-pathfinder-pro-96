@@ -79,17 +79,6 @@ function Index() {
           </Link>
         </motion.div>
 
-        {/* Logo strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 grid w-full max-w-3xl grid-cols-4 items-center justify-items-center gap-8 opacity-40"
-        >
-          {["ACME", "IPSUM", "LOOP", "LOGO"].map((l) => (
-            <span key={l} className="text-[13px] font-bold tracking-[0.2em] text-white/70">{l}</span>
-          ))}
-        </motion.div>
       </section>
 
       {/* ── ABOUT US ── */}
