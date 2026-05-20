@@ -41,7 +41,7 @@ export function ValueMeter({ value, progress, label = "Estimated missed value / 
           className="pointer-events-none absolute -top-12 -right-10 h-40 w-40 rounded-full opacity-40"
           style={{
             background:
-              "radial-gradient(circle, rgba(34,197,94,0.45) 0%, rgba(34,197,94,0) 70%)",
+              "radial-gradient(circle, rgba(167,139,250,0.45) 0%, rgba(167,139,250,0) 70%)",
             filter: "blur(20px)",
           }}
         />
