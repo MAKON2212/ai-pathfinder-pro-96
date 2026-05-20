@@ -256,7 +256,7 @@ function AuditPage() {
             className={cn(
               "h-1.5 rounded-full transition-all",
               i < stepIdx
-                ? "w-6 bg-money"
+                ? "w-6 bg-white/60"
                 : i === stepIdx
                 ? "w-8 bg-brand"
                 : "w-1.5 bg-white/10",
