@@ -63,7 +63,7 @@ export function ValueMeter({ value, progress, label = "Estimated missed value / 
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
           className={`gradient-value-text text-4xl font-bold tracking-tight sm:text-5xl ${
-            emphatic ? "drop-shadow-[0_0_24px_rgba(34,197,94,0.5)]" : ""
+            emphatic ? "drop-shadow-[0_0_24px_rgba(167,139,250,0.5)]" : ""
           }`}
         >
           <motion.span>{display}</motion.span>
