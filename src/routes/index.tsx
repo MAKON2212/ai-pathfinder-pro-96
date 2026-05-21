@@ -27,6 +27,7 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.5, delay },
 });
 
+// ScanAI · Gold Tech · build 2026-05-21
 /** Reusable CTA block — same markup on mobile (below counter) and desktop (in left col) */
 function CtaBlock({ delay }: { delay: number }) {
   return (
