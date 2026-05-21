@@ -203,7 +203,10 @@ async function suggestCompetitors(answers: AuditAnswers, scrapeContext: string):
 export const generateReport = createServerFn({ method: "POST" })
   .inputValidator((input: { answers: AuditAnswers }) => {
     if (!input?.answers || typeof input.answers !== "object") throw new Error("Invalid answers");
-    if (!input.answers.companyName || input.answers.companyName.length < 1) throw new Error("Bedrijfsnaam ontbreekt");
+    // companyName is optional in the new short flow — default it so downstream prompts still work
+    if (!input.answers.companyName || input.answers.companyName.length < 1) {
+      input.answers.companyName = "Jouw bedrijf";
+    }
     return input;
   })
   .handler(async ({ data }): Promise<GeneratedReport> => {

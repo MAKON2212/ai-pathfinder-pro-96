@@ -208,7 +208,7 @@ function AuditPage() {
       painPoints: (answers.painPoints as string[]) ?? [],
       grossMargin: (answers.grossMargin as string) ?? "",
       missedLeadsPerMonth: answers.missedLeadsPerMonth,
-      companyName: "",
+      companyName: "Jouw bedrijf",
       revenue: "",
       techStack: [],
       goals: [],
