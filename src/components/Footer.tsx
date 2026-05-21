@@ -9,7 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Link to="/" className="flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-primary-foreground">
                 <Check className="h-4 w-4" strokeWidth={3} />
               </span>
               <span className="text-[16px] font-semibold tracking-tight">ScanAI</span>
@@ -36,7 +36,7 @@ export function Footer() {
             <p className="mt-4 text-sm text-foreground/80">hello@scanai.app</p>
             <Link
               to="/audit"
-              className="mt-5 inline-flex items-center justify-center rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-white shadow-[0_8px_24px_rgba(99,44,255,0.45)] transition hover:brightness-110"
+              className="mt-5 inline-flex items-center justify-center rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-primary-foreground shadow-[0_8px_24px_rgba(212,176,98,0.45)] transition hover:brightness-110"
             >
               Start AI Check
             </Link>

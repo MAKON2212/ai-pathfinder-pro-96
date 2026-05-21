@@ -158,7 +158,7 @@ function EmailGate({ reportId, onCaptured }: { reportId?: string; onCaptured: ()
         <button
           type="submit"
           disabled={submitting || !email}
-          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-60"
+          className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-brand text-sm font-semibold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
         >
           {submitting ? "Even wachten…" : "Bewaar rapport & ga door"}
           <ArrowRight className="h-4 w-4" />
@@ -228,7 +228,7 @@ function TierCard({ tier, selected, onSelect }: { tier: typeof PRICING_TIERS[0];
       } ${tier.highlight ? "md:scale-[1.03]" : ""}`}
     >
       {tier.highlight && (
-        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white">
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">
           Populairst
         </span>
       )}
@@ -899,7 +899,7 @@ function ResultsPage() {
                   </div>
                   <button
                     onClick={openCheckout}
-                    className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-white transition hover:brightness-110"
+                    className="mt-7 inline-flex w-full items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
                   >
                     <span className="inline-flex items-center gap-2">
                       <Lock className="h-4 w-4" />
@@ -919,7 +919,7 @@ function ResultsPage() {
         {/* Final CTA */}
         <section className="mt-24">
           <div className="surface relative overflow-hidden rounded-[2rem] p-10 md:p-14">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(79,70,229,0.05),transparent_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,176,98,0.05),transparent_60%)]" />
             <div className="relative grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
               <div className="md:col-span-8">
                 <span className="pill">· Volgende stap</span>
@@ -937,7 +937,7 @@ function ResultsPage() {
                 <button
                   onClick={handleUnlock}
                   disabled={downloading}
-                  className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-60"
+                  className="inline-flex items-center justify-between gap-2 rounded-full bg-brand px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:brightness-110 disabled:opacity-60"
                 >
                   <span className="inline-flex items-center gap-2">
                     {paid ? <Download className="h-4 w-4" /> : <Lock className="h-4 w-4" />}

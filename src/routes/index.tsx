@@ -43,7 +43,7 @@ function Index() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.08 }}
           className="mt-7 max-w-[18ch] text-balance font-display text-[44px] font-medium leading-[1.02] tracking-[-0.035em] text-white sm:text-[68px] md:text-[96px] lg:text-[112px]"
-          style={{ background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.55) 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
+          style={{ background: "linear-gradient(180deg, #F5ECD7 25%, rgba(212,176,98,0.85) 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
         >
           AI-Driven Success, Redefining the Future.
         </motion.h1>

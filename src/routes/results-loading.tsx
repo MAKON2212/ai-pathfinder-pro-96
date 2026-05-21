@@ -74,7 +74,7 @@ function LoadingPage() {
     <div className="relative flex min-h-[100dvh] flex-col items-center justify-center px-6 py-24 overflow-hidden">
       {/* Ambient indigo glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(79,26,214,0.12), transparent 65%)" }} />
+        style={{ background: "radial-gradient(circle, rgba(212,176,98,0.12), transparent 65%)" }} />
 
       <div className="relative mx-auto w-full max-w-lg">
         {/* Step counter */}
@@ -128,7 +128,7 @@ function LoadingPage() {
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="h-full rounded-full bg-brand"
-            style={{ boxShadow: "0 0 12px rgba(79,26,214,0.8)" }}
+            style={{ boxShadow: "0 0 12px rgba(212,176,98,0.8)" }}
           />
         </div>
 
@@ -160,7 +160,7 @@ function LoadingPage() {
                 className="flex items-center gap-3 text-sm text-muted-foreground"
               >
                 <span className="flex h-4 w-4 flex-none items-center justify-center rounded-full"
-                  style={{ background: "rgba(79,26,214,0.2)" }}>
+                  style={{ background: "rgba(212,176,98,0.2)" }}>
                   <svg viewBox="0 0 10 10" className="h-2.5 w-2.5 text-brand fill-none stroke-current" strokeWidth="1.8">
                     <polyline points="1.5,5 4,7.5 8.5,2.5" />
                   </svg>
@@ -178,7 +178,7 @@ function LoadingPage() {
           <p className="mt-1 text-foreground/80">{error}</p>
           <button
             onClick={() => { startedRef.current = false; setError(null); setActiveStep(0); }}
-            className="mt-3 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white"
+            className="mt-3 rounded-full bg-brand px-4 py-2 text-xs font-semibold text-primary-foreground"
           >
             Try again
           </button>
