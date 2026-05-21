@@ -75,14 +75,14 @@ export function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full bg-white"
+        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 rounded-full bg-[#E8CB85]"
         style={{ willChange: "transform" }}
       />
       {/* Ring — follows with lag */}
       <div
         ref={ringRef}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[9998] rounded-full border border-white/50"
+        className="pointer-events-none fixed left-0 top-0 z-[9998] rounded-full border border-[rgba(232,203,133,0.5)]"
         style={{ willChange: "transform", width: 28, height: 28, transition: "width 0.2s, height 0.2s, opacity 0.2s" }}
       />
     </>
