@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Lock, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock, Lock, Sparkles } from "lucide-react";
 import { ValueMeter } from "@/components/ValueMeter";
 import { calcMissedValue, formatEUR, type ValueAnswers } from "@/lib/value-calc";
 import {
@@ -119,6 +119,7 @@ function AuditPage() {
   const [revealed, setRevealed] = useState(false);
   const sessionKeyRef = useRef<string>("");
   const maxStepRef = useRef<number>(0);
+  const prevValueRef = useRef<number>(0);
 
   const step = STEPS[stepIdx];
   const total = STEPS.length;
@@ -237,16 +238,15 @@ function AuditPage() {
     }
   };
 
+  const delta = calc.total - prevValueRef.current;
+  useEffect(() => { prevValueRef.current = calc.total; }, [calc.total]);
+
   if (revealed) {
     return <ValueReveal value={calc.total} low={calc.low} high={calc.high} answers={answers} />;
   }
 
-  const prevValue = useRef(calc.total);
-  const delta = calc.total - prevValue.current;
-  useEffect(() => { prevValue.current = calc.total; }, [stepIdx]);
-
   return (
-    <div className="mx-auto w-full max-w-md pb-36 sm:max-w-lg">
+    <div className="mx-auto w-full max-w-md pb-36 sm:max-w-lg lg:max-w-2xl">
 
       {/* ── Live meter card ── */}
       <div className="mx-3 mt-3 sm:mx-5">
@@ -460,7 +460,7 @@ function AuditPage() {
           paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
         }}
       >
-        <div className="mx-auto flex w-full max-w-md items-center gap-2">
+        <div className="mx-auto flex w-full max-w-md items-center gap-2 lg:max-w-2xl">
           <button
             type="button"
             onClick={goBack}
