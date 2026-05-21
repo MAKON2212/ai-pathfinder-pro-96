@@ -227,6 +227,21 @@
   50% { box-shadow: 0 0 60px rgba(201,166,100,0.55); }
 }
 
+/* Live pulse dot */
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E8CB85;
+  box-shadow: 0 0 8px #E8CB85;
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
 /* Vibrating dot grid — dark theme */
 @keyframes dot-vibrate {
   0%,  100% { background-position: 0px 0px,   11px 11px; }

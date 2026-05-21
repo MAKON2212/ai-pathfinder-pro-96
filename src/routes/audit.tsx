@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Lock, Sparkles, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Lock, Sparkles } from "lucide-react";
 import { ValueMeter } from "@/components/ValueMeter";
 import { calcMissedValue, formatEUR, type ValueAnswers } from "@/lib/value-calc";
 import {
@@ -241,101 +241,209 @@ function AuditPage() {
     return <ValueReveal value={calc.total} low={calc.low} high={calc.high} answers={answers} />;
   }
 
+  const prevValue = useRef(calc.total);
+  const delta = calc.total - prevValue.current;
+  useEffect(() => { prevValue.current = calc.total; }, [stepIdx]);
+
   return (
-    <div className="mx-auto w-full max-w-md px-4 pb-32 pt-4 sm:pt-8">
-      {/* Sticky meter */}
-      <div className="sticky top-2 z-30">
-        <ValueMeter value={calc.total} progress={(stepIdx + (isAnswered ? 1 : 0)) / total} />
+    <div className="mx-auto w-full max-w-md pb-36 sm:max-w-lg">
+
+      {/* ── Live meter card ── */}
+      <div className="mx-3 mt-3 sm:mx-5">
+        <div
+          className="relative overflow-hidden rounded-[20px] p-[18px]"
+          style={{
+            background: "linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))",
+            backdropFilter: "blur(28px) saturate(180%)",
+            WebkitBackdropFilter: "blur(28px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.08), 0 24px 60px rgba(0,0,0,0.3)",
+          }}
+        >
+          {/* bg glow */}
+          <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 80% 60% at 100% 0%, rgba(201,166,100,0.18), transparent 60%)" }} />
+
+          {/* Header row */}
+          <div className="relative flex items-center justify-between">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.16em]" style={{ color: "#E8CB85" }}>
+              Live Value Scan
+            </span>
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10.5px] font-semibold"
+              style={{ background: "rgba(201,166,100,0.12)", border: "1px solid rgba(201,166,100,0.3)", color: "#E8CB85" }}
+            >
+              <span className="live-dot" />
+              Updating
+            </span>
+          </div>
+
+          {/* Big value */}
+          <motion.div
+            key={calc.total}
+            initial={{ opacity: 0.6, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative mt-3 flex items-baseline gap-1 font-semibold tabular-nums leading-none tracking-[-0.04em]"
+            style={{
+              fontSize: 52,
+              background: "linear-gradient(180deg, #FFE8A8 0%, #C9A664 60%, #876B2C 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            <span style={{ fontSize: 28 }}>€</span>
+            {calc.total > 0 ? Math.round(calc.total).toLocaleString("nl-NL") : "–"}
+            <span className="ml-1.5 text-[13px] font-medium" style={{ color: "rgba(245,236,215,0.5)", WebkitTextFillColor: "rgba(245,236,215,0.5)" }}>
+              / year
+            </span>
+          </motion.div>
+
+          {/* Delta */}
+          {delta > 0 && (
+            <div className="mt-1.5 flex items-center gap-1 text-[12px] font-medium tabular-nums" style={{ color: "#E8CB85" }}>
+              <span style={{ fontSize: 9 }}>▲</span>
+              + €{Math.round(delta).toLocaleString("nl-NL")} since previous question
+            </div>
+          )}
+
+          {/* Progress */}
+          <div className="mt-4 border-t pt-3" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px]" style={{ color: "rgba(245,236,215,0.5)" }}>
+                Progress · <b style={{ color: "#f5ecd7" }}>0{stepIdx + 1}/0{total}</b>
+              </span>
+              <span className="text-[11px] font-semibold tabular-nums" style={{ color: "#E8CB85" }}>
+                {Math.round(((stepIdx + (isAnswered ? 1 : 0)) / total) * 100)}%
+              </span>
+            </div>
+            <div className="flex gap-1">
+              {STEPS.map((_, i) => (
+                <div
+                  key={i}
+                  className="h-1.5 flex-1 rounded-[2px] transition-all"
+                  style={
+                    i < stepIdx
+                      ? { background: "linear-gradient(90deg, #876B2C, #C9A664)" }
+                      : i === stepIdx
+                      ? { background: "#E8CB85", boxShadow: "0 0 12px rgba(201,166,100,0.6)" }
+                      : { background: "rgba(255,255,255,0.06)" }
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Progress dots */}
-      <div className="mt-4 flex items-center justify-center gap-1.5">
-        {STEPS.map((s, i) => (
-          <div
-            key={s.key}
-            className={cn(
-              "h-1.5 rounded-full transition-all",
-              i < stepIdx
-                ? "w-6"
-                : i === stepIdx
-                ? "w-8"
-                : "w-1.5 bg-white/10",
-            )}
-            style={
-              i < stepIdx
-                ? { background: "linear-gradient(90deg, #876B2C, #C9A664)" }
-                : i === stepIdx
-                ? { background: "#E8CB85", boxShadow: "0 0 12px rgba(201,166,100,0.6)" }
-                : undefined
-            }
-          />
-        ))}
-      </div>
-
-      {/* Question card */}
+      {/* ── Question ── */}
       <AnimatePresence mode="wait">
         <motion.div
           key={step.key}
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
+          exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="mt-5"
+          className="px-4 pt-8 sm:px-5"
         >
-          <div className="mb-1 text-[11px] font-medium uppercase tracking-wider text-[#E8CB85]">
-            Question {stepIdx + 1} of {total}
+          {/* Question tag */}
+          <div className="inline-flex items-center gap-2 rounded-full border py-1 pl-1 pr-3 text-[11px] font-medium" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)", color: "rgba(245,236,215,0.7)" }}>
+            <span
+              className="flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold tabular-nums"
+              style={{ background: "linear-gradient(135deg, #E8CB85, #876B2C)", color: "#14110a" }}
+            >
+              {String(stepIdx + 1).padStart(2, "0")}
+            </span>
+            {step.type === "multi" ? "Multiple choice" : "Single choice"}
           </div>
-          <h1 className="text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-            {step.title}
-          </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">{step.subtitle}</p>
 
-          <div
-            className={cn(
-              "mt-5 grid gap-2",
-              step.compact || step.options.length > 6
-                ? "grid-cols-2"
-                : "grid-cols-1",
-            )}
+          <h1
+            className="mt-4 font-semibold leading-[1.02] tracking-[-0.04em]"
+            style={{ fontSize: "clamp(28px, 8vw, 36px)", color: "#f5ecd7" }}
           >
-            {step.options.map((opt) => {
+            {step.title.includes("biggest") ? (
+              <>What are your biggest <em className="not-italic" style={{ background: "linear-gradient(180deg, #FFE8A8, #C9A664, #876B2C)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent" }}>time-wasters</em>?</>
+            ) : step.title}
+          </h1>
+          <p className="mt-3.5 text-[14px] leading-[1.5] tracking-[-0.008em]" style={{ color: "rgba(245,236,215,0.6)" }}>
+            {step.subtitle}
+          </p>
+
+          {/* Options */}
+          <div className={cn("mt-5 flex flex-col gap-1.5", step.compact && step.options.length > 6 ? "grid grid-cols-2" : "")}>
+            {step.options.map((opt, oi) => {
               const selected =
                 step.type === "multi"
                   ? ((answers[step.key] as string[] | undefined) ?? []).includes(opt)
                   : answers[step.key] === opt;
+              // Rough value hints
+              const deltaHints: Record<string, string> = {
+                "Repetitive work": "+€4.2k",
+                "Slow customer service": "+€2.8k",
+                "Admin & invoicing": "+€2.1k",
+                "Content creation": "up to €3.4k",
+                "Data silos": "up to €5.0k",
+                "Planning & scheduling": "+€1.8k",
+                "Research & analysis": "up to €2.6k",
+              };
+              const deltaHint = deltaHints[opt];
               return (
                 <motion.button
                   key={opt}
                   type="button"
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() =>
-                    step.type === "multi" ? toggleMulti(opt) : pickSingle(opt)
-                  }
-                  className={cn(
-                    "group relative flex items-center justify-between gap-2 rounded-2xl border px-3.5 py-3 text-left text-sm transition-all",
-                    "hover:border-[rgba(201,166,100,0.4)] hover:bg-[rgba(201,166,100,0.05)]",
-                    selected
-                      ? "text-foreground"
-                      : "border-border bg-card text-foreground/90",
-                  )}
-                  style={selected ? {
-                    background: "linear-gradient(180deg, rgba(201,166,100,0.18), rgba(201,166,100,0.04))",
-                    borderColor: "rgba(201,166,100,0.4)",
-                    boxShadow: "inset 0 1px 0 rgba(255,232,168,0.15), 0 0 0 1px rgba(201,166,100,0.1)",
-                  } : undefined}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => step.type === "multi" ? toggleMulti(opt) : pickSingle(opt)}
+                  className="relative grid items-center gap-3 overflow-hidden rounded-[14px] px-3.5 py-3.5 text-left transition-all"
+                  style={{
+                    gridTemplateColumns: "28px 1fr auto",
+                    ...(selected ? {
+                      background: "linear-gradient(180deg, rgba(201,166,100,0.18), rgba(201,166,100,0.04))",
+                      border: "1px solid rgba(201,166,100,0.4)",
+                      boxShadow: "inset 0 1px 0 rgba(255,232,168,0.15), 0 0 0 1px rgba(201,166,100,0.1)",
+                    } : {
+                      background: "rgba(255,255,255,0.025)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                    }),
+                  }}
                 >
-                  <span className="leading-tight">{opt}</span>
-                  {selected && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[#14110a]"
-                      style={{ background: "linear-gradient(180deg, #FFE8A8, #C9A664)" }}
+                  {/* Number */}
+                  <span
+                    className="text-[11px] font-semibold tabular-nums tracking-[0.04em]"
+                    style={{ color: selected ? "#E8CB85" : "rgba(245,236,215,0.4)" }}
+                  >
+                    {String(oi + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* Label */}
+                  <span className="text-[14.5px] font-medium leading-tight tracking-[-0.012em]" style={{ color: selected ? "#f5ecd7" : "rgba(245,236,215,0.9)" }}>
+                    {opt}
+                  </span>
+
+                  {/* Right side: delta + checkbox */}
+                  <span className="flex items-center gap-2">
+                    {deltaHint && (
+                      <span
+                        className="text-[12px] font-semibold tabular-nums"
+                        style={{ color: selected ? "#E8CB85" : "rgba(245,236,215,0.4)" }}
+                      >
+                        {selected ? (deltaHint.startsWith("+") ? deltaHint : `+${deltaHint.replace("up to ", "")}`) : deltaHint}
+                      </span>
+                    )}
+                    <span
+                      className="flex h-[22px] w-[22px] items-center justify-center rounded-[7px] transition-all"
+                      style={selected ? {
+                        background: "linear-gradient(180deg, #FFE8A8, #C9A664)",
+                        border: "1.5px solid #C9A664",
+                        color: "#14110a",
+                        boxShadow: "0 0 12px rgba(201,166,100,0.4)",
+                      } : {
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1.5px solid rgba(245,236,215,0.2)",
+                      }}
                     >
-                      <Check className="h-3 w-3" strokeWidth={3} />
-                    </motion.span>
-                  )}
+                      {selected && <Check className="h-3 w-3" strokeWidth={2.5} />}
+                    </span>
+                  </span>
                 </motion.button>
               );
             })}
@@ -343,34 +451,47 @@ function AuditPage() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Bottom nav */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/85 px-4 pt-3 backdrop-blur-md" style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}>
+      {/* ── Bottom nav ── */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-40 px-4 pt-3 backdrop-blur-xl"
+        style={{
+          background: "rgba(8,8,10,0.85)",
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+          paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))",
+        }}
+      >
         <div className="mx-auto flex w-full max-w-md items-center gap-2">
           <button
             type="button"
             onClick={goBack}
             disabled={stepIdx === 0}
-            className="flex h-12 w-12 items-center justify-center rounded-2xl border bg-card text-muted-foreground transition disabled:opacity-40"
-            style={{ borderColor: "rgba(201,166,100,0.2)" }}
+            className="flex h-12 w-12 items-center justify-center rounded-[14px] transition disabled:opacity-30"
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "rgba(245,236,215,0.7)",
+            }}
             aria-label="Back"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="h-4 w-4" />
           </button>
           <button
             type="button"
             onClick={goNext}
             disabled={!isAnswered}
             className={cn(
-              "group relative flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl font-semibold transition-all",
-              isAnswered
-                ? "hover:brightness-105"
-                : "bg-white/5 text-muted-foreground",
+              "group relative flex h-12 flex-1 items-center justify-center gap-2 rounded-[14px] font-semibold text-[15px] transition-all",
+              !isAnswered && "opacity-40",
             )}
             style={isAnswered ? {
               background: "linear-gradient(180deg, #FFE8A8, #C9A664)",
               color: "#14110a",
               boxShadow: "0 8px 32px rgba(201,166,100,0.40), inset 0 1px 0 rgba(255,255,255,0.5)",
-            } : undefined}
+            } : {
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              color: "rgba(245,236,215,0.4)",
+            }}
           >
             {stepIdx === total - 1 ? (
               <>
