@@ -108,7 +108,7 @@ function Index() {
         {/* Head */}
         <div className="relative flex items-center justify-between">
           <span className="text-[11px] font-medium" style={{ color: "rgba(245,236,215,0.55)" }}>
-            Sample · Construction 12 FTE
+            Sample · Tech agency 34 FTE
           </span>
           <span
             className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[11px] font-semibold"
@@ -135,7 +135,7 @@ function Index() {
           }}
         >
           <span style={{ fontSize: 28 }}>€</span>
-          47,280
+          213,480
           <span className="text-[13px] font-medium ml-1.5" style={{ color: "rgba(245,236,215,0.5)", WebkitTextFillColor: "rgba(245,236,215,0.5)" }}>
             / year
           </span>
@@ -154,8 +154,8 @@ function Index() {
 
         {/* Foot */}
         <div className="mt-2.5 flex justify-between text-[11px]" style={{ color: "rgba(245,236,215,0.45)" }}>
-          <span>Range <b style={{ color: "#E8CB85" }}>€31k – €68k</b></span>
-          <span>Confidence <b style={{ color: "#E8CB85" }}>92%</b></span>
+          <span>Range <b style={{ color: "#E8CB85" }}>€148k – €284k</b></span>
+          <span>Confidence <b style={{ color: "#E8CB85" }}>94%</b></span>
         </div>
       </motion.div>
 
@@ -206,16 +206,18 @@ function Index() {
       {/* ── Trust bar ── */}
       <motion.div {...fadeUp(0.36)} className="mt-5 flex items-center gap-3">
         <div className="flex">
-          {["#C9A664","#E8CB85","#876B2C","#C9A664"].map((c, i) => (
-            <span
+          {[
+            "https://randomuser.me/api/portraits/women/44.jpg",
+            "https://randomuser.me/api/portraits/men/32.jpg",
+            "https://randomuser.me/api/portraits/women/68.jpg",
+            "https://randomuser.me/api/portraits/men/75.jpg",
+          ].map((src, i) => (
+            <img
               key={i}
-              className="relative inline-block h-7 w-7 rounded-full border-2"
-              style={{
-                marginLeft: i > 0 ? -8 : 0,
-                background: c,
-                borderColor: "#08080a",
-                zIndex: 4 - i,
-              }}
+              src={src}
+              alt=""
+              className="h-7 w-7 rounded-full border-2 object-cover"
+              style={{ marginLeft: i > 0 ? -8 : 0, borderColor: "#08080a", zIndex: 4 - i, position: "relative" }}
             />
           ))}
         </div>
@@ -295,7 +297,7 @@ function Index() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              €47k
+              €213k
             </div>
             <div className="mt-1 text-[12px]" style={{ color: "rgba(245,236,215,0.6)" }}>
               <b style={{ color: "#f5ecd7" }}>Missed revenue / year</b>{" "}

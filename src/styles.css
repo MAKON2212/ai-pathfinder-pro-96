@@ -92,15 +92,9 @@
 @layer base {
   * {
     border-color: var(--color-border);
-    /* Hide default OS cursor — CustomCursor component renders ours */
-    cursor: none !important;
   }
 
-  /* Restore pointer on touch devices where we don't render custom cursor */
-  @media (pointer: coarse) {
-    * { cursor: auto !important; }
-    a, button, [role="button"] { cursor: pointer !important; }
-  }
+  a, button, [role="button"] { cursor: pointer; }
 
   html,
   body {
