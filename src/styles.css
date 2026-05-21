@@ -224,11 +224,11 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 30px rgba(79,26,214,0.25); }
-  50% { box-shadow: 0 0 60px rgba(79,26,214,0.55); }
+  0%, 100% { box-shadow: 0 0 30px rgba(212, 176, 98, 0.22); }
+  50% { box-shadow: 0 0 60px rgba(212, 176, 98, 0.50); }
 }
 
-/* Vibrating dot grid — dark theme */
+/* Vibrating dot grid — gold theme */
 @keyframes dot-vibrate {
   0%,  100% { background-position: 0px 0px,   11px 11px; }
   25%        { background-position: 2px 1px,   13px 12px; }
@@ -238,11 +238,11 @@
 
 .dot-grid {
   background-image:
-    radial-gradient(circle, rgba(255,255,255,0.22) 1px, transparent 1px),
-    radial-gradient(circle, rgba(110,60,255,0.50) 2px, transparent 2px);
+    radial-gradient(circle, rgba(245,236,215,0.18) 1px, transparent 1px),
+    radial-gradient(circle, rgba(212,176,98,0.45) 2px, transparent 2px);
   background-size: 28px 28px, 84px 84px;
   background-position: 0 0, 14px 14px;
-  opacity: 0.65;
+  opacity: 0.55;
   animation: dot-vibrate 10s ease-in-out infinite;
 }
 
@@ -250,6 +250,7 @@
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .card-glow:hover {
-  border-color: rgba(79, 26, 214, 0.35);
-  box-shadow: 0px 0px 20px 2px rgba(79, 26, 214, 0.15);
+  border-color: rgba(212, 176, 98, 0.35);
+  box-shadow: 0px 0px 20px 2px rgba(212, 176, 98, 0.18);
 }
+
