@@ -131,29 +131,29 @@
 
 @layer utilities {
   .surface {
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(245, 236, 215, 0.045);
+    border: 1px solid rgba(245, 236, 215, 0.10);
     border-radius: 20px;
-    box-shadow: inset 0px 10px 10px -1px rgba(90, 40, 240, 0.08);
+    box-shadow: inset 0px 10px 10px -1px rgba(212, 176, 98, 0.08);
   }
   .surface-2 {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(245, 236, 215, 0.07);
+    border: 1px solid rgba(245, 236, 215, 0.10);
     border-radius: 24px;
   }
   .glass {
-    background: rgba(255, 255, 255, 0.055);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(245, 236, 215, 0.045);
+    border: 1px solid rgba(245, 236, 215, 0.10);
     border-radius: 20px;
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
   }
   .frosted {
-    background: rgba(8, 8, 8, 0.80);
+    background: rgba(8, 8, 10, 0.80);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    color: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(245, 236, 215, 0.92);
+    border: 1px solid rgba(245, 236, 215, 0.08);
   }
   .text-brand { color: var(--brand); }
   .bg-brand { background-color: var(--brand); }
@@ -168,8 +168,8 @@
   }
   .grid-lines {
     background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(245,236,215,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,236,215,0.03) 1px, transparent 1px);
     background-size: 32px 32px;
   }
   .pill {
@@ -178,13 +178,15 @@
     gap: 0.5rem;
     padding: 0.35rem 0.85rem;
     border-radius: 999px;
-    background: rgba(79,26,214,0.12);
-    color: #c7d2fe;
-    font-size: 12px;
+    background: rgba(212, 176, 98, 0.10);
+    color: #F5ECD7;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: -0.003em;
-    border: 1px solid rgba(79,26,214,0.3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid rgba(212, 176, 98, 0.28);
   }
+
   .display {
     font-family: var(--font-display);
     font-weight: 700;
