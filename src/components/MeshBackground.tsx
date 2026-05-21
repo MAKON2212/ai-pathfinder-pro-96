@@ -1,17 +1,17 @@
 /**
- * Nubien-style background:
- * - Pure black base
- * - Dramatic bottom-center violet arc glow (the Nubien signature)
- * - Fine dot grid + film grain
+ * Gold tech background:
+ * - Near-black canvas
+ * - Warm champagne/gold ambient glow (top + bottom)
+ * - Subtle film grain
  */
 export function MeshBackground() {
   return (
     <div
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
-      style={{ background: "#000000" }}
+      style={{ background: "#08080A" }}
     >
-      {/* Bottom arc — outer halo */}
+      {/* Bottom warm gold halo */}
       <div
         style={{
           position: "absolute",
@@ -21,11 +21,11 @@ export function MeshBackground() {
           width: "140vw",
           height: "100vh",
           background:
-            "radial-gradient(ellipse 55% 50% at 50% 50%, rgba(99,44,255,0.55) 0%, rgba(79,26,214,0.30) 38%, transparent 65%)",
-          filter: "blur(40px)",
+            "radial-gradient(ellipse 55% 50% at 50% 50%, rgba(212,176,98,0.32) 0%, rgba(180,140,70,0.18) 38%, transparent 65%)",
+          filter: "blur(48px)",
         }}
       />
-      {/* Bottom arc — bright core */}
+      {/* Bottom bright core — champagne */}
       <div
         style={{
           position: "absolute",
@@ -35,21 +35,21 @@ export function MeshBackground() {
           width: "85vw",
           height: "60vh",
           background:
-            "radial-gradient(ellipse 50% 55% at 50% 50%, rgba(140,90,255,0.55) 0%, rgba(99,44,255,0.25) 50%, transparent 72%)",
-          filter: "blur(24px)",
+            "radial-gradient(ellipse 50% 55% at 50% 50%, rgba(232,201,122,0.32) 0%, rgba(212,176,98,0.16) 50%, transparent 72%)",
+          filter: "blur(28px)",
         }}
       />
-      {/* Subtle top ambient */}
+      {/* Top warm ambient */}
       <div
         style={{
           position: "absolute",
-          top: "-30vh",
+          top: "-35vh",
           left: "50%",
           transform: "translateX(-50%)",
           width: "100vw",
           height: "55vh",
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(60,20,180,0.18) 0%, transparent 65%)",
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(160,120,55,0.16) 0%, transparent 65%)",
           filter: "blur(60px)",
         }}
       />
@@ -57,7 +57,7 @@ export function MeshBackground() {
       {/* Film grain */}
       <svg
         aria-hidden
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.12 }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.10 }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="noise-bg">
