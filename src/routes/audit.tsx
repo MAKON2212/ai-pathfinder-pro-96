@@ -288,7 +288,7 @@ function AuditPage() {
           <h1
             className="mx-auto max-w-[20ch] text-balance font-display text-[32px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[44px] md:text-[56px]"
             style={{
-              background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.55) 100%)",
+              background: "linear-gradient(180deg, #F5ECD7 25%, rgba(212,176,98,0.85) 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               color: "transparent",
