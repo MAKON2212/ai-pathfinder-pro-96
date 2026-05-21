@@ -277,7 +277,7 @@ function AuditPage() {
         >
           <div className="mb-6 flex justify-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/60 py-1.5 pl-1.5 pr-4 backdrop-blur-xl">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-primary-foreground">
                 <Sparkles className="h-3.5 w-3.5" />
               </span>
               <span className="text-[12px] font-medium tracking-tight text-foreground/90">
@@ -336,7 +336,7 @@ function AuditPage() {
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-white"
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-primary-foreground"
                     >
                       <Check className="h-3 w-3" strokeWidth={3} />
                     </motion.span>
@@ -367,7 +367,7 @@ function AuditPage() {
             className={cn(
               "group relative flex h-12 flex-1 items-center justify-center gap-2 rounded-2xl font-semibold transition-all",
               isAnswered
-                ? "bg-brand text-white shadow-[0_8px_32px_rgba(90,40,240,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] hover:brightness-110 hover:shadow-[0_12px_48px_rgba(90,40,240,0.70)]"
+                ? "bg-brand text-primary-foreground shadow-[0_8px_32px_rgba(212,176,98,0.55),inset_0_1px_0_rgba(255,255,255,0.12)] hover:brightness-110 hover:shadow-[0_12px_48px_rgba(212,176,98,0.70)]"
                 : "bg-white/5 text-muted-foreground",
             )}
           >
@@ -535,7 +535,7 @@ function AuditPage() {
           {/* Lock overlay */}
           <div className="pointer-events-none absolute inset-0 flex items-end justify-center bg-gradient-to-t from-card via-card/80 to-transparent pb-6">
             <div className="pointer-events-auto w-full px-5 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-white shadow-[0_0_30px_rgba(79,70,229,0.5)]">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand text-primary-foreground shadow-[0_0_30px_rgba(212,176,98,0.5)]">
                 <Lock className="h-5 w-5" />
               </div>
               <p className="text-sm text-foreground/85">
@@ -589,7 +589,7 @@ function UnlockCTA({ onClick }: { onClick: () => void }) {
       <button
         type="button"
         onClick={onClick}
-        className="group relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-brand font-semibold text-white shadow-[0_10px_40px_rgba(79,70,229,0.45)] transition hover:brightness-110"
+        className="group relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-2xl bg-brand font-semibold text-primary-foreground shadow-[0_10px_40px_rgba(212,176,98,0.45)] transition hover:brightness-110"
       >
         <Lock className="h-4 w-4" />
         <span className="text-base">Unlock my report</span>

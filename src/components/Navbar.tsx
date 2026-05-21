@@ -18,7 +18,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-[1240px] items-center justify-between rounded-2xl border border-white/8 bg-black/60 px-3 py-2 backdrop-blur-xl md:rounded-full md:px-4 md:py-2.5">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 pl-1.5" onClick={() => setOpen(false)}>
-          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-brand text-primary-foreground">
             <Check className="h-4 w-4" strokeWidth={3} />
           </span>
           <span className="text-[15px] font-semibold tracking-tight text-foreground">ScanAI</span>
@@ -42,7 +42,7 @@ export function Navbar() {
         {/* CTA */}
         <Link
           to="/audit"
-          className="hidden rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-white shadow-[0_8px_32px_rgba(99,44,255,0.45),inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:brightness-110 md:inline-flex"
+          className="hidden rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-primary-foreground shadow-[0_8px_32px_rgba(212,176,98,0.45),inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:brightness-110 md:inline-flex"
         >
           Get In Touch
         </Link>
@@ -75,7 +75,7 @@ export function Navbar() {
             <Link
               to="/audit"
               onClick={() => setOpen(false)}
-              className="mt-1 rounded-xl bg-brand px-3 py-3 text-center text-[15px] font-semibold text-white"
+              className="mt-1 rounded-xl bg-brand px-3 py-3 text-center text-[15px] font-semibold text-primary-foreground"
             >
               Get In Touch
             </Link>
